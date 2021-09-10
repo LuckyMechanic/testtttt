@@ -1,0 +1,10 @@
+^D:\GCARD-CLIENT\XLUA-BUILD\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/gcard-client/xlua-build -BD:/gcard-client/xlua-build/build64 --check-stamp-file D:/gcard-client/xlua-build/build64/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

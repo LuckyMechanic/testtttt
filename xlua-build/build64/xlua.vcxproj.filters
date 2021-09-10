@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\lapi.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\lauxlib.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\lbaselib.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\lbitlib.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\lcode.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\lcorolib.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\lctype.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\ldblib.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\ldebug.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\ldo.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\ldump.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\lfunc.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\lgc.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\linit.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\liolib.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\llex.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\lmathlib.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\lmem.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\loadlib.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\lobject.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\lopcodes.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\loslib.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\lparser.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\lstate.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\lstring.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\lstrlib.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\ltable.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\ltablib.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\ltm.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\lundump.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\lutf8lib.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\lvm.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-5.3.5\src\lzio.c">
+      <Filter>lua-5.3.5\src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\luasocket\auxiliar.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\luasocket\buffer.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\luasocket\except.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\luasocket\inet.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\luasocket\io.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\luasocket\luasocket.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\luasocket\mime.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\luasocket\options.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\luasocket\select.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\luasocket\tcp.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\luasocket\timeout.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\luasocket\udp.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\luasocket\wsocket.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\i64lib.c" />
+    <ClCompile Include="D:\gcard-client\xlua-build\xlua.c" />
+    <ClCompile Include="D:\gcard-client\xlua-build\memory_leak_checker.c" />
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-rapidjson\source\Document.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-rapidjson\source\rapidjson.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-rapidjson\source\Schema.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-rapidjson\source\values.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\gcard-client\xlua-build\lua-protobuf\pb.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\gcard-client\xlua-build\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{B01C115C-CCD1-3861-85C7-B9D5C37E3E14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lua-5.3.5">
+      <UniqueIdentifier>{ED524D53-FDA9-335C-A570-0EDB3FBE6FE9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lua-5.3.5\src">
+      <UniqueIdentifier>{6D2CB911-73E7-3FA1-B94A-CFB1A4A42501}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="luasocket">
+      <UniqueIdentifier>{9D2E66B6-1C8E-3841-80C8-669934626A0C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

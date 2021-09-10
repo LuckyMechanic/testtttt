@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\gcard-client\xlua-build\build64\CMakeFiles\b6dd05b8c620d354650a5db22e942cf1\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{9645538F-0215-3B02-8718-C5028A8ED34B}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

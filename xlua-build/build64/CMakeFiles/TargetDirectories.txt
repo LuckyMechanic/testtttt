@@ -1,0 +1,3 @@
+D:/gcard-client/xlua-build/build64/CMakeFiles/xlua.dir
+D:/gcard-client/xlua-build/build64/CMakeFiles/ALL_BUILD.dir
+D:/gcard-client/xlua-build/build64/CMakeFiles/ZERO_CHECK.dir

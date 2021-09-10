@@ -1,0 +1,3 @@
+D:/gcard-client/xlua-build/build_android_x86/CMakeFiles/xlua.dir
+D:/gcard-client/xlua-build/build_android_x86/CMakeFiles/edit_cache.dir
+D:/gcard-client/xlua-build/build_android_x86/CMakeFiles/rebuild_cache.dir
