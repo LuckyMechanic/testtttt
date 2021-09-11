@@ -1,0 +1,39 @@
+
+ï
+
+http.protohttpmodel.protodb.prototemplate.protoerror.proto"×
+rpc
+router (	
+error (2.error.CError 
+registerd (2.http.register&
+registerRete (2.http.registerRet
+loginf (2.http.login 
+loginRetg (2.http.loginRet"
+	enterAreah (2.http.enterArea(
+enterAreaReti (2.http.enterAreaRet"
+	enterGamej (2.http.enterGame(
+enterGameRetk (2.http.enterGameRet".
+register
+username (	
+password (	"[
+registerRet
+info (2.model.UserInfo
+token (	
+areas (2.model.AreaInfo"+
+login
+username (	
+password (	"X
+loginRet
+info (2.model.UserInfo
+token (	
+areas (2.model.AreaInfo"
+	enterArea
+aid ("A
+enterAreaRet
+token (	"
+players (2.model.PlayerInfo"
+	enterGame
+pid (	"B
+enterGameRet
+token (	#
+config (2.model.ServerConfig

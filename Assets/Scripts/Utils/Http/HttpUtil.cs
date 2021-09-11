@@ -57,7 +57,7 @@ public class HttpUtil : Singleton<HttpUtil>
         return new HttpResult() { code = -1, bytes = new byte[] { }, response = null };
     }
 
-    public void GetAsyn(HttpWebRequest request, Action<HttpResult> cb = null, Action<Exception> error = null)
+    public void GetAsync(HttpWebRequest request, Action<HttpResult> cb = null, Action<Exception> error = null)
     {
         Thread thread = null;
         thread = new Thread(new ThreadStart(() =>
@@ -77,7 +77,7 @@ public class HttpUtil : Singleton<HttpUtil>
 
     /// <summary>
     /// Post方法
-    /// </summary>s
+    /// </summary>
     public HttpResult Post(HttpWebRequest request, byte[] body, Action<Exception> error = null)
     {
         HttpWebResponse response;
@@ -121,7 +121,7 @@ public class HttpUtil : Singleton<HttpUtil>
         return new HttpResult() { code = -1, bytes = new byte[] { }, response = null };
     }
 
-    public void PostAsyn(HttpWebRequest request, byte[] body, Action<HttpResult> cb = null, Action<Exception> error = null)
+    public void PostAsync(HttpWebRequest request, byte[] body, Action<HttpResult> cb = null, Action<Exception> error = null)
     {
         Thread thread = null;
         thread = new Thread(new ThreadStart(() =>
@@ -130,10 +130,7 @@ public class HttpUtil : Singleton<HttpUtil>
             {
                 ThreadUtil.Instance.PostMainThreadAction<Exception>(error, ex);
             });
-            if (result.bytes.Length > 0)
-            {
-                ThreadUtil.Instance.PostMainThreadAction<HttpResult>(cb, result);
-            }
+            ThreadUtil.Instance.PostMainThreadAction<HttpResult>(cb, result);
         }));
         thread.Start();
     }

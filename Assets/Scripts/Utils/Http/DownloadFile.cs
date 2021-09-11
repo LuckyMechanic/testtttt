@@ -58,7 +58,7 @@ public class DownloadFile
     /// 异步查询文件大小
     /// </summary>
     /// <param name="onTrigger"></param>
-    public void GetFileSizeAsyn(Action<long> onTrigger = null)
+    public void GetFileSizeAsync(Action<long> onTrigger = null)
     {
         ThreadStart threadStart = new ThreadStart(() =>
         {
@@ -83,7 +83,7 @@ public class DownloadFile
 
 
         // 下载逻辑
-        GetFileSizeAsyn((size) =>
+        GetFileSizeAsync((size) =>
         {
             if (size == -1) return;
             // 准备工作
@@ -188,7 +188,7 @@ public class DownloadFile
         int ocnt = 0;   // 完成线程数
         byte[] cdata;  // 已下载数据
         // 下载逻辑
-        GetFileSizeAsyn((size) =>
+        GetFileSizeAsync((size) =>
         {
             cdata = new byte[size];
             // 单线程下载过程回调函数

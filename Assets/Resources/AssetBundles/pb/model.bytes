@@ -1,0 +1,41 @@
+
+ú
+model.protomodel"Z
+UserInfo
+uid (	
+username (	
+banTime (
+state (
+lastAid ("4
+AreaInfo
+aid (
+name (	
+state (" 
+
+PlayerInfo
+pid (	
+uid (	
+aid (
+name (	
+
+lv (
+exp (
+	loginTime (
+
+logoutTime (
+online	 (
+state
+ ("6
+ServerConfig
+
+id (
+host (	
+port ("6
+PlayerCurrency
+	currency0 (
+	currency1 ("?
+PlayerProps
+propsId (
+cnt (
+
+createTime (

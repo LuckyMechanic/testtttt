@@ -15,6 +15,15 @@ public class LuaEnvManager : Singleton<LuaEnvManager>
         LuaEnv = new LuaEnv();
         LuaEnv.AddBuildin("rapidjson", XLua.LuaDLL.Lua.LoadRapidJson);
         LuaEnv.AddBuildin("pb", XLua.LuaDLL.Lua.LoadPB);
+
+        LuaEnv.DoString(@"
+            local applicationDataPath = CS.UnityEngine.Application.dataPath..'/../Tool/ExtendLuaDLL/emmy_core.dll'
+            CS.UnityEngine.Debug.Log('EditorLog:'..applicationDataPath)
+            package.cpath = package.cpath .. ';'..applicationDataPath
+            local dbg = require('emmy_core')
+            dbg.tcpConnect('localhost', 9966)
+        ");
+
         LuaEnv.AddLoader(OnLoadLuaFile);
         LuaEnv.DoString(@"require 'main'");
 
