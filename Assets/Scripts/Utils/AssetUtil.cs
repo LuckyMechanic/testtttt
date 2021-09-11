@@ -56,7 +56,6 @@ public class AssetUtil : Singleton<AssetUtil>
                     dirPath = dirPath.Replace("Assets\\Resources\\", "");
                     dirPath = dirPath.Replace("\\", "/");
                     string path = dirPath + "/" + assetName;
-                    UnityEngine.Debug.Log(assetName + " " + dirPath);
                     _abAssetFileMap[abName].Add(assetName, path);
                 }
             }
