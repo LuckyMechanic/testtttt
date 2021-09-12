@@ -61,8 +61,28 @@ public class AssetUtil : Singleton<AssetUtil>
             }
         }
 #endif
-
     }
+    /// <summary>
+    /// 获取开发环境缓存ab包资源路径
+    /// </summary>
+    /// <param name="abName"></param>
+    /// <param name="assetName"></param>
+    /// <returns></returns>
+    public string getABAssetFilePath(string abName, string assetName)
+    {
+        if (!_abAssetFileMap.ContainsKey(abName))
+        {
+            return null;
+        }
+        var map = _abAssetFileMap[abName];
+        if (!map.ContainsKey(assetName))
+        {
+            return null;
+        }
+        var path = map[assetName];
+        return path;
+    }
+
 
     /// <summary>
     /// 查找资源文件字节集
@@ -340,16 +360,11 @@ public class AssetUtil : Singleton<AssetUtil>
     /// <returns></returns>
     public UnityEngine.Object LoadAssetFromEditorBundle(Type type, string key, string assetName)
     {
-        if (!_abAssetFileMap.ContainsKey(key))
+        var path = getABAssetFilePath(key, assetName);
+        if (path == null)
         {
             return null;
         }
-        var map = _abAssetFileMap[key];
-        if (!map.ContainsKey(assetName))
-        {
-            return null;
-        }
-        var path = map[assetName];
         var asset = Resources.Load(path, type);
         if (asset != null)
         {
@@ -359,18 +374,13 @@ public class AssetUtil : Singleton<AssetUtil>
     }
     public void LoadAssetFromEditorBundleAsync(Type type, string key, string assetName, Action<UnityEngine.Object> cb)
     {
-        if (!_abAssetFileMap.ContainsKey(key))
+        var path = getABAssetFilePath(key, assetName);
+        if (path == null)
         {
             cb(null);
             return;
         }
-        var map = _abAssetFileMap[key];
-        if (!map.ContainsKey(assetName))
-        {
-            cb(null);
-            return;
-        }
-        var path = map[assetName];
+
         MonoUtil.Instance.StartCoroutine(_loadAssetFromResourcesAsync(type, path, (asset) =>
         {
             if (asset != null)

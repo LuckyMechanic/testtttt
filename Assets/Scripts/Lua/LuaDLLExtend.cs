@@ -22,5 +22,16 @@ namespace XLua.LuaDLL
         {
             return luaopen_pb(L);
         }
+
+
+#if UNITY_EDITOR
+        [DllImport("emmy_core.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int luaopen_emmy_core(System.IntPtr L);
+        [MonoPInvokeCallback(typeof(LuaDLL.lua_CSFunction))]
+        public static int LoadEmmyCore(System.IntPtr L)
+        {
+            return luaopen_emmy_core(L);
+        }
+#endif
     }
 }

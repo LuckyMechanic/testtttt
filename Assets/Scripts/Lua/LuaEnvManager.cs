@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using UnityEngine;
 using XLua;
 public class LuaEnvManager : Singleton<LuaEnvManager>
@@ -16,13 +17,9 @@ public class LuaEnvManager : Singleton<LuaEnvManager>
         LuaEnv.AddBuildin("rapidjson", XLua.LuaDLL.Lua.LoadRapidJson);
         LuaEnv.AddBuildin("pb", XLua.LuaDLL.Lua.LoadPB);
 
-        LuaEnv.DoString(@"
-            local applicationDataPath = CS.UnityEngine.Application.dataPath..'/../Tool/ExtendLuaDLL/emmy_core.dll'
-            CS.UnityEngine.Debug.Log('EditorLog:'..applicationDataPath)
-            package.cpath = package.cpath .. ';'..applicationDataPath
-            local dbg = require('emmy_core')
-            dbg.tcpConnect('localhost', 9966)
-        ");
+#if UNITY_EDITOR
+        LuaEnv.AddBuildin("emmy_core", XLua.LuaDLL.Lua.LoadEmmyCore);
+#endif
 
         LuaEnv.AddLoader(OnLoadLuaFile);
         LuaEnv.DoString(@"require 'main'");
@@ -43,8 +40,19 @@ public class LuaEnvManager : Singleton<LuaEnvManager>
         if (asset == null)
         {
             UnityEngine.Debug.LogError(string.Format("找不到Lua文件[{0}]", filepath));
-            return new byte[] { };
+            return null;
         }
+#if UNITY_EDITOR
+        // 这里主要为了调试环境的断点可以打到对应的文件位置，因此修改filepath
+        if (GameConst.PRO_ENV == ENV_TYPE.DEV)
+        {
+            var fileInfo = FileUtil.Instance.GetChildFile(Path.Combine(GameConst.RESOURCES, "AssetBundles/lua"), string.Format("{0}.lua.txt", filepath));
+            if (fileInfo != null)
+            {
+                filepath = fileInfo.FullName;
+            }
+        }
+#endif
         return asset.bytes;
     }
 }

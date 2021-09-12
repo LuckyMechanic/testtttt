@@ -1,12 +1,13 @@
+local dbg = require('emmy_core')
+dbg.tcpConnect('localhost', 9966)
 
 -- 这里直接通过C#加载pb字节流
 local pb = require('pb')
-pb.load(CS.System.IO.File.ReadAllBytes(CS.GameConst.RESOURCES..'/AssetBundles/pb/http.bytes'))
-pb.load(CS.System.IO.File.ReadAllBytes(CS.GameConst.RESOURCES..'/AssetBundles/pb/error.bytes'))
-pb.load(CS.System.IO.File.ReadAllBytes(CS.GameConst.RESOURCES..'/AssetBundles/pb/model.bytes'))
+pb.load(CS.System.IO.File.ReadAllBytes(CS.GameConst.RESOURCES .. '/AssetBundles/pb/http.bytes'))
+pb.load(CS.System.IO.File.ReadAllBytes(CS.GameConst.RESOURCES .. '/AssetBundles/pb/error.bytes'))
+pb.load(CS.System.IO.File.ReadAllBytes(CS.GameConst.RESOURCES .. '/AssetBundles/pb/model.bytes'))
 
-local data = { router = "register",register={username="fdsajhfaskfl",password="sdafasdgasdf"}};
-
+local data = {router = 'register', register = {username = 'fdsajhfaskfl', password = 'sdafasdgasdf'}}
 -- -- 序列化
 -- local buff = assert(pb.encode('http.rpc', data))
 -- print('序列化成功',buff,pb.tohex(buff))
@@ -14,13 +15,15 @@ local data = { router = "register",register={username="fdsajhfaskfl",password="s
 -- local rpc = assert(pb.decode('http.rpc',buff))
 -- print('反序列化成功',rpc);
 
-
-
 local request = CS.System.Net.HttpWebRequest.Create(CS.System.Uri('http://127.0.0.1:8200'))
 request.Timeout = 1000
-print(CS.HttpUtil.Instance.Post)
+print('fdsajfs', CS.HttpUtil.Instance.Post)
 
-CS.HttpUtil.Instance:PostAsync(request,assert(pb.encode('http.rpc', data)),function(result)
-    -- local rpc = assert(pb.decode('http.rpc',result.bytes))
-    -- print(rpc.router,rpc[rpc.router].info.code);
-end)
+CS.HttpUtil.Instance:PostAsync(
+    request,
+    assert(pb.encode('http.rpc', data)),
+    function(result)
+        -- local rpc = assert(pb.decode('http.rpc',result.bytes))
+        -- print(rpc.router,rpc[rpc.router].info.code);
+    end
+)
