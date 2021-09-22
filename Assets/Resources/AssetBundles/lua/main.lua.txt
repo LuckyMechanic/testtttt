@@ -29,4 +29,5 @@
 -- )
 
 
-print("123")
+require("global");
+

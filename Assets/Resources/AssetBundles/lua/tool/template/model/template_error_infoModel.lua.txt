@@ -1,0 +1,18 @@
+-- 该文件通过工具生成，只可以修改可编辑区块中的内容
+local Base = require('template_model_base')
+local Model = class('template_error_infoModel', Base)
+
+function Model:ctor(data)
+    self.name = 'error_info'
+    self:init(data)
+end
+
+-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ 可编辑区块 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+function Model:equal(tplModel)
+    return self:get_code() == tplModel:get_code();
+end
+
+-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ 可编辑区块 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+
+return Model

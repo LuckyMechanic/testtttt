@@ -1,0 +1,5 @@
+_G.class = require("class");
+require("utils");
+
+_G.Template = require("template");
+_G.Template.refresh()

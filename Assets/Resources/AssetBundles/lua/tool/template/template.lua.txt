@@ -1,0 +1,13 @@
+-- 该文件通过工具生成，请勿更改
+
+local Template = {};
+
+Template.template_props = require('template_propsManager'):new()
+Template.template_error_info = require('template_error_infoManager'):new()
+
+Template.refresh = function ()
+	Template.template_props:refresh()
+	Template.template_error_info:refresh()
+end
+
+return Template;
