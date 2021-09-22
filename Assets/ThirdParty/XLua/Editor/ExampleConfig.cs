@@ -131,7 +131,7 @@ public static class ExampleConfig
                     }
                 }
             }
-            return delegate_types.Where(t => t.BaseType == typeof(MulticastDelegate) && !hasGenericParameter(t) && !delegateHasEditorRef(t)).Distinct().ToList();
+            return delegate_types.Where(t => t.BaseType == typeof(MulticastDelegate) && !hasGenericParameter(t) && !delegateHasEditorRef(t) && !delegateInBlackList(t)).Distinct().ToList();
         }
     }
     //--------------end 纯lua编程配置参考----------------------------
@@ -277,40 +277,69 @@ public static class ExampleConfig
                 new List<string>(){"System.IO.DirectoryInfo", "CreateSubdirectory", "System.String", "System.Security.AccessControl.DirectorySecurity"},
                 new List<string>(){"System.IO.DirectoryInfo", "Create", "System.Security.AccessControl.DirectorySecurity"},
                 new List<string>(){"UnityEngine.MonoBehaviour", "runInEditMode"},
-
                 new List<string>(){"UnityEngine.AnimatorControllerParameter","name"},
                 new List<string>(){"UnityEngine.AudioSettings","SetSpatializerPluginName"},
-                new List<string>(){"UnityEngine.AudioSettings","GetSpatializerPluginNames"}
-};
+                new List<string>(){"UnityEngine.AudioSettings","SetSpatializerPluginName","System.String"},
+                new List<string>(){"UnityEngine.AudioSettings","GetSpatializerPluginNames"},
+                new List<string>(){"UnityEngine.Caching","SetNoBackupFlag","UnityEngine.CachedAssetBundle"},
+                new List<string>(){"UnityEngine.Caching","SetNoBackupFlag","System.String","UnityEngine.Hash128"},
+                new List<string>(){"UnityEngine.Caching","ResetNoBackupFlag","UnityEngine.CachedAssetBundle"},
+                new List<string>(){"UnityEngine.Caching","ResetNoBackupFlag","System.String","UnityEngine.Hash128"},
+                new List<string>(){"UnityEngine.Input","IsJoystickPreconfigured","System.String"},
+                new List<string>(){"UnityEngine.DrivenRectTransformTracker","StopRecordingUndo"},
+                new List<string>(){"UnityEngine.DrivenRectTransformTracker","StartRecordingUndo"},
+                new List<string>(){"UnityEngine.LightProbeGroup","probePositions"},
+                new List<string>(){"UnityEngine.LightProbeGroup","dering"},
+                new List<string>(){"UnityEngine.MeshRenderer","receiveGI"},
+                new List<string>(){"UnityEngine.Light","SetLightDirty"},
+                new List<string>(){"UnityEngine.Light","shadowRadius"},
+                new List<string>(){"UnityEngine.Light","shadowAngle"},
+                new List<string>(){"UnityEngine.QualitySettings","streamingMipmapsRenderersPerFrame"},
+                new List<string>(){"UnityEngine.UI.DefaultControls","factory"},
+                new List<string>(){"UnityEngine.UI.Graphic","OnRebuildRequested"},
+                new List<string>(){"UnityEngine.UI.Text","OnRebuildRequested"},
+                new List<string>(){"UnityEngine.Texture","imageContentsHash"},
+                new List<string>(){"UnityEngine.ParticleSystemForceField","FindAll"}
+    };
+    // Delegate黑名单
+    public static List<string> DelegateBlackList = new List<string>()
+    {
+        "OnRequestRebuild"
+    };
+
+    static bool delegateInBlackList(Type delegateType)
+    {
+        return DelegateBlackList.IndexOf(delegateType.Name) != -1;
+    }
 
 #if UNITY_2018_1_OR_NEWER
-    [BlackList]
-    public static Func<MemberInfo, bool> MethodFilter = (memberInfo) =>
-    {
-        if (memberInfo.DeclaringType.IsGenericType && memberInfo.DeclaringType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
-        {
-            if (memberInfo.MemberType == MemberTypes.Constructor)
-            {
-                ConstructorInfo constructorInfo = memberInfo as ConstructorInfo;
-                var parameterInfos = constructorInfo.GetParameters();
-                if (parameterInfos.Length > 0)
-                {
-                    if (typeof(System.Collections.IEnumerable).IsAssignableFrom(parameterInfos[0].ParameterType))
-                    {
-                        return true;
-                    }
-                }
-            }
-            else if (memberInfo.MemberType == MemberTypes.Method)
-            {
-                var methodInfo = memberInfo as MethodInfo;
-                if (methodInfo.Name == "TryAdd" || methodInfo.Name == "Remove" && methodInfo.GetParameters().Length == 2)
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    };
+    // [BlackList]
+    // public static Func<MemberInfo, bool> MethodFilter = (memberInfo) =>
+    // {
+    //     if (memberInfo.DeclaringType.IsGenericType && memberInfo.DeclaringType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+    //     {
+    //         if (memberInfo.MemberType == MemberTypes.Constructor)
+    //         {
+    //             ConstructorInfo constructorInfo = memberInfo as ConstructorInfo;
+    //             var parameterInfos = constructorInfo.GetParameters();
+    //             if (parameterInfos.Length > 0)
+    //             {
+    //                 if (typeof(System.Collections.IEnumerable).IsAssignableFrom(parameterInfos[0].ParameterType))
+    //                 {
+    //                     return true;
+    //                 }
+    //             }
+    //         }
+    //         else if (memberInfo.MemberType == MemberTypes.Method)
+    //         {
+    //             var methodInfo = memberInfo as MethodInfo;
+    //             if (methodInfo.Name == "TryAdd" || methodInfo.Name == "Remove" && methodInfo.GetParameters().Length == 2)
+    //             {
+    //                 return true;
+    //             }
+    //         }
+    //     }
+    //     return false;
+    // };
 #endif
 }
