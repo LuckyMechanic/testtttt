@@ -1,7 +1,21 @@
+-- 分割字符串
 string.split = function(str,separator)
 	local result = {}
 	string.gsub(str,'[^'..separator..']+',function ( w )
         table.insert(result,w)
     end)
     return result
+end
+-- 字符串倒序查找
+string.rfind = function(str, pattern)
+    local rstr = string.reverse(str)
+    local rpattern = string.reverse(pattern)
+    local t_min, t_max = string.find(rstr, rpattern)
+    if (t_min == nil and t_max == nil) then
+        return nil, nil
+    end
+    local len = string.len(rstr)
+    local min = len - t_max + 1
+    local max = len - t_min + 1
+    return min, max
 end

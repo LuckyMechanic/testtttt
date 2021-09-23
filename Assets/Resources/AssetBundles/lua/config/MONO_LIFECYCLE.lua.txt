@@ -1,0 +1,10 @@
+local MONO_LIFECYCLE = {}
+
+MONO_LIFECYCLE.GLOBAL = {"Start","OnDisable", "OnDestroy","Update","FixedUpdate","OnPause","OnFocus"};
+
+MONO_LIFECYCLE.COMPONENT = table.merge(
+    MONO_LIFECYCLE.GLOBAL,
+    {"Awake","OnEnable","OnTriggerEnter", "OnTriggerStay","OnTriggerExit","OnCollisionEnter","OnCollisionStay","OnCollisionExit","OnTriggerEnter2D","OnTriggerStay2D","OnTriggerExit2D","OnCollisionEnter2D","OnCollisionStay2D","OnCollisionExit2D"}
+)
+
+return MONO_LIFECYCLE

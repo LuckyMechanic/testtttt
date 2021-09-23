@@ -1,0 +1,12 @@
+local BROADCAST_CODE = {}
+
+--场景切换
+BROADCAST_CODE.SCENE_LOADED = 'SCENE_LOADED'
+
+--Mono生命周期
+---@type MONO_LIFECYCLE.GLOBAL
+BROADCAST_CODE.MONO = function(type)
+    return string.format("MONO_%s",string.upper(type))
+end
+
+return BROADCAST_CODE

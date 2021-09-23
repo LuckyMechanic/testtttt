@@ -325,11 +325,11 @@ public class AssetBundleEditor : MonoBehaviour
                 continue;
             }
             // 清理旧版本资源文件
-            foreach (var t_fileinfo in FileUtil.Instance.GetChildFiles(GameConst.StreamingAssetsPath, tag + "*"))
+            foreach (var t_fileinfo in FileUtil.Instance.GetChildFiles(Application.streamingAssetsPath, tag + "*"))
             {
                 t_fileinfo.Delete();
             }
-            string savePath = fileInfo.FullName.Replace(new DirectoryInfo(GameConst.BUILD_ROOT).FullName, GameConst.StreamingAssetsPath).Replace("\\", "/");
+            string savePath = fileInfo.FullName.Replace(new DirectoryInfo(GameConst.BUILD_ROOT).FullName, Application.streamingAssetsPath).Replace("\\", "/");
             FileUtil.Instance.CopyTo(fileInfo.FullName, savePath, true);
 
             Debug.Log("复制默认资源至StreamingAssetsPath >>> " + savePath);

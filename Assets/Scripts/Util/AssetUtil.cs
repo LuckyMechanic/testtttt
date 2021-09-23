@@ -98,7 +98,7 @@ public class AssetUtil : Singleton<AssetUtil>
             return FileUtil.Instance.ReadBytes(filePath);
         }
         // 从StreamingAssetsPath调用
-        WWW www = new WWW(Path.Combine(GameConst.StreamingAssetsPath, name));
+        WWW www = new WWW(Path.Combine(Application.streamingAssetsPath, name));
         while (!www.isDone) { }
         if (www.bytes.Length > 0)
         {

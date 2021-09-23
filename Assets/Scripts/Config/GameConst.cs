@@ -44,11 +44,4 @@ public class GameConst
     /// </summary>
     /// <returns></returns>
     public static string ASSETBUNDLES_ROOT = Path.Combine(Application.dataPath, "../AssetBundles");
-
-    /// <summary>
-    /// StreamingAssetsPath目录
-    /// </summary>
-    public static string StreamingAssetsPath = Application.streamingAssetsPath;
-
-
 }

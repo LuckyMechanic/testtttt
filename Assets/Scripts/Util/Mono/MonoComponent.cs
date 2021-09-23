@@ -12,8 +12,8 @@ public class MonoComponent : MonoBehaviour
     public event Action UpdateEvent;
     public event Action FixedUpdateEvent;
 
-    public event Action<bool> OnPause;
-    public event Action<bool> OnFocus;
+    public event Action<bool> OnPauseEvent;
+    public event Action<bool> OnFocusEvent;
 
     public event Action<Collider> OnTriggerEnterEvent;
     public event Action<Collider> OnTriggerStayEvent;
@@ -62,11 +62,11 @@ public class MonoComponent : MonoBehaviour
 
     private void OnApplicationPause(bool pauseStatus)
     {
-        if (OnPause != null) OnPause(pauseStatus);
+        if (OnPauseEvent != null) OnPauseEvent(pauseStatus);
     }
     private void OnApplicationFocus(bool focusStatus)
     {
-        if (OnFocus != null) OnFocus(focusStatus);
+        if (OnFocusEvent != null) OnFocusEvent(focusStatus);
     }
 
     private void OnTriggerEnter(Collider other)
