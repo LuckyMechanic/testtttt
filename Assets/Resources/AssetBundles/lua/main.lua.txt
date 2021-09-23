@@ -31,3 +31,4 @@
 
 require("global");
 
+print("321")

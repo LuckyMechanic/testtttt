@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2509634293
+CRC: 3672747798
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: e46b97466bb39b783b03faa98fcc0d87
+    Hash: 2f4636e131f582eed4cf6d7cf5c9080a
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5ad585dd02dfb5016c0dad519eab8f49
@@ -12,5 +12,18 @@ ClassTypes:
 - Class: 49
   Script: {instanceID: 0}
 Assets:
+- Assets/Resources/AssetBundles/lua/util/utils.lua.txt
+- Assets/Resources/AssetBundles/lua/tool/template/template.lua.txt
+- Assets/Resources/AssetBundles/lua/tool/template/manager/template_propsManager.lua.txt
+- Assets/Resources/AssetBundles/lua/util/string_util.lua.txt
+- Assets/Resources/AssetBundles/lua/tool/template/data/template_error_info.lua.txt
+- Assets/Resources/AssetBundles/lua/tool/template/data/template_props.lua.txt
+- Assets/Resources/AssetBundles/lua/tool/template/manager/template_error_infoManager.lua.txt
+- Assets/Resources/AssetBundles/lua/tool/template/base/template_model_base.lua.txt
+- Assets/Resources/AssetBundles/lua/base/global.lua.txt
+- Assets/Resources/AssetBundles/lua/tool/template/base/template_manager_base.lua.txt
+- Assets/Resources/AssetBundles/lua/tool/template/model/template_propsModel.lua.txt
+- Assets/Resources/AssetBundles/lua/base/class.lua.txt
 - Assets/Resources/AssetBundles/lua/main.lua.txt
+- Assets/Resources/AssetBundles/lua/tool/template/model/template_error_infoModel.lua.txt
 Dependencies: []
