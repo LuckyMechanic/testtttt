@@ -1,0 +1,6 @@
+-- pb AB包资源文件名
+return {
+    "http_pb",
+    "error_pb",
+    "model_pb"
+}

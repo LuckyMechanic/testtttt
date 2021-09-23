@@ -32,11 +32,6 @@
 require("global");
 
 
-local pb = require('pb')
-pb.load(asset:loadBytes("pb","http"))
-pb.load(asset:loadBytes("pb","error"))
-pb.load(asset:loadBytes("pb","model"))
-
 local data = {router = 'register', register = {username = 'fdsajhfaskfl', password = 'sdafasdgasdf'}}
 -- 序列化
 local buff = assert(pb.encode('http.rpc', data))
