@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1488161412
+CRC: 3951072344
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: fd7c2323e7b9d8f9be8b65808ecf614e
+    Hash: d127af9a55005d842a56ffe0d7ec8490
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5ad585dd02dfb5016c0dad519eab8f49
@@ -20,10 +20,13 @@ Assets:
 - Assets/Resources/AssetBundles/lua/tool/middleware.lua.txt
 - Assets/Resources/AssetBundles/lua/util/table_util.lua.txt
 - Assets/Resources/AssetBundles/lua/tool/timer/timer.lua.txt
+- Assets/Resources/AssetBundles/lua/tool/try.lua.txt
+- Assets/Resources/AssetBundles/lua/util/date_util.lua.txt
 - Assets/Resources/AssetBundles/lua/tool/template/data/template_props.lua.txt
 - Assets/Resources/AssetBundles/lua/tool/template/manager/template_error_infoManager.lua.txt
 - Assets/Resources/AssetBundles/lua/config/MONO_LIFECYCLE.lua.txt
 - Assets/Resources/AssetBundles/lua/tool/asset.lua.txt
+- Assets/Resources/AssetBundles/lua/tool/log.lua.txt
 - Assets/Resources/AssetBundles/lua/tool/template/base/template_model_base.lua.txt
 - Assets/Resources/AssetBundles/lua/tool/pool.lua.txt
 - Assets/Resources/AssetBundles/lua/base/global.lua.txt
@@ -34,7 +37,6 @@ Assets:
 - Assets/Resources/AssetBundles/lua/tool/broadcast.lua.txt
 - Assets/Resources/AssetBundles/lua/tool/timer/timer_model.lua.txt
 - Assets/Resources/AssetBundles/lua/tool/mono.lua.txt
-- Assets/Resources/AssetBundles/lua/config/PB_LIST.lua.txt
 - Assets/Resources/AssetBundles/lua/main.lua.txt
 - Assets/Resources/AssetBundles/lua/tool/template/model/template_error_infoModel.lua.txt
 - Assets/Resources/AssetBundles/lua/tool/downloadFile.lua.txt

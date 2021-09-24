@@ -316,7 +316,7 @@ public class AssetBundleEditor : MonoBehaviour
         EncryptUtil.Instance.WriteString(versionFile.FullName, json);
 
         // 复制部分默认文件到StreamingAssetsPath
-        string[] defaultFiles = new string[] { "Version", "AssetBundleRely", "lua", "hotupdate" };
+        string[] defaultFiles = new string[] { "Version", "AssetBundleRely", "lua", "hotupdate", "pb" };
         foreach (var tag in defaultFiles)
         {
             FileInfo fileInfo = FileUtil.Instance.GetChildFile(GameConst.BUILD_ROOT, tag + "*");
