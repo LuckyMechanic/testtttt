@@ -44,4 +44,9 @@ public class GameConst
     /// </summary>
     /// <returns></returns>
     public static string ASSETBUNDLES_ROOT = Path.Combine(Application.dataPath, "../AssetBundles");
+    /// <summary>
+    /// Lua文件所在根目录
+    /// </summary>
+    /// <returns></returns>
+    public static string LUA_FILE_ROOT = Path.Combine(RESOURCES, "./AssetBundles", "./lua");
 }

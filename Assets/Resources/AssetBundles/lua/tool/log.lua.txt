@@ -1,0 +1,77 @@
+local Log = {};
+
+local rapidjson = require('rapidjson')
+
+local STACK_CNT = 3
+
+local COLOR = {
+    WHITE= "#FFFFFF",
+    GRAY= "#F2F2F2",
+    RED= "#FF0000",
+    PURPLE= "#BE81F7",
+    GREEN = "#01DF74",
+}
+
+local getStackInfo = function(offset)
+    offset = offset or 0
+    local START = 4   -- 初始底层堆栈数量
+    local info = debug.getinfo(offset+START)
+    if(info.currentline==-1) then
+        return ' - '
+    end
+    local t = string.split(info.source,'\\')
+    return string.format('%s:%d',t[#t],info.currentline)
+end
+local getDateInfo = function ()
+    return Date.format("{year}年{month}月{day}日 {hour}:{minute}:{second}");
+end
+local getTopText = function (tag, color)
+    local arr = {}
+    -- 类型
+    table.insert(arr,{color=COLOR.GREEN,text="[LUA]"})
+    -- 时间
+    table.insert(arr,{color = COLOR.GRAY,text = string.format("[%s]",getDateInfo())})
+    -- 标签
+    table.insert(arr,{color = color,text = string.format("[%s]",tag)})
+    -- 堆栈信息
+    for i = 0, STACK_CNT-1 do
+        table.insert(arr,{color = COLOR.PURPLE,text = string.format("[%s]",getStackInfo(i))})
+    end
+    local strArr = {}
+    for index, info in ipairs(arr) do
+        table.insert(strArr,string.format("<color=%s>%s</color> ",info.color,info.text))
+    end
+    return table.concat(strArr);
+end
+Log.print = function(...)
+    local arr = { }
+    table.insert(arr,getTopText('Print',COLOR.WHITE))
+    table.insert(arr,'  ')
+    for index, value in ipairs({...}) do
+        local valStr = ''
+        if(type(value)=='table') then
+            valStr = string.format("<color=%s>[%s](%s)</color>\t",COLOR.WHITE,value,rapidjson.encode(value))
+        else
+            valStr = string.format("<color=%s>%s</color>\t",COLOR.WHITE,value)
+        end
+        table.insert(arr,valStr);
+    end
+    CS.UnityEngine.Debug.Log(table.concat(arr))
+end
+Log.error = function(...)
+    local arr = { }
+    table.insert(arr,getTopText('Error',COLOR.RED))
+    table.insert(arr,'  ')
+    for index, value in ipairs({...}) do
+        local valStr = ''
+        if(type(value)=='table') then
+            valStr = string.format("<color=%s>[%s](%s)</color>\t",COLOR.RED,value,rapidjson.encode(value))
+        else
+            valStr = string.format("<color=%s>%s</color>\t",COLOR.RED,value)
+        end
+        table.insert(arr,valStr);
+    end
+    CS.UnityEngine.Debug.Log(table.concat(arr))
+end
+
+return Log

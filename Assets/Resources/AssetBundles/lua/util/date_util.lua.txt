@@ -1,0 +1,31 @@
+_G.Date = {}
+-- 获取当前时间戳
+Date.unix = function()
+    return os.time()
+end
+-- 时间戳转时间table
+Date.toTable = function(timestamp)
+    timestamp = timestamp or Date.unix()
+    local t = {}
+    t.year = tonumber(os.date("%Y",timestamp))
+    t.month =tonumber(os.date("%m",timestamp))
+    t.day = tonumber(os.date("%d",timestamp))
+    t.hour = tonumber(os.date("%H",timestamp))
+    t.minute = tonumber(os.date("%M",timestamp))
+    t.second = tonumber(os.date("%S",timestamp))
+    return t
+end
+-- 格式化时间戳为字符串
+Date.format = function(formatText,timestamp)
+    formatText = formatText or "{year}-{month}-{day} {hour}:{minute}:{second}"
+    timestamp = timestamp or Date.unix()
+    local t = {}
+    for key, value in pairs(Date.toTable(timestamp)) do
+        if(key == 'year') then
+            t[key] = string.format("%04d",value)
+        else
+            t[key] = string.format("%02d",value)
+        end
+    end
+    return string.formatTable(formatText,t)
+end

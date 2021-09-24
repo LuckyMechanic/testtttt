@@ -1,7 +1,7 @@
 -- 分割字符串
 string.split = function(str,separator)
 	local result = {}
-	string.gsub(str,'[^'..separator..']+',function ( w )
+	string.gsub(str,table.concat({"[^",separator,"]+"}),function ( w )
         table.insert(result,w)
     end)
     return result
@@ -18,4 +18,12 @@ string.rfind = function(str, pattern)
     local min = len - t_max + 1
     local max = len - t_min + 1
     return min, max
+end
+-- 通过table格式化字符串
+string.formatTable = function(formatText,t)
+	local result = formatText
+	for k, v in pairs( t ) do
+		result = string.gsub(result,table.concat({'{',k,'}'}),v)
+	end
+	return result
 end

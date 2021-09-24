@@ -8,6 +8,7 @@ _G.BROADCAST_CODE = require("BROADCAST_CODE");
 _G.DownloadFile = require("downloadFile")
 _G.Middleware = require("middleware")
 -- 静态类
+_G.log = require("log");
 _G.Template = require("template");
 _G.Template.refresh()
 
@@ -23,4 +24,6 @@ for index, buff in ipairs(asset:loadAllBytes("pb")) do
     _G.pb.load(buff)
 end
 
-print(asset:loadPrefab("prefab","Canvas"))
+log.print({a=123})
+
+log.print({a=456})

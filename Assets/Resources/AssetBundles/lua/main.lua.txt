@@ -32,10 +32,10 @@
 require("global");
 
 
-local data = {router = 'register', register = {username = 'fdsajhfaskfl', password = 'sdafasdgasdf'}}
--- 序列化
-local buff = assert(pb.encode('http.rpc', data))
-print('序列化成功',buff,pb.tohex(buff))
--- 反序列化
-local rpc = assert(pb.decode('http.rpc',buff))
-print('反序列化成功',rpc);
+-- local data = {router = 'register', register = {username = 'fdsajhfaskfl', password = 'sdafasdgasdf'}}
+-- -- 序列化
+-- local buff = assert(pb.encode('http.rpc', data))
+-- print('序列化成功',buff,pb.tohex(buff))
+-- -- 反序列化
+-- local rpc = assert(pb.decode('http.rpc',buff))
+-- print('反序列化成功',rpc);
