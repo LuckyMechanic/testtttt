@@ -1,20 +1,3 @@
--- local dbg = require('emmy_core')
--- dbg.tcpConnect('localhost', 9966)
-
--- -- 这里直接通过C#加载pb字节流
--- local pb = require('pb')
--- pb.load(CS.System.IO.File.ReadAllBytes(CS.GameConst.RESOURCES .. '/AssetBundles/pb/http.bytes'))
--- pb.load(CS.System.IO.File.ReadAllBytes(CS.GameConst.RESOURCES .. '/AssetBundles/pb/error.bytes'))
--- pb.load(CS.System.IO.File.ReadAllBytes(CS.GameConst.RESOURCES .. '/AssetBundles/pb/model.bytes'))
-
--- local data = {router = 'register', register = {username = 'fdsajhfaskfl', password = 'sdafasdgasdf'}}
--- -- -- 序列化
--- -- local buff = assert(pb.encode('http.rpc', data))
--- -- print('序列化成功',buff,pb.tohex(buff))
--- -- -- 反序列化
--- -- local rpc = assert(pb.decode('http.rpc',buff))
--- -- print('反序列化成功',rpc);
-
 -- local request = CS.System.Net.HttpWebRequest.Create(CS.System.Uri('http://127.0.0.1:8200'))
 -- request.Timeout = 1000
 -- print('fdsajfs', CS.HttpUtil.Instance.Post)
@@ -28,14 +11,29 @@
 --     end
 -- )
 
+require('global')
 
-require("global");
+if (GAME_CONST.PRO_ENV == ENV_TYPE.DEV) then -- 此处为断点代码，需要注意的是，当改为正式环境时会失效，需要手动调整
+    -- 连接EmmyLua
+    try {
+        function()
+            local dbg = require('emmy_core')
+            dbg.tcpConnect('localhost', 9966)
+        end,
+        catch = function(error)
+            log.warn('EmmyLua未连接，若不需要IDE断点则忽略')
+        end
+    }
+end
 
+local data = {router = 'register', register = {username = 'fdsajhfaskfl', password = 'sdafasdgasdf'}}
+-- 序列化
+local buff = assert(pb.encode('http.rpc', data))
+print('序列化成功', buff, pb.tohex(buff))
+-- 反序列化
+local rpc = assert(pb.decode('http.rpc', buff))
+print('反序列化成功', rpc)
 
--- local data = {router = 'register', register = {username = 'fdsajhfaskfl', password = 'sdafasdgasdf'}}
--- -- 序列化
--- local buff = assert(pb.encode('http.rpc', data))
--- print('序列化成功',buff,pb.tohex(buff))
--- -- 反序列化
--- local rpc = assert(pb.decode('http.rpc',buff))
--- print('反序列化成功',rpc);
+log.print(200, '我是一个提示', {tip = '我是一个提示'})
+log.error(400, '我是一个错误', {tip = '我是一个错误'})
+log.warn(500, '我是一个警告', {tip = '我是一个警告'})

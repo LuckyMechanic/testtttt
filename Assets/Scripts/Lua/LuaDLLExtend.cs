@@ -4,6 +4,16 @@ namespace XLua.LuaDLL
 {
     public partial class Lua
     {
+        // [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+        // public static extern int luaopen_socket_core(System.IntPtr L);//[,,m]
+
+        // [MonoPInvokeCallback(typeof(LuaDLL.lua_CSFunction))]
+        // public static int LoadSocketCore(System.IntPtr L)
+        // {
+        //     return luaopen_socket_core(L);
+        // }
+
+
 
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int luaopen_rapidjson(System.IntPtr L);
@@ -14,6 +24,8 @@ namespace XLua.LuaDLL
             return luaopen_rapidjson(L);
         }
 
+
+
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int luaopen_pb(System.IntPtr L);
 
@@ -22,6 +34,7 @@ namespace XLua.LuaDLL
         {
             return luaopen_pb(L);
         }
+
 
 
 #if UNITY_EDITOR

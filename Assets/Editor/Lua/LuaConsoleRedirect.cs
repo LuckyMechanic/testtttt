@@ -13,8 +13,7 @@ using UnityEngine;
 /// </summary>
 public class LuaConsoleRedirect
 {
-    private static int s_InstanceID = AssetDatabase.LoadAssetAtPath<MonoScript>("Assets/ThirdParty/XLua/Gen/UnityEngine_DebugWrap.cs").GetInstanceID();
-    private static int s_Line = 295;
+    private static int s_InstanceID = AssetDatabase.LoadAssetAtPath<MonoScript>("Assets/ThirdParty/XLua/Gen/UnityEngine_DebugWrap.cs").GetInstanceID(); // Lua文件打印起始堆栈
     private static Type consoleWindowType
     {
         get
@@ -55,13 +54,13 @@ public class LuaConsoleRedirect
     {
         if (!EditorWindow.focusedWindow.titleContent.text.Equals("Console")) // 只对控制台的开启进行重定向
             return false;
-        if (instanceID != s_InstanceID || line != s_Line)   // 只对Lua打印的日志重定向 注意lua层是通过CS.UnityEngine.Debug.Log打印
+        if (instanceID != s_InstanceID)   // 只对Lua打印的日志重定向 注意lua层是通过CS.UnityEngine.Debug.Log打印
             return false;
         // 获取控制台信息
         string text = consoleText;
 
         // 匹配Lua文件信息
-        Regex reg = new Regex(@"<color=#BE81F7>\[(\S+):(\d+)\]</color>");   //日志打印规则
+        Regex reg = new Regex(@"<color=#BE81F7>\[(\S+):(\d+)\]</color>");   //根据日志打印规则改动
         Match match = reg.Match(text);
         if (match.Groups.Count != 3)
         {

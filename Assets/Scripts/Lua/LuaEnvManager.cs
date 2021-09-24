@@ -14,6 +14,9 @@ public class LuaEnvManager : Singleton<LuaEnvManager>
     public void Load()
     {
         LuaEnv = new LuaEnv();
+        // LuaEnv.AddBuildin("socket.core", XLua.LuaDLL.Lua.LoadSocketCore);
+        // LuaEnv.AddBuildin("socket", XLua.LuaDLL.Lua.LoadSocketCore);
+
         LuaEnv.AddBuildin("rapidjson", XLua.LuaDLL.Lua.LoadRapidJson);
         LuaEnv.AddBuildin("pb", XLua.LuaDLL.Lua.LoadPB);
 

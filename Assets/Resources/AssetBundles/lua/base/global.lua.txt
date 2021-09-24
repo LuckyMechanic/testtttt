@@ -1,29 +1,26 @@
-_G.class = require("class");
-require("utils");
+_G.class = require('class')
+_G.try = require('try')
+require('utils')
 -- 常量
-_G.MONO_LIFECYCLE = require("MONO_LIFECYCLE");
-_G.GAME_CONST = require("GAME_CONST");
-_G.BROADCAST_CODE = require("BROADCAST_CODE");
+_G.MONO_LIFECYCLE = require('MONO_LIFECYCLE')
+_G.GAME_CONST = require('GAME_CONST')
+_G.BROADCAST_CODE = require('BROADCAST_CODE')
 -- 类
-_G.DownloadFile = require("downloadFile")
-_G.Middleware = require("middleware")
+_G.DownloadFile = require('downloadFile')
+_G.Middleware = require('middleware')
 -- 静态类
-_G.log = require("log");
-_G.Template = require("template");
+_G.log = require('log')
+_G.Template = require('template')
 _G.Template.refresh()
 
 -- 实例化对象
-_G.broadcast = require("broadcast"):new()
+_G.broadcast = require('broadcast'):new()
 _G.mono = require('mono'):new()
-_G.timer = require("timer"):new()
-_G.asset = require("asset"):new()
-_G.pool = require("pool"):new()
+_G.timer = require('timer'):new()
+_G.asset = require('asset'):new()
+_G.pool = require('pool'):new()
 
 _G.pb = require('pb')
-for index, buff in ipairs(asset:loadAllBytes("pb")) do
+for index, buff in ipairs(asset:loadAllBytes('pb')) do
     _G.pb.load(buff)
 end
-
-log.print({a=123})
-
-log.print({a=456})
