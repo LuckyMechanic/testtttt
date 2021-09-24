@@ -12,6 +12,41 @@ public class LuaConsoleRedirect
 {
     private static int s_InstanceID = AssetDatabase.LoadAssetAtPath<MonoScript>("Assets/ThirdParty/XLua/Gen/UnityEngine_DebugWrap.cs").GetInstanceID();
     private static int s_Line = 295;
+    private static Type consoleWindowType
+    {
+        get
+        {
+            if (_consoleWindowType == null)
+            {
+                _consoleWindowType = typeof(EditorWindow).Assembly.GetType("UnityEditor.ConsoleWindow");
+            }
+            return _consoleWindowType;
+        }
+    }
+    private static Type _consoleWindowType;
+    private static object consoleWindowInstance
+    {
+        get
+        {
+            if (_consoleWindowInstance == null)
+            {
+                var fieldInfo = consoleWindowType.GetField("ms_ConsoleWindow", BindingFlags.Static | BindingFlags.NonPublic);
+                _consoleWindowInstance = fieldInfo.GetValue(null);
+            }
+            return _consoleWindowInstance;
+        }
+    }
+    private static object _consoleWindowInstance;
+
+    private static string consoleText
+    {
+        get
+        {
+            var fieldInfo = consoleWindowType.GetField("m_ActiveText", BindingFlags.Instance | BindingFlags.NonPublic);
+            return fieldInfo.GetValue(consoleWindowInstance).ToString();
+        }
+    }
+
     [OnOpenAssetAttribute(0)]
     public static bool OnOpenAsset(int instanceID, int line)
     {
@@ -20,19 +55,11 @@ public class LuaConsoleRedirect
         if (instanceID != s_InstanceID || line != s_Line)
             return false;
         // 获取控制台信息
-        var consoleWindowType = typeof(EditorWindow).Assembly.GetType("UnityEditor.ConsoleWindow");
-        var fieldInfo = consoleWindowType.GetField("ms_ConsoleWindow", BindingFlags.Static | BindingFlags.NonPublic);
-        var consoleWindowInstance = fieldInfo.GetValue(null);
-        if (consoleWindowInstance == null)
-            return false;
-        if ((object)EditorWindow.focusedWindow != consoleWindowInstance)
-            return false;
-        fieldInfo = consoleWindowType.GetField("m_ActiveText", BindingFlags.Instance | BindingFlags.NonPublic);
-        string activeText = fieldInfo.GetValue(consoleWindowInstance).ToString();
+        string text = consoleText;
 
         // 匹配Lua文件信息
         Regex reg = new Regex(@"<color=#BE81F7>\[(\S+):(\d+)\]</color>");   //日志打印规则
-        Match match = reg.Match(activeText);
+        Match match = reg.Match(text);
         if (match.Groups.Count != 3)
         {
             return false;
