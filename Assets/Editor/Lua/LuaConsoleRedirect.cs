@@ -8,6 +8,9 @@ using UnityEditor.Callbacks;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
+/// <summary>
+/// Lua控制台日志重定向
+/// </summary>
 public class LuaConsoleRedirect
 {
     private static int s_InstanceID = AssetDatabase.LoadAssetAtPath<MonoScript>("Assets/ThirdParty/XLua/Gen/UnityEngine_DebugWrap.cs").GetInstanceID();
@@ -50,9 +53,9 @@ public class LuaConsoleRedirect
     [OnOpenAssetAttribute(0)]
     public static bool OnOpenAsset(int instanceID, int line)
     {
-        if (!EditorWindow.focusedWindow.titleContent.text.Equals("Console"))//只对控制台的开启进行重定向
+        if (!EditorWindow.focusedWindow.titleContent.text.Equals("Console")) // 只对控制台的开启进行重定向
             return false;
-        if (instanceID != s_InstanceID || line != s_Line)
+        if (instanceID != s_InstanceID || line != s_Line)   // 只对Lua打印的日志重定向 注意lua层是通过CS.UnityEngine.Debug.Log打印
             return false;
         // 获取控制台信息
         string text = consoleText;
