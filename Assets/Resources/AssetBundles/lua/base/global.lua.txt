@@ -4,7 +4,6 @@ require("utils");
 _G.MONO_LIFECYCLE = require("MONO_LIFECYCLE");
 _G.GAME_CONST = require("GAME_CONST");
 _G.BROADCAST_CODE = require("BROADCAST_CODE");
-_G.PB_LIST = require("PB_LIST");
 -- 类
 _G.DownloadFile = require("downloadFile")
 _G.Middleware = require("middleware")
@@ -20,6 +19,8 @@ _G.asset = require("asset"):new()
 _G.pool = require("pool"):new()
 
 _G.pb = require('pb')
-for index, name in ipairs(PB_LIST) do
-    _G.pb.load(asset:loadBytes("pb",string.format("%s",name)))
+for index, buff in ipairs(asset:loadAllBytes("pb")) do
+    _G.pb.load(buff)
 end
+
+print(asset:loadPrefab("prefab","Canvas"))

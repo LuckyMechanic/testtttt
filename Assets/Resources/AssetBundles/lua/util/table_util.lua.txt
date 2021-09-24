@@ -69,3 +69,11 @@ table.del = function(t, value)
     end
     return false
 end
+-- CS数组对象转Table
+table.csArrayToTable = function(csArray)
+    local t = {}
+    for i = 0, csArray.Length-1 do
+        table.insert(t,csArray:GetValue(i))
+    end
+    return t
+end

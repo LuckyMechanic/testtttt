@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3672747798
+CRC: 1488161412
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 2f4636e131f582eed4cf6d7cf5c9080a
+    Hash: fd7c2323e7b9d8f9be8b65808ecf614e
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5ad585dd02dfb5016c0dad519eab8f49
@@ -17,13 +17,26 @@ Assets:
 - Assets/Resources/AssetBundles/lua/tool/template/manager/template_propsManager.lua.txt
 - Assets/Resources/AssetBundles/lua/util/string_util.lua.txt
 - Assets/Resources/AssetBundles/lua/tool/template/data/template_error_info.lua.txt
+- Assets/Resources/AssetBundles/lua/tool/middleware.lua.txt
+- Assets/Resources/AssetBundles/lua/util/table_util.lua.txt
+- Assets/Resources/AssetBundles/lua/tool/timer/timer.lua.txt
 - Assets/Resources/AssetBundles/lua/tool/template/data/template_props.lua.txt
 - Assets/Resources/AssetBundles/lua/tool/template/manager/template_error_infoManager.lua.txt
+- Assets/Resources/AssetBundles/lua/config/MONO_LIFECYCLE.lua.txt
+- Assets/Resources/AssetBundles/lua/tool/asset.lua.txt
 - Assets/Resources/AssetBundles/lua/tool/template/base/template_model_base.lua.txt
+- Assets/Resources/AssetBundles/lua/tool/pool.lua.txt
 - Assets/Resources/AssetBundles/lua/base/global.lua.txt
 - Assets/Resources/AssetBundles/lua/tool/template/base/template_manager_base.lua.txt
 - Assets/Resources/AssetBundles/lua/tool/template/model/template_propsModel.lua.txt
+- Assets/Resources/AssetBundles/lua/config/BROADCAST_CODE.lua.txt
 - Assets/Resources/AssetBundles/lua/base/class.lua.txt
+- Assets/Resources/AssetBundles/lua/tool/broadcast.lua.txt
+- Assets/Resources/AssetBundles/lua/tool/timer/timer_model.lua.txt
+- Assets/Resources/AssetBundles/lua/tool/mono.lua.txt
+- Assets/Resources/AssetBundles/lua/config/PB_LIST.lua.txt
 - Assets/Resources/AssetBundles/lua/main.lua.txt
 - Assets/Resources/AssetBundles/lua/tool/template/model/template_error_infoModel.lua.txt
+- Assets/Resources/AssetBundles/lua/tool/downloadFile.lua.txt
+- Assets/Resources/AssetBundles/lua/config/GAME_CONST.lua.txt
 Dependencies: []

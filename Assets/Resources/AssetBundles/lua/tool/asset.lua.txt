@@ -1,5 +1,6 @@
 local Asset = class('Asset')
 local CSAssetUtil = CS.AssetUtil.Instance
+
 function Asset:_load(type, key, assetName)
     local asset = CSAssetUtil:LoadAsset(typeof(type), key, assetName)
     return asset
@@ -14,9 +15,43 @@ function Asset:_loadAsync(type, key, assetName, cb)
         end
     )
 end
+function Asset:_loadAll(type,key)
+    local assets = CSAssetUtil:LoadAllAsset(typeof(type), key)
+    return table.csArrayToTable(assets);
+end
+function Asset:_loadAllAsync(type,key,cb)
+    CSAssetUtil:LoadAllAssetAsync(
+        typeof(type),
+        key,
+        function(assets)
+            cb(table.csArrayToTable(assets))
+        end
+    )
+end
+-- 加载类型资源函数动态创建 string与bytes并不通用 另外写
+local loadInfoList = {
+    {key="Prefab",type=CS.UnityEngine.GameObject},
+    {key="Sprite",type=CS.UnityEngine.Sprite},
+    {key="Animator",type=CS.UnityEngine.RuntimeAnimatorController},
+}
+
+for index, info in ipairs(loadInfoList) do
+    Asset[string.format("load%s",info.key)] = function(this,key,assetName)
+        return this:_load( info.type , key , assetName );
+    end
+    Asset[string.format("load%sAsync",info.key)] = function(this,key,assetName,cb)
+        return this:_loadAsync( info.type , key, assetName , cb );
+    end
+    Asset[string.format("loadAll%s",info.key)] = function(this,key)
+        return this:_loadAll( info.type , key );
+    end
+    Asset[string.format("loadAll%sAsync",info.key)] = function(this,key,cb)
+        return this:_loadAllAsync( info.type , key,cb );
+    end
+end
 
 function Asset:loadString(key, assetName)
-    local asset = self:_load(CS.UnityEngine.Object, key, assetName, true)
+    local asset = self:_load(CS.UnityEngine.Object, key, assetName)
     if (asset == nil) then
         return nil
     end
@@ -38,12 +73,35 @@ function Asset:loadStringAsync(key, assetName, cb)
             -- 异步直接卸载时容易出现并发问题，暂不自动卸载
             -- self:unloadAsset(asset)
             cb(result)
-        end,
-        true
+        end
+    )
+end
+function Asset:loadAllString(key)
+    local assets = self:_loadAll(CS.UnityEngine.Object,key);
+    local result = {}
+    for index, asset in ipairs(assets) do
+        table.insert(result,asset:ToString())
+        self:unloadAsset(asset);
+    end
+    return result
+end
+function Asset:loadAllStringAsync(key, cb)
+    self:_loadAllAsync(
+        CS.UnityEngine.Object,
+        key,
+        function(assets)
+            local result = {}
+            for index, asset in ipairs(assets) do
+                table.insert(result,asset:ToString())
+                -- 异步直接卸载时容易出现并发问题，暂不自动卸载
+                -- self:unloadAsset(asset)
+            end
+            cb(result)
+        end
     )
 end
 function Asset:loadBytes(key, assetName)
-    local asset = self:_load(CS.UnityEngine.Object, key, assetName, true)
+    local asset = self:_load(CS.UnityEngine.Object, key, assetName)
     if (asset == nil) then
         return nil
     end
@@ -65,28 +123,34 @@ function Asset:loadBytesAsync(key, assetName, cb)
             -- 异步直接卸载时容易出现并发问题，暂不自动卸载
             -- self:unloadAsset(asset)
             cb(result)
-        end,
-        true
+        end
     )
 end
-function Asset:loadPrefab(key, assetName)
-    return self:_load(CS.UnityEngine.GameObject, key, assetName)
+function Asset:loadAllBytes(key)
+    local assets = self:_loadAll(CS.UnityEngine.Object,key);
+    local result = {}
+    for index, asset in ipairs(assets) do
+        table.insert(result,asset.bytes)
+        self:unloadAsset(asset);
+    end
+    return result
 end
-function Asset:loadPrefabAsync(key, assetName, cb)
-    self:_loadAsync(CS.UnityEngine.GameObject, key, assetName, cb)
+function Asset:loadAllBytesAsync(key, cb)
+    self:_loadAllAsync(
+        CS.UnityEngine.Object,
+        key,
+        function(assets)
+            local result = {}
+            for index, asset in ipairs(assets) do
+                table.insert(result,asset.bytes)
+                -- 异步直接卸载时容易出现并发问题，暂不自动卸载
+                -- self:unloadAsset(asset)
+            end
+            cb(result)
+        end
+    )
 end
-function Asset:loadSprite(key, assetName)
-    return self:_load(CS.UnityEngine.Sprite, key, assetName)
-end
-function Asset:loadSpriteAsync(key, assetName, cb)
-    self:_loadAsync(CS.UnityEngine.Sprite, key, assetName, cb)
-end
-function Asset:loadAnimator(key, assetName)
-    return self:_load(CS.UnityEngine.RuntimeAnimatorController, key, assetName)
-end
-function Asset:loadAnimatorAsync(key, assetName, cb)
-    self:_loadAsync(CS.UnityEngine.RuntimeAnimatorController, key, assetName, cb)
-end
+
 function Asset:unloadAsset(asset)
     CSAssetUtil:UnloadAsset(asset)
 end
