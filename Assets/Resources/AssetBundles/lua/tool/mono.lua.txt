@@ -8,12 +8,13 @@ local monoEventMap = {}
 function Mono:ctor()
     self.monoNode = CSMonoUtil.MonoNode
     for index, mono in ipairs(MONO_LIFECYCLE.GLOBAL) do
-        local event = function(arg1)  -- 目前只可能有一个参数
+        monoEventMap[mono] = function(arg1)  -- 目前只可能有一个参数
             broadcast:notify(BROADCAST_CODE.MONO(mono), arg1)
         end
-        monoEventMap[mono] = event;
     end
-
+    monoEventMap['SCENE_LOADED'] = function(scene,mode)
+        broadcast:notify(BROADCAST_CODE.SCENE_LOADED, scene.name)
+    end
     self:Regist();
     broadcast:on(BROADCAST_CODE.MONO("OnDisable"),function()
         self:UnRegist();
@@ -21,20 +22,17 @@ function Mono:ctor()
 end
 function Mono:Regist()
     for index, mono in ipairs(MONO_LIFECYCLE.GLOBAL) do
-        local event = monoEventMap[mono];
         local eventName = string.format("%sEvent",mono)
-        MonoComp[eventName](MonoComp,"+",event)
+        MonoComp[eventName](MonoComp,"+",monoEventMap[mono])
     end
-    CSSceneManager.sceneLoaded("+",function(s,l)
-        print("切换场景");
-    end)
+    CSSceneManager.sceneLoaded("+", monoEventMap['SCENE_LOADED'])
 end
 function Mono:UnRegist()
     for index, mono in ipairs(MONO_LIFECYCLE.GLOBAL) do
-        local event = monoEventMap[mono];
         local eventName = string.format("%sEvent",mono)
-        MonoComp[eventName](MonoComp,"-",event)
+        MonoComp[eventName](MonoComp,"-",monoEventMap[mono])
     end
+    CSSceneManager.sceneLoaded("-", monoEventMap['SCENE_LOADED'])
 end
 
 return Mono

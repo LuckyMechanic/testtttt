@@ -17,6 +17,9 @@ local getStackInfo = function(offset)
     offset = offset or 0
     local START = 4 -- 初始底层堆栈数量
     local info = debug.getinfo(offset + START)
+    if (info == nil) then
+        return ' - '
+    end
     if (info.currentline == -1) then
         return ' - '
     end

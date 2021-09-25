@@ -3,13 +3,13 @@ function Broadcast:ctor()
     self.callBackInfoMap = {}
 end
 
-function Broadcast:notify(key, data)
+function Broadcast:notify(key, ...)
     if self:exist(key) == false then
         return false
     end
     local removeList = {}
     for i, v in pairs(self.callBackInfoMap[key]) do
-        v.callback(data)
+        v.callback(...)
         if v.isOnce then
             table.insert(removeList, v.callback)
         end
