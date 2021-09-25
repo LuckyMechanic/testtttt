@@ -1,16 +1,19 @@
 local LifecycleBase = class('LifecycleBase')
 -------------------- 继承重写 --------------------
-function LifecycleBase:onDestroy(this)
-    this = this or self
-    self.timer_clear(this)
-    self.broadcast_clear(this)
-    self.asset_clear(this)
+function LifecycleBase:ctor(...)
+end
+function LifecycleBase:close()
 end
 -------------------- 继承重写 --------------------
 function LifecycleBase:ctor(...)
     self.timerMap = {}
     self.broadcastMap = {}
     self.assetMap = {}
+end
+function LifecycleBase:close()
+    self:timer_clear()
+    self:broadcast_clear()
+    self:asset_clear()
 end
 function LifecycleBase:timer_on(time, loopCount, onTrigger)
     local t = timer:on(time, loopCount, onTrigger)

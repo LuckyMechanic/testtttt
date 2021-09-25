@@ -8,4 +8,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Step.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/Hotfix.unity
+    guid: 35e2c46d1e54b5b44b721d3f769b3a02
+  - enabled: 1
+    path: Assets/Scenes/Login.unity
+    guid: 4a871b682c133fb4b911874ba6711ad5
+  - enabled: 1
+    path: Assets/Scenes/Game.unity
+    guid: d2d50a48d48273f41becfa00cbafae12
   m_configObjects: {}

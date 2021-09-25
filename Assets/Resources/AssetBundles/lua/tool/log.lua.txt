@@ -2,7 +2,7 @@ local Log = {}
 
 local rapidjson = require('rapidjson')
 
-local STACK_CNT = 3
+local STACK_CNT = 1
 
 local COLOR = {
     WHITE = '#FFFFFF',
@@ -12,7 +12,22 @@ local COLOR = {
     GREEN = '#01DF74',
     YELLOW = '#FFFF00'
 }
-
+local getColorText = function (color,text)
+    local result = ''
+    if (type(text) == 'table') then
+        try{
+            function ()
+                result = string.format('<color=%s>[%s](%s)</color> ',color, text, rapidjson.encode(text))
+            end,
+            catch = function ()
+                result = string.format('<color=%s>[%s](%s)</color> ',color, text, '[userdata]')
+            end
+        }
+    else
+        result = string.format('<color=%s>%s</color> ', color, text)
+    end
+    return result
+end
 local getStackInfo = function(offset)
     offset = offset or 0
     local START = 4 -- 初始底层堆栈数量
@@ -43,7 +58,7 @@ local getTopText = function(tag, color)
     end
     local strArr = {}
     for index, info in ipairs(arr) do
-        table.insert(strArr, string.format('<color=%s>%s</color> ', info.color, info.text))
+        table.insert(strArr, getColorText(info.color, info.text))
     end
     return table.concat(strArr)
 end
@@ -52,13 +67,7 @@ Log.print = function(...)
     table.insert(arr, getTopText('Print', COLOR.WHITE))
     table.insert(arr, '  ')
     for index, value in ipairs({...}) do
-        local valStr = ''
-        if (type(value) == 'table') then
-            valStr = string.format('<color=%s>[%s](%s)</color>\t', COLOR.WHITE, value, rapidjson.encode(value))
-        else
-            valStr = string.format('<color=%s>%s</color>\t', COLOR.WHITE, value)
-        end
-        table.insert(arr, valStr)
+        table.insert(arr, getColorText(COLOR.WHITE,value))
     end
     CS.UnityEngine.Debug.Log(table.concat(arr))
 end
@@ -67,13 +76,7 @@ Log.error = function(...)
     table.insert(arr, getTopText('Error', COLOR.RED))
     table.insert(arr, '  ')
     for index, value in ipairs({...}) do
-        local valStr = ''
-        if (type(value) == 'table') then
-            valStr = string.format('<color=%s>[%s](%s)</color>\t', COLOR.RED, value, rapidjson.encode(value))
-        else
-            valStr = string.format('<color=%s>%s</color>\t', COLOR.RED, value)
-        end
-        table.insert(arr, valStr)
+        table.insert(arr, getColorText(COLOR.RED,value))
     end
     CS.UnityEngine.Debug.LogError(table.concat(arr))
 end
@@ -83,13 +86,7 @@ Log.warn = function(...)
     table.insert(arr, getTopText('Warn', COLOR.YELLOW))
     table.insert(arr, '  ')
     for index, value in ipairs({...}) do
-        local valStr = ''
-        if (type(value) == 'table') then
-            valStr = string.format('<color=%s>[%s](%s)</color>\t', COLOR.YELLOW, value, rapidjson.encode(value))
-        else
-            valStr = string.format('<color=%s>%s</color>\t', COLOR.YELLOW, value)
-        end
-        table.insert(arr, valStr)
+        table.insert(arr, getColorText(COLOR.YELLOW,value))
     end
     CS.UnityEngine.Debug.LogWarning(table.concat(arr))
 end

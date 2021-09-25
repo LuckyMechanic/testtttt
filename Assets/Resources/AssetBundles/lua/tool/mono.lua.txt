@@ -2,7 +2,6 @@ local Mono = class("Mono")
 local CSMonoUtil = CS.MonoUtil.Instance
 local MonoComp = CSMonoUtil.MonoComponent
 
-local CSSceneManager = CS.UnityEngine.SceneManagement.SceneManager
 local monoEventMap = {}
 
 function Mono:ctor()
@@ -11,9 +10,6 @@ function Mono:ctor()
         monoEventMap[mono] = function(arg1)  -- 目前只可能有一个参数
             broadcast:notify(BROADCAST_CODE.MONO(mono), arg1)
         end
-    end
-    monoEventMap['SCENE_LOADED'] = function(scene,mode)
-        broadcast:notify(BROADCAST_CODE.SCENE_LOADED, scene.name)
     end
     self:Regist();
     broadcast:on(BROADCAST_CODE.MONO("OnDisable"),function()
@@ -25,14 +21,12 @@ function Mono:Regist()
         local eventName = string.format("%sEvent",mono)
         MonoComp[eventName](MonoComp,"+",monoEventMap[mono])
     end
-    CSSceneManager.sceneLoaded("+", monoEventMap['SCENE_LOADED'])
 end
 function Mono:UnRegist()
     for index, mono in ipairs(MONO_LIFECYCLE.GLOBAL) do
         local eventName = string.format("%sEvent",mono)
         MonoComp[eventName](MonoComp,"-",monoEventMap[mono])
     end
-    CSSceneManager.sceneLoaded("-", monoEventMap['SCENE_LOADED'])
 end
 
 return Mono

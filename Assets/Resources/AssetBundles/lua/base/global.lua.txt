@@ -19,8 +19,8 @@ _G.mono = require('mono'):new()
 _G.timer = require('timer'):new()
 _G.asset = require('asset'):new()
 _G.pool = require('pool'):new()
-
 _G.pb = require('pb')
 for index, buff in ipairs(asset:loadAllBytes('pb')) do
     _G.pb.load(buff)
 end
+_G.scene = require('scene'):new()

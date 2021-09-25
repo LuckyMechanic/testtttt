@@ -2,9 +2,18 @@ local class = function (className,super)
 	local cls = {};
 	cls.className = className
 	cls.super = super;
-
+	cls.STATIC = {}
+	-- 设置静态变量
+	if(super~=nil) then
+		for key, value in pairs(super.STATIC) do
+			if(cls[key]==nil) then
+				cls.STATIC[key] = super.STATIC[key]
+			end
+		end
+	end
 	cls.new = function(self,...)
 		local o = setmetatable({},{__index = self});
+		-- 创建
 		local create;
 		create = function (object,class,...)
 			if(class.super ~= nil) then
@@ -14,12 +23,29 @@ local class = function (className,super)
 			end
 			-- 执行构造函数
 			local ctor = rawget(class, 'ctor')
-			if(ctor~=nil)then
+			if(ctor~=nil) then
 				ctor(object,...);
 			end
-
 		end
 		create(o,self,...);
+
+		-- 卸载
+		local destory;
+		destory = function(object,class,...)
+			if(class.super~= nil) then
+				-- 存在父类 先去处理父类
+				destory(object,class.super,...)
+			end
+			-- 执行销毁函数
+			local close = rawget(class,'close')
+			if(close~=nil) then
+				close(object,...)
+			end
+		end
+
+		o.close = function (...)
+			destory(o,self,...)
+		end
 
 		return o;
 	end

@@ -1,0 +1,31 @@
+local base = require('lifecycle_base')
+local SceneBase = class('SceneBase', base)
+
+-------------------- 继承重写 --------------------
+-- 开始加载
+function SceneBase:onLoadStart(...)
+end
+-- 加载过程
+function SceneBase:onLoading(ao,progress,...)
+end
+-- 加载完毕
+function SceneBase:onLoadEnd(ao,...)
+end
+-- 加载完毕并进入场景
+function SceneBase:onLoad(...)
+end
+-- 卸载场景
+function SceneBase:close()
+end
+-- 加载参数
+-- ALLOW_SCENE_ACTIVATION:加载场景完毕后是否自动进入
+-- CloseAllUI:是否清理所有UI
+SceneBase.STATIC.LOAD_ARG = { ALLOW_SCENE_ACTIVATION = true, CloseAllUI = true }
+-------------------- 继承重写 --------------------
+
+function SceneBase:ctor(...)
+    self.name = self.className
+    self.arg = {...}
+end
+
+return SceneBase
