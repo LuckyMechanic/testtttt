@@ -54,7 +54,7 @@ public class LuaConsoleRedirect
     {
         if (!EditorWindow.focusedWindow.titleContent.text.Equals("Console")) // 只对控制台的开启进行重定向
             return false;
-        if (instanceID != s_InstanceID)   // 只对Lua打印的日志重定向 注意lua层是通过CS.UnityEngine.Debug.Log打印
+        if (instanceID != s_InstanceID)   // 只对Lua打印的日志重定向 注意lua层是通过CS.UnityEngine.Debug打印
             return false;
         // 获取控制台信息
         string text = consoleText;
