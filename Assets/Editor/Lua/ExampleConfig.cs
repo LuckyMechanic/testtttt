@@ -77,7 +77,8 @@ public static class ExampleConfig
             List<string> namespaces = new List<string>() // 在这里添加名字空间
            {
                "UnityEngine",
-               "UnityEngine.UI"
+               "UnityEngine.UI",
+               "UnityEngine.SceneManagement",
            };
             var unityTypes = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
                               where !(assembly.ManifestModule is System.Reflection.Emit.ModuleBuilder)

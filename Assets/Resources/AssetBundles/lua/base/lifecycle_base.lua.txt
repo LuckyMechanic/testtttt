@@ -1,0 +1,144 @@
+local LifecycleBase = class('LifecycleBase')
+-------------------- 继承重写 --------------------
+function LifecycleBase:onDestroy(this)
+    this = this or self
+    self.timer_clear(this)
+    self.broadcast_clear(this)
+    self.asset_clear(this)
+end
+-------------------- 继承重写 --------------------
+function LifecycleBase:ctor(...)
+    self.timerMap = {}
+    self.broadcastMap = {}
+    self.assetMap = {}
+end
+function LifecycleBase:timer_on(time, loopCount, onTrigger)
+    local t = timer:on(time, loopCount, onTrigger)
+    table.insert(self.timerMap, t)
+    return t
+end
+function LifecycleBase:timer_out(t)
+    timer:out(t)
+    table.del(self.timerMap, t)
+end
+function LifecycleBase:timer_clear()
+    local tempMap = {}
+    for index, t in pairs(self.timerMap) do
+        table.insert(tempMap, t)
+    end
+    for index, t in pairs(tempMap) do
+        self:timer_out(t)
+    end
+    self.timerMap = {}
+end
+function LifecycleBase:broadcast_on(key, callback, order, isOnce)
+    local flag = broadcast:on(key, callback, order, isOnce)
+    if flag then
+        local info = {key = key, callback = callback}
+        table.insert(self.broadcastMap, info)
+    end
+    return flag
+end
+function LifecycleBase:broadcast_out(key, callback)
+    local flag = broadcast:out(key, callback)
+    if flag then
+        table.del(self.broadcastMap, {key = key, callback = callback})
+    end
+    return flag
+end
+function LifecycleBase:broadcast_clear()
+    local tempMap = {}
+    for index, info in pairs(self.broadcastMap) do
+        table.insert(tempMap, info)
+    end
+    for index, info in pairs(tempMap) do
+        self:broadcast_out(info.key, info.callback)
+    end
+    self.broadcastMap = {}
+end
+
+-- 加载类型资源函数动态创建 string与bytes并不通用 另外写
+local loadTypeList = { "Prefab","Sprite","Animator" }
+
+for index, t in ipairs(loadTypeList) do
+    LifecycleBase[string.format("load%s",t)] = function(this,key,assetName)
+        local asset_obj = asset[string.format("load%s",t)](asset,key, assetName)
+        table.insert(this.assetMap, asset_obj)
+        return asset_obj
+    end
+    LifecycleBase[string.format("load%sAsync",t)] = function(this,key,assetName,cb)
+        asset[string.format("load%sAsync",t)](
+            asset,
+            key,
+            assetName,
+            function(asset_obj)
+                table.insert(this.assetMap, asset_obj)
+                if (cb ~= nil) then
+                    cb(asset_obj)
+                end
+            end
+        )
+    end
+    LifecycleBase[string.format("loadAll%s",t)] = function(this,key)
+        local asset_objs = asset[string.format("loadAll%s",t)](asset,key)
+        for index, asset_obj in ipairs(asset_objs) do
+            table.insert(this.assetMap, asset_obj)
+        end
+        return asset_objs
+    end
+    LifecycleBase[string.format("loadAll%sAsync",t)] = function(this,key,cb)
+        asset[string.format("loadAll%sAsync",t)](
+            asset,
+            key,
+            function(asset_objs)
+                for index, asset_obj in ipairs(asset_objs) do
+                    table.insert(this.assetMap, asset_obj)
+                end
+                if (cb ~= nil) then
+                    cb(asset_objs)
+                end
+            end
+        )
+    end
+end
+
+function LifecycleBase:loadString(key, assetName)
+    return asset:loadString(key, assetName)
+end
+function LifecycleBase:loadStringAsync(key, assetName, cb)
+    asset:loadStringAsync(key, assetName, cb)
+end
+function LifecycleBase:loadAllString(key)
+    return asset:loadAllString(key)
+end
+function LifecycleBase:loadAllStringAsync(key, cb)
+    asset:loadAllStringAsync(key, cb)
+end
+
+function LifecycleBase:loadBytes(key, assetName)
+    return asset:loadBytes(key, assetName)
+end
+function LifecycleBase:loadBytesAsync(key, assetName, cb)
+    asset:loadBytesAsync(key, assetName, cb)
+end
+function LifecycleBase:loadAllBytes(key)
+    return asset:loadAllBytes(key)
+end
+function LifecycleBase:loadAllBytesAsync(key, cb)
+    asset:loadAllBytesAsync(key, cb)
+end
+function LifecycleBase:unloadAsset(asset_obj)
+    asset:unloadAsset(asset_obj)
+end
+function LifecycleBase:asset_clear()
+    local tempMap = {}
+    for index, asset in pairs(self.assetMap) do
+        table.insert(tempMap, asset)
+    end
+    for index, asset in pairs(tempMap) do
+        self:unloadAsset(asset)
+    end
+    self.assetMap = {}
+end
+
+return LifecycleBase
