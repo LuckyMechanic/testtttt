@@ -1,7 +1,5 @@
 local Log = {}
 
-local rapidjson = require('rapidjson')
-
 local STACK_CNT = 1
 
 local COLOR = {
@@ -14,17 +12,10 @@ local COLOR = {
 }
 local getColorText = function (color,text)
     local result = ''
-    if (type(text) == 'table') then
-        try{
-            function ()
-                result = string.format('<color=%s>[%s](%s)</color> ',color, text, rapidjson.encode(text))
-            end,
-            catch = function ()
-                result = string.format('<color=%s>[%s](%s)</color> ',color, text, '[userdata]')
-            end
-        }
+    if(type(text)=='string') then
+        result = string.format('<color=%s>%s</color>', color, text)
     else
-        result = string.format('<color=%s>%s</color> ', color, text)
+        result = string.format('<color=%s>%s</color>', color, table.toString(text))
     end
     return result
 end
@@ -60,35 +51,32 @@ local getTopText = function(tag, color)
     for index, info in ipairs(arr) do
         table.insert(strArr, getColorText(info.color, info.text))
     end
-    return table.concat(strArr)
+    return table.concat(strArr,' ')
 end
 Log.print = function(...)
     local arr = {}
     table.insert(arr, getTopText('Print', COLOR.WHITE))
-    table.insert(arr, '  ')
     for index, value in ipairs({...}) do
         table.insert(arr, getColorText(COLOR.WHITE,value))
     end
-    CS.UnityEngine.Debug.Log(table.concat(arr))
+    CS.UnityEngine.Debug.Log(table.concat(arr,'  '))
 end
 Log.error = function(...)
     local arr = {}
     table.insert(arr, getTopText('Error', COLOR.RED))
-    table.insert(arr, '  ')
     for index, value in ipairs({...}) do
         table.insert(arr, getColorText(COLOR.RED,value))
     end
-    CS.UnityEngine.Debug.LogError(table.concat(arr))
+    CS.UnityEngine.Debug.LogError(table.concat(arr,'  '))
 end
 
 Log.warn = function(...)
     local arr = {}
     table.insert(arr, getTopText('Warn', COLOR.YELLOW))
-    table.insert(arr, '  ')
     for index, value in ipairs({...}) do
         table.insert(arr, getColorText(COLOR.YELLOW,value))
     end
-    CS.UnityEngine.Debug.LogWarning(table.concat(arr))
+    CS.UnityEngine.Debug.LogWarning(table.concat(arr,'  '))
 end
 
 return Log

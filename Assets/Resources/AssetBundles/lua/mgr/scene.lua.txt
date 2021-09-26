@@ -64,19 +64,19 @@ end
 function Scene:RegistLog()
     broadcast:on(BROADCAST_CODE.SCENE_UNLOAD,function(name)
         log.print("[Sence]","[UnLoad]",string.format('[%s]',name));
-    end)
+    end,-1)
     broadcast:on(BROADCAST_CODE.SCENE_LOAD_START,function(name,...)
         log.print("[Sence]",string.format('[%s]',name),"[LoadStart]",...);
-    end)
+    end,-1)
     broadcast:on(BROADCAST_CODE.SCENE_LOADING,function(name,ao,progress,...)
         log.print("[Sence]",string.format('[%s]',name),"[Loading]",string.format("[%s/1.0]",progress),...);
-    end)
+    end,-1)
     broadcast:on(BROADCAST_CODE.SCENE_LOAD_END,function(name,ao,...)
-        log.print("[Sence]",string.format('[%s]',name),"[LoadEnd]",...);
-    end)
+        log.print("[Sence]",string.format('[%s]',name),"[LoadEnd]",ao,...);
+    end,-1)
     broadcast:on(BROADCAST_CODE.SCENE_LOAD,function(name,...)
         log.print("[Sence]",string.format('[%s]',name),"[onLoad]",...);
-    end)
+    end,-1)
 end
 
 return Scene

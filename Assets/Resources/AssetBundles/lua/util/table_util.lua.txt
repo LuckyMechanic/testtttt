@@ -77,3 +77,48 @@ table.csArrayToTable = function(csArray)
     end
     return t
 end
+-- table转字符串
+---@type t table table
+---@type tier int 遍历最大深度
+---@type child boolean 是否为子字符串 主要用于table判断是否加类型前缀[]
+table.toString = function ( t,depth,child )
+	depth = depth or 3
+	child = child or false
+	if(t==nil) then
+		return 'nil'
+	elseif(type(t)=='number') then
+		return tostring(t)
+	elseif(type(t)=='boolean') then
+		return tostring(t)
+	elseif(type(t)=='string') then
+		return table.concat({'"',t,'"'})
+	elseif(type(t)=='userdata') then
+		return table.concat({'[',tostring(t),']'})
+	elseif(type(t)=='function') then
+		return table.concat({'[',tostring(t),']'})
+	elseif(type(t)=='thread') then
+		return table.concat({'[',tostring(t),']'})
+	elseif(type(t)=='table') then
+		local tstr = ''
+		if(depth<=0) then
+			tstr = table.concat({'[',tostring(t),']'})
+		end
+		local arr = {}
+		if(table.isArray(t)) then
+			for i, v in ipairs( t ) do
+				local vstr = table.toString(v,depth-1,true)
+				table.insert( arr, vstr )
+			end
+			tstr = table.concat({'[',table.concat(arr,','),']'})
+		else
+			for k, v in pairs( t ) do
+				local kstr = type(k)~='number'and k or table.concat({'[',k,']'})
+				local vstr = table.toString(v,depth-1,true)
+				table.insert( arr, table.concat({kstr,'=',vstr}) )
+			end
+			tstr = table.concat({'{',table.concat(arr,','),'}'})
+		end
+		return child and tstr or table.concat({'[',tostring(t),']','(',tstr,')'})
+	end
+	return ''
+end
