@@ -2,23 +2,16 @@ local Log = {}
 
 local STACK_CNT = 1
 
-local COLOR = {
-    WHITE = '#FFFFFF',
-    GRAY = '#F2F2F2',
-    RED = '#FF0000',
-    PURPLE = '#BE81F7',
-    GREEN = '#01DF74',
-    YELLOW = '#FFFF00'
-}
 local getColorText = function (color,text)
     local result = ''
     if(type(text)=='string') then
-        result = string.format('<color=%s>%s</color>', color, text)
+        result = string.getColorText(color,text)
     else
-        result = string.format('<color=%s>%s</color>', color, table.toString(text))
+        result = string.getColorText(color,table.toString(text))
     end
     return result
 end
+
 local getStackInfo = function(offset)
     offset = offset or 0
     local START = 4 -- 初始底层堆栈数量
@@ -38,14 +31,14 @@ end
 local getTopText = function(tag, color)
     local arr = {}
     -- 类型
-    table.insert(arr, {color = COLOR.GREEN, text = '[LUA]'})
+    table.insert(arr, {color = Color.Green, text = '[LUA]'})
     -- 时间
-    table.insert(arr, {color = COLOR.GRAY, text = string.format('[%s]', getDateInfo())})
+    table.insert(arr, {color = Color.Gray, text = string.format('[%s]', getDateInfo())})
     -- 标签
     table.insert(arr, {color = color, text = string.format('[%s]', tag)})
     -- 堆栈信息
     for i = 0, STACK_CNT - 1 do
-        table.insert(arr, {color = COLOR.PURPLE, text = string.format('[%s]', getStackInfo(i))})
+        table.insert(arr, {color = Color.Purple, text = string.format('[%s]', getStackInfo(i))})
     end
     local strArr = {}
     for index, info in ipairs(arr) do
@@ -55,26 +48,26 @@ local getTopText = function(tag, color)
 end
 Log.print = function(...)
     local arr = {}
-    table.insert(arr, getTopText('Print', COLOR.WHITE))
+    table.insert(arr, getTopText('Print', Color.White))
     for index, value in ipairs({...}) do
-        table.insert(arr, getColorText(COLOR.WHITE,value))
+        table.insert(arr, getColorText(Color.White,value))
     end
     CS.UnityEngine.Debug.Log(table.concat(arr,'  '))
 end
 Log.error = function(...)
     local arr = {}
-    table.insert(arr, getTopText('Error', COLOR.RED))
+    table.insert(arr, getTopText('Error', Color.Red))
     for index, value in ipairs({...}) do
-        table.insert(arr, getColorText(COLOR.RED,value))
+        table.insert(arr, getColorText( Color.Red,value))
     end
     CS.UnityEngine.Debug.LogError(table.concat(arr,'  '))
 end
 
 Log.warn = function(...)
     local arr = {}
-    table.insert(arr, getTopText('Warn', COLOR.YELLOW))
+    table.insert(arr, getTopText('Warn',Color.Yellow))
     for index, value in ipairs({...}) do
-        table.insert(arr, getColorText(COLOR.YELLOW,value))
+        table.insert(arr, getColorText(Color.Yellow,value))
     end
     CS.UnityEngine.Debug.LogWarning(table.concat(arr,'  '))
 end

@@ -1,8 +1,8 @@
 local class = function (className,super)
 	local cls = {};
-	cls.className = className
-	cls.super = super;
-	cls.STATIC = {}
+	cls.className = className	-- 类名
+	cls.super = super		-- 父类
+	cls.STATIC = {}			-- 静态变量
 	-- 设置静态变量
 	if(super~=nil) then
 		for key, value in pairs(super.STATIC) do

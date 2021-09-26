@@ -27,3 +27,9 @@ string.formatTable = function(formatText,t)
 	end
 	return result
 end
+-- 获取携带Color颜色信息的字符串
+---@type color color
+---@type string text
+string.getColorText = function (color,text)
+    return string.format('<color=%s>%s</color>', color:toHex(), text)
+end

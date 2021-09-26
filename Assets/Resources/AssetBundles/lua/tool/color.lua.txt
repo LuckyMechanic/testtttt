@@ -1,0 +1,79 @@
+local Color = {}
+
+local _getter = {}
+local unity_color = CS.UnityEngine.Color
+
+Color.__index = function(t,k)
+	local var = rawget(Color, k)
+	if var ~= nil then
+		return var
+	end
+
+	var = rawget(_getter, k)
+	if var ~= nil then
+		return var(t)
+	end
+
+	return rawget(unity_color, k)
+end
+
+-- 常量定义
+_getter.White = function () return Color:new('#FFFFFF') end
+_getter.Gray = function () return Color:new('#F2F2F2') end
+_getter.Red = function () return Color:new('#FF0000') end
+_getter.Purple = function () return Color:new('#BE81F7') end
+_getter.Green = function () return Color:new('#01DF74') end
+_getter.Yellow = function () return  Color:new('#FFFF00') end
+
+-- 静态函数
+-- 十六进制颜色转RGBA
+---@return rgba 0-1
+Color.hexToRGBA = function(hex)
+    if string.sub(hex, 1, 1) == '#' then
+        hex = string.sub(hex, 2)
+        if(#hex==6) then
+            hex = hex..'FF'
+        end
+    end
+    local r = tonumber(string.sub(hex, 1, 2), 16) / 255
+    local g = tonumber(string.sub(hex, 3, 4), 16) / 255
+    local b = tonumber(string.sub(hex, 5, 6), 16) / 255
+    local a = tonumber(string.sub(hex, 7, 8), 16) / 255
+    return {r=r,g=g,b=b,a=a}
+end
+-- RGBA转十六进制颜色
+---@return hex #FFFFFFFF
+Color.rgbaToHEX = function(rgba)
+	local hexArr = {}
+	table.insert( hexArr,'#')
+	table.insert( hexArr,string.format( "%02X", rgba.r * 255 ) )
+	table.insert( hexArr,string.format( "%02X", rgba.g * 255 ) )
+	table.insert( hexArr,string.format( "%02X", rgba.b * 255 ) )
+	table.insert( hexArr,string.format( "%02X", rgba.a * 255 ) )
+	return table.concat( hexArr )
+end
+
+
+
+-- 构造函数
+function Color:new(r, g, b, a)
+    local rgba = nil
+    if(type(r)=='string') then
+        rgba = Color.hexToRGBA(r)
+    elseif (type(r)=='userdata') then
+        rgba = {r = r.r, g = r.g, b = r.b, a = r.a}
+    else
+        rgba = {r = r or 1, g = g or 1, b = b or 1, a = a or 1}
+    end
+    return setmetatable(rgba, Color)
+end
+function Color:toRGBA()
+    return {r=self.r,g=self.g,b=self.b,a=self.a}
+end
+function Color:toHex()
+    return Color.rgbaToHEX(self:toRGBA())
+end
+
+
+setmetatable(Color, Color)
+return Color

@@ -8,6 +8,7 @@ _G.BROADCAST_CODE = require('BROADCAST_CODE')
 -- 类
 _G.DownloadFile = require('downloadFile')
 _G.Middleware = require('middleware')
+_G.Color = require('color')
 -- 静态类
 _G.log = require('log')
 _G.Template = require('template')
