@@ -24,6 +24,8 @@ function Scene:onLoad()
     -- local color = Color:new(img.color)
     -- color.r = 0
     -- img.color = color
+
+    log.print(Vector2.one)
 end
 
 return Scene

@@ -10,6 +10,7 @@ _G.DownloadFile = require('downloadFile')
 _G.Middleware = require('middleware')
 _G.Color = require('color')
 _G.Vector3 = require('vector3')
+_G.Vector2 = require('vector2')
 -- 静态类
 _G.log = require('log')
 _G.Template = require('template')
