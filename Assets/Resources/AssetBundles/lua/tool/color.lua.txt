@@ -17,36 +17,46 @@ Color.__index = function(t,k)
 	return rawget(unity_color, k)
 end
 Color.__add = function(a, b)
-	return Color.New(a.r + b.r, a.g + b.g, a.b + b.b, a.a + b.a)
+	return Color(a.r + b.r, a.g + b.g, a.b + b.b, a.a + b.a)
 end
 
 Color.__sub = function(a, b)
-	return Color.New(a.r - b.r, a.g - b.g, a.b - b.b, a.a - b.a)
+	return Color(a.r - b.r, a.g - b.g, a.b - b.b, a.a - b.a)
 end
 
 Color.__mul = function(a, b)
 	if type(b) == "number" then
-		return Color.New(a.r * b, a.g * b, a.b * b, a.a * b)
+		return Color(a.r * b, a.g * b, a.b * b, a.a * b)
 	elseif getmetatable(b) == Color then
-		return Color.New(a.r * b.r, a.g * b.g, a.b * b.b, a.a * b.a)
+		return Color(a.r * b.r, a.g * b.g, a.b * b.b, a.a * b.a)
 	end
 end
-
 Color.__div = function(a, d)
-	return Color.New(a.r / d, a.g / d, a.b / d, a.a / d)
+	return Color(a.r / d, a.g / d, a.b / d, a.a / d)
 end
 
 Color.__eq = function(a,b)
 	return a.r == b.r and a.g == b.g and a.b == b.b and a.a == b.a
 end
+Color.__call = function (t,r, g, b, a)
+    return Color:new(r, g, b, a)
+end
+-- __tostring
+Color.__tostringx = function (t)
+	Color.__tostring = nil
+	local str = table.concat({'Color',' ',t:toHex()})
+	Color.__tostring = Color.__tostringx
+	return str
+end
+Color.__tostring = Color.__tostringx
 
 -- 常量定义
-_getter.White = function () return Color:new('#FFFFFF') end
-_getter.Gray = function () return Color:new('#F2F2F2') end
-_getter.Red = function () return Color:new('#FF0000') end
-_getter.Purple = function () return Color:new('#BE81F7') end
-_getter.Green = function () return Color:new('#01DF74') end
-_getter.Yellow = function () return  Color:new('#FFFF00') end
+_getter.White = function () return Color('#FFFFFF') end
+_getter.Gray = function () return Color('#F2F2F2') end
+_getter.Red = function () return Color('#FF0000') end
+_getter.Purple = function () return Color('#BE81F7') end
+_getter.Green = function () return Color('#01DF74') end
+_getter.Yellow = function () return  Color('#FFFF00') end
 
 -- 静态函数
 -- 十六进制颜色转RGBA
@@ -86,18 +96,17 @@ function Color:new(r, g, b, a)
     elseif (type(r)=='userdata') then
         rgba = {r = r.r, g = r.g, b = r.b, a = r.a}
     else
-        rgba = {r = r or 1, g = g or 1, b = b or 1, a = a or 1}
+        rgba = {r = r , g = g , b = b , a = a or 1}
     end
     return setmetatable(rgba, Color)
 end
-function Color:Set(r, g, b, a)
+function Color:set(r, g, b, a)
 	self.r = r
 	self.g = g
 	self.b = b
 	self.a = a or 1
 end
-
-function Color:Get()
+function Color:get()
 	return self.r, self.g, self.b, self.a
 end
 function Color:toRGBA()

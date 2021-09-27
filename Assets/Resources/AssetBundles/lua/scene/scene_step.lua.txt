@@ -8,14 +8,17 @@ function Scene:onLoad()
 
     -- scene:load("Game",1,2,{a=123})
 
-    -- local go = CS.UnityEngine.GameObject.Find('Image')
-    -- local img = go:GetComponent(typeof(CS.UnityEngine.UI.Image))
+    local go = CS.UnityEngine.GameObject.Find('Image')
+    local img = go:GetComponent(typeof(CS.UnityEngine.UI.Image))
 
-    -- -- go.transform.position = {x=1,y=2,z=3}
+    go.transform.position = Vector3.one
+    log.print(Vector3(go.transform.position) == Vector3.one )
+    -- log.print(go.transform.position == Vector3.one)
     -- -- img.color = Color:new(1,1,1,1)
     -- -- log.print( Color:new('#FFFF00'))
-    -- img.color = Color.Yellow
-    -- log.print(Color.Yellow)
+    img.color = Color.Yellow
+    log.print(Color.Yellow)
+    log.print(Vector3.one == Vector3.one)
     -- log.print(img.color)
     -- log.print(Color:new(img.color))
     -- local color = Color:new(img.color)
