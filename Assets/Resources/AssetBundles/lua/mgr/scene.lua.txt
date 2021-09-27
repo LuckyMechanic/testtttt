@@ -38,7 +38,7 @@ function Scene:load(name,...)
         function (ao, progress)
             broadcast:notify(BROADCAST_CODE.SCENE_LOADING,table.unpack(table.merge({name,ao,progress},arg)))
         end,
-        cls.STATIC.LOAD_ARG.ALLOW_SCENE_ACTIVATION,
+        cls.LOAD_ARG.ALLOW_SCENE_ACTIVATION,
         CS.UnityEngine.SceneManagement.LoadSceneMode.Single
     );
 end

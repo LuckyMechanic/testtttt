@@ -60,7 +60,7 @@ public class LuaConsoleRedirect
         string text = consoleText;
 
         // 匹配Lua文件信息
-        Regex reg = new Regex(@"<color=#BE81F7>\[(\S+):(\d+)\]</color>");   //根据日志打印规则改动
+        Regex reg = new Regex(@"<color=#BE81F7FF>\[(\S+):(\d+)\]</color>");   //根据日志打印规则改动
         Match match = reg.Match(text);
         if (match.Groups.Count != 3)
         {

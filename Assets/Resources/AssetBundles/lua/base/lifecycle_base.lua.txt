@@ -1,7 +1,6 @@
 local LifecycleBase = class('LifecycleBase')
+LifecycleBase.override = {close = false}
 -------------------- 继承重写 --------------------
-function LifecycleBase:ctor(...)
-end
 function LifecycleBase:close()
 end
 -------------------- 继承重写 --------------------

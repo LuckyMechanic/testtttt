@@ -5,21 +5,22 @@ local Scene = class('Step', base)
 -- 加载完毕
 function Scene:onLoad()
     log.print("进入场景Step")
+
     -- scene:load("Game",1,2,{a=123})
 
-    local go = CS.UnityEngine.GameObject.Find('Image')
-    local img = go:GetComponent(typeof(CS.UnityEngine.UI.Image))
+    -- local go = CS.UnityEngine.GameObject.Find('Image')
+    -- local img = go:GetComponent(typeof(CS.UnityEngine.UI.Image))
 
-    -- go.transform.position = {x=1,y=2,z=3}
-    -- img.color = Color:new(1,1,1,1)
-    -- log.print( Color:new('#FFFF00'))
-    img.color = Color.Yellow
-    log.print(Color.Yellow)
-    log.print(img.color)
-    log.print(Color:new(img.color))
-    local color = Color:new(img.color)
-    color.r = 0
-    img.color = color
+    -- -- go.transform.position = {x=1,y=2,z=3}
+    -- -- img.color = Color:new(1,1,1,1)
+    -- -- log.print( Color:new('#FFFF00'))
+    -- img.color = Color.Yellow
+    -- log.print(Color.Yellow)
+    -- log.print(img.color)
+    -- log.print(Color:new(img.color))
+    -- local color = Color:new(img.color)
+    -- color.r = 0
+    -- img.color = color
 end
 
 return Scene
