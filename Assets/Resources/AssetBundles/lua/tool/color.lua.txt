@@ -93,7 +93,7 @@ function Color:new(r, g, b, a)
     local rgba = nil
     if(type(r)=='string') then
         rgba = Color.hexToRGBA(r)
-    elseif (type(r)=='userdata') then
+    elseif (type(r)=='userdata' or type(r)=='table') then
         rgba = {r = r.r, g = r.g, b = r.b, a = r.a}
     else
         rgba = {r = r , g = g , b = b , a = a or 1}

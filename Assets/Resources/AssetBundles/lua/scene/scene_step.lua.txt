@@ -26,6 +26,8 @@ function Scene:onLoad()
     -- img.color = color
 
     log.print(Vector2.one)
+
+    log.print(Date.toTable(10))
 end
 
 return Scene

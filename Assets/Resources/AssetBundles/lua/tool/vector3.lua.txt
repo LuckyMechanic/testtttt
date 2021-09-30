@@ -21,7 +21,6 @@ Vector3.__add = function(a, b)
 end
 
 Vector3.__sub = function(a, b)
-    log.print(">>>>",a,b)
 	return Vector3(a.x - b.x, a.y - b.y, a.z - b.z)
 end
 Vector3.__mul = function(a, b)
@@ -77,10 +76,10 @@ _getter.one		= function() return Vector3(1,1,1) end
 -- 构造函数
 function Vector3:new(x,y,z)
     local v3 = nil
-    if (type(x)=='userdata') then
+    if (type(x)=='userdata' or type(x)=='table') then
         v3 = {x = x.x, y = x.y, z = x.z}
     else
-        v3 = {x = x or 0, y = y or 0, z = z or 0}
+        v3 = {x = x, y = y, z = z or 0}
     end
     return setmetatable(v3, Vector3)
 end
