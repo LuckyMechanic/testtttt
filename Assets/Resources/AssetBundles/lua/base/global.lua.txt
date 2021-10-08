@@ -26,4 +26,6 @@ _G.pb = require('pb')
 for index, buff in ipairs(asset:loadAllBytes('pb')) do
     _G.pb.load(buff)
 end
+_G.comp = require('comp'):new()
 _G.scene = require('scene'):new()
+_G.ui = require('ui'):new()

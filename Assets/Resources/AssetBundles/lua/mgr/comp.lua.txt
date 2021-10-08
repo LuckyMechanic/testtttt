@@ -1,0 +1,123 @@
+local Comp = class('Comp')
+
+-- CS
+function Comp:addCSComponent(node, comp)
+    return node.gameObject:AddComponent(typeof(comp))
+end
+function Comp:getCSComponent(node, comp)
+    return node.gameObject:GetComponent(typeof(comp))
+end
+function Comp:getCsComponents(node,comp)
+    return node.gameObject:GetComponents(typeof(comp))
+end
+function Comp:closeCSComponent(comp)
+    CS.UnityEngine.Object.Destroy(comp)
+end
+function Comp:getCSComponentInChildren(node, comp)
+    return node.gameObject:GetComponentInChildren(typeof(comp))
+end
+function Comp:getCSComponentsInChildren(node, comp)
+    return node.gameObject:GetComponentsInChildren(typeof(comp))
+end
+function Comp:getCSComponentInParent(node, comp)
+    return node.gameObject:GetComponentInParent(typeof(comp))
+end
+function Comp:getCSComponentsInParent(node, comp)
+    return node.gameObject:GetComponentsInParent(typeof(comp))
+end
+
+--Lua
+function Comp:addComponent(node, compName, ...)
+    local compClass;
+    if(type(compName) == 'string') then
+        compClass = require(compName)
+    else
+        compClass = compName;
+        compName = compClass.className
+    end
+    if(compClass==nil) then return; end
+    local comp = self:getComponent(node, compName)
+    if comp ~= nil then
+        return comp
+    end
+
+    comp = compClass:new(node,...)
+
+    return comp
+end
+function Comp:getComponent(node, compName)
+    local compList = self:getCsComponents(node,CS.LuaComponent)
+    if compList.Length == 0 then
+        return nil
+    end
+    for i = 0, compList.Length-1 do
+        local csComp = compList:GetValue(i)
+        if(csComp.LuaName == compName) then
+            return csComp.LuaTable
+        end
+    end
+    return nil
+end
+function Comp:closeComponent(node, compName)
+    local compClass;
+    if(type(compName) == 'string') then
+        compClass = self:getComponent(node,compName)
+    elseif(type(compName) == 'table') then
+        compClass = compName
+        compName = compClass.className
+    elseif(type(node)=='table' and compName == nil) then
+        compClass = node;
+        compName = compClass.className
+        node = compClass.node
+    end
+    if(compClass==nil) then
+        return false
+    end
+    self:closeCSComponent(compClass.csComp)
+    return true
+end
+
+function Comp:getComponentInChildren(node, compName)
+    local csComps = self:getCSComponentsInChildren(node, CS.LuaComponent)
+    for i = 0, csComps.Length - 1 do
+        local csComp = csComps:GetValue(i)
+        if csComp.LuaName == compName then
+            return csComp.LuaTable
+        end
+    end
+    return nil
+end
+function Comp:getComponentsInChildren(node, compName)
+    local comps = {}
+    local csComps = self:getCSComponentsInChildren(node, CS.LuaComponent)
+    for i = 0, csComps.Length - 1 do
+        local csComp = csComps:GetValue(i)
+        if csComp.LuaName == compName then
+            table.insert(comps, csComp.LuaTable)
+        end
+    end
+    return comps
+end
+function Comp:getComponentInParent(node, compName)
+    local csComps = self:getCSComponentsInParent(node, CS.LuaComponent)
+    for i = 0, csComps.Length - 1 do
+        local csComp = csComps:GetValue(i)
+        if csComp.LuaName == compName then
+            return csComp.LuaTable
+        end
+    end
+    return nil
+end
+function Comp:getComponentsInParent(node, compName)
+    local comps = {}
+    local csComps = self:getCSComponentsInParent(node, CS.LuaComponent)
+    for i = 0, csComps.Length - 1 do
+        local csComp = csComps:GetValue(i)
+        if csComp.LuaName == compName then
+            table.insert(comps, csComp.LuaTable)
+        end
+    end
+    return comps
+end
+
+return Comp

@@ -10,7 +10,7 @@ function Scene:ctor()
         end
     end
     CSSceneManager.sceneLoaded("+", event)
-    broadcast:on(BROADCAST_CODE.MONO("OnDisable"),function()
+    broadcast:on(BROADCAST_CODE.MONO("OnDestroy"),function()
         CSSceneManager.sceneLoaded("-", event)
     end)
 

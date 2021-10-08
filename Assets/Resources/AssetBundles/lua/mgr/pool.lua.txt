@@ -1,10 +1,13 @@
 local Pool = class('Pool')
+-- 检查周期
+local CHECK_TIME = 5
+-- 默认配置项
 -- cnt:常驻数量
 local DEFAULT_CONFIG = {cnt = 10}
 
 function Pool:ctor()
     timer:on(
-        5,
+        CHECK_TIME,
         true,
         function()
             self:upPoolObjectCnt()
@@ -23,7 +26,7 @@ function Pool:existPool(key)
 end
 --获取池对象
 function Pool:getPool(key, isCreate)
-    isCreate = isCreate or true
+    isCreate = isCreate==nil and true or false
     local node = self.root:Find(key)
     if node == nil and isCreate then
         node = CS.UnityEngine.GameObject(key).transform
@@ -69,7 +72,7 @@ function Pool:loadPool(key, prefab, config)
         print('对象池已存在 无法加载>>>', key)
         return nil
     end
-    config = config or table.copy(DEFAULT_CONFIG)
+    config = config or table.deepCopy(DEFAULT_CONFIG)
     for key, value in pairs(DEFAULT_CONFIG) do
         if config[key] == nil then
             config[key] = value

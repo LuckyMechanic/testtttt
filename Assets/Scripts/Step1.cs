@@ -1,8 +1,11 @@
-﻿using System.IO;
+﻿using System.Net.Mime;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using XLua;
+using UnityEngine.UI;
+
 [LuaCallCSharp]
 public class Step1 : MonoBehaviour
 {
@@ -45,6 +48,21 @@ public class Step1 : MonoBehaviour
         t.Start();
         // 实例化调用一下
         // var mgr = LuaEnvManager.Instance;
+
+        // Camera camera = gameObject.GetComponent<Camera>();
+        // camera.clearFlags = CameraClearFlags.Depth;
+        // camera.cullingMask = LayerMask.NameToLayer("UI");
+        // camera.orthographic = true;
+        // camera.s
+
+        // CanvasScaler canvas = gameObject.GetComponent<CanvasScaler>();
+        // canvas.uiScaleMode = ScaleMode.ScaleToFit;
+        // canvas.uiScaleMode = ScaleMode.StretchToFill
+        // canvas.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize
+        // canvas.referenceResolution =
+        // canvas.renderMode =
+        // GraphicRaycaster graphicRaycaster = gameObject.GetComponent<GraphicRaycaster>()
+
     }
 
     private void cll(string obj)

@@ -12,8 +12,5 @@ public class Main
         MonoUtil.Instance.MonoGo.AddComponent<TestConsole>().Show();
 
         LuaEnvManager.Instance.Load();
-
-
-
     }
 }

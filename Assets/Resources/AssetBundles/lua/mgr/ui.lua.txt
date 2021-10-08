@@ -1,0 +1,40 @@
+local UI = class('UI')
+
+local createUIRoot = function ()
+    local uiRoot = CS.UnityEngine.GameObject('UIRoot').transform
+    CS.UnityEngine.GameObject.DontDestroyOnLoad(uiRoot.gameObject)
+
+    local cameraNode = CS.UnityEngine.GameObject('UICamera').transform
+    cameraNode.parent = uiRoot
+    local uiCamera = comp:addCSComponent(cameraNode,CS.UnityEngine.Camera)
+    uiCamera.clearFlags = CS.UnityEngine.CameraClearFlags.Depth
+    uiCamera.cullingMask = CS.UnityEngine.LayerMask.GetMask("UI")
+    uiCamera.orthographic = true
+    uiCamera.orthographicSize = 7
+    uiCamera.depth = 100
+
+    local uiCanvas = CS.UnityEngine.GameObject('UICanvas').transform
+    uiCanvas.parent = uiRoot
+    uiCanvas = comp:addCSComponent(uiCanvas,CS.UnityEngine.RectTransform)
+    local canvas = comp:addCSComponent(uiCanvas,CS.UnityEngine.Canvas)
+    canvas.renderMode = CS.UnityEngine.RenderMode.ScreenSpaceCamera
+    canvas.worldCamera = uiCamera
+    local canvasScaler = comp:addCSComponent(uiCanvas,CS.UnityEngine.UI.CanvasScaler)
+    canvasScaler.uiScaleMode = CS.UnityEngine.UI.CanvasScaler.ScaleMode.ScaleWithScreenSize
+    canvasScaler.referenceResolution = Vector2(1334,750)
+    local graphicRaycaster = comp:addCSComponent(uiCanvas,CS.UnityEngine.UI.GraphicRaycaster)
+
+    local eventSystem = CS.UnityEngine.GameObject('EventSystem').transform
+    eventSystem.parent = uiRoot
+    comp:addCSComponent(eventSystem,CS.UnityEngine.EventSystems.EventSystem)
+    comp:addCSComponent(eventSystem,CS.UnityEngine.EventSystems.StandaloneInputModule)
+
+    return uiRoot,uiCamera,uiCanvas
+end
+
+function UI:ctor()
+    self.uiRoot,self.uiCamera,self.uiCanvas = createUIRoot()
+
+end
+
+return UI

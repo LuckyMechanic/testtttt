@@ -1,6 +1,6 @@
 local Log = {}
 
-local STACK_CNT = 1
+local STACK_CNT = 1     -- 显示堆栈层级数量
 
 local getColorText = function (color,text)
     local result = ''

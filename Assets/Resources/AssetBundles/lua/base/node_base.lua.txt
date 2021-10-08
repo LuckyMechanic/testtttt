@@ -1,0 +1,12 @@
+-- node基类 将Lua代码绑定至某游戏物体
+local base = require('lifecycle_base')
+local NodeBase = class('NodeBase', base)
+
+function NodeBase:ctor(node,...)
+    self:bind(node)
+end
+function NodeBase:bind(node)
+    self.node = node
+end
+
+return NodeBase

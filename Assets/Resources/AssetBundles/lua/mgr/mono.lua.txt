@@ -1,0 +1,47 @@
+local Mono = class("Mono")
+local CSMonoUtil = CS.MonoUtil.Instance
+local MonoComp = CSMonoUtil.MonoComponent
+
+local monoEventMap = {}
+
+function Mono:ctor()
+    self.monoNode = CSMonoUtil.MonoNode
+    for index, mono in ipairs(MONO_LIFECYCLE.GLOBAL) do
+        monoEventMap[mono] = function(arg1)  -- 目前只可能有一个参数
+            broadcast:notify(BROADCAST_CODE.MONO(mono), arg1)
+        end
+    end
+    -- Mono调用顺序不可控导致的问题，起始函数手动调用
+    monoEventMap['Awake']()
+    monoEventMap['OnEnable']()
+    monoEventMap['Start']()
+
+    self:Regist();
+    broadcast:on(BROADCAST_CODE.MONO("OnDisable"),function()
+        -- 由于Mono调用顺序不可控，导致OnDestroy不一定会成功调用 因此监听OnDisable来手动调用
+        monoEventMap['OnDestroy']()
+        self:close()
+    end)
+end
+function Mono:Regist()
+    for index, mono in ipairs(MONO_LIFECYCLE.GLOBAL) do
+        if(not table.exist({'Awake','Start','OnDestroy'},mono)) then    -- Mono调用顺序不可控导致的问题，部分函数需要手动调用
+            local eventName = string.format("%sEvent",mono)
+            MonoComp[eventName](MonoComp,"+",monoEventMap[mono])
+        end
+    end
+end
+function Mono:UnRegist()
+    for index, mono in ipairs(MONO_LIFECYCLE.GLOBAL) do
+        if(not table.exist({'Awake','Start','OnDestroy'},mono)) then    -- Mono调用顺序不可控导致的问题，部分函数需要手动调用
+            local eventName = string.format("%sEvent",mono)
+            MonoComp[eventName](MonoComp,"-",monoEventMap[mono])
+        end
+    end
+end
+
+function Mono:close()
+    self:UnRegist();
+end
+
+return Mono

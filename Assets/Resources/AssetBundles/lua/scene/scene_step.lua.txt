@@ -28,6 +28,22 @@ function Scene:onLoad()
     log.print(Vector2.one)
 
     log.print(Date.toTable(10))
+
+    -- for i = 1, 10 do
+    --     local tempcomp = comp:addCSComponent(img.transform,CS.LuaComponent)
+    --     tempcomp.LuaName = '我是LuaComp'..i
+    -- end
+
+    -- local arr = comp:getCsComponents(img.transform,CS.LuaComponent)
+    -- for i = 0, arr.Length-1 do
+    --     local tempcomp = arr:GetValue(i)
+    --     print(tempcomp.LuaName)
+    -- end
+
+    local tettet = comp:addComponent(img.transform,'comp_test1')
+    tettet = comp:getComponent(img.transform,'Test1')
+    tettet:log();
+    -- comp:closeComponent(img.transform,tettet)
 end
 
 return Scene

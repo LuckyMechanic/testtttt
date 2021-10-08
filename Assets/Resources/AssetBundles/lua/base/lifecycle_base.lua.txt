@@ -1,3 +1,4 @@
+-- Lua生命周期基类 管理广播、计时器、资源等内存的注册与卸载
 local LifecycleBase = class('LifecycleBase')
 LifecycleBase.override = {close = false}
 -------------------- 继承重写 --------------------
