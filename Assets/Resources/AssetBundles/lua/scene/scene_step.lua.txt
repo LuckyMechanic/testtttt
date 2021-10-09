@@ -6,7 +6,7 @@ local SceneStep = class('scene_step', base)
 function SceneStep:onLoad()
     log.print("进入场景Step")
 
-    scene:load("Game",nil,nil,1,2,{a=123})
+    -- scene:load("Game",nil,nil,1,2,{a=123})
 
     local go = CS.UnityEngine.GameObject.Find('Image')
     local img = go:GetComponent(typeof(CS.UnityEngine.UI.Image))
@@ -46,6 +46,11 @@ function SceneStep:onLoad()
     -- tettet:closeSelf()
     -- comp:closeComponent(img.transform,tettet)
 
+
+
+    ui:load("ui_msg",nil,function(ccc)
+        scene:load("Game",nil,nil,1,2,{a=123})
+    end)
 
 end
 

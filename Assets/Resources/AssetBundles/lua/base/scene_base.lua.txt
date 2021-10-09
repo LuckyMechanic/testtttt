@@ -40,6 +40,10 @@ end
 -- 开始加载
 function SceneBase:onLoadStart(...)
     log.print("[Sence]","[LoadStart]",string.format('[%s]',self.className),...);
+
+    if(self.LOAD_ARG.CLOASE_ALLUI) then
+        ui:closeAllUI()
+    end
 end
 -- 加载过程
 function SceneBase:onLoading(ao,progress,...)
