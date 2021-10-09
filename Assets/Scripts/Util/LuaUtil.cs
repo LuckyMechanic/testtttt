@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class LuaUtil : Singleton<LuaUtil>
 {
+    public bool IsNull(UnityEngine.Object obj)
+    {
+        return obj == null;
+    }
     public void LoadScene(string name, Action<AsyncOperation> cb = null, Action<AsyncOperation, float> loadingFunc = null, bool allowSceneActivation = true, LoadSceneMode mode = LoadSceneMode.Single)
     {
         MonoUtil.Instance.StartCoroutine(_loadScene(name, cb, loadingFunc, allowSceneActivation, mode));

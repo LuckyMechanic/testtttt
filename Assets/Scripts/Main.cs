@@ -9,8 +9,9 @@ public class Main
         MonoUtil.Instance.Load();
         AssetUtil.Instance.Load();
 
-        MonoUtil.Instance.MonoGo.AddComponent<TestConsole>().Show();
+        // MonoUtil.Instance.MonoGo.AddComponent<TestConsole>().Show();
 
         LuaEnvManager.Instance.Load();
+
     }
 }

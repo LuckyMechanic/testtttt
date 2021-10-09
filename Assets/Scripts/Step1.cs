@@ -63,6 +63,8 @@ public class Step1 : MonoBehaviour
         // canvas.renderMode =
         // GraphicRaycaster graphicRaycaster = gameObject.GetComponent<GraphicRaycaster>()
 
+        // transform.layer
+        // transform.GetComponent<RectTransform>()
     }
 
     private void cll(string obj)

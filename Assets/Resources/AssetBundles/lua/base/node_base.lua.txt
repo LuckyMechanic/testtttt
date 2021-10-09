@@ -1,10 +1,17 @@
 -- node基类 将Lua代码绑定至某游戏物体
 local base = require('lifecycle_base')
 local NodeBase = class('NodeBase', base)
-
+-- 构造函数只是为了方便快速绑定物体，主要入口逻辑应该写在bind函数
 function NodeBase:ctor(node,...)
-    self:bind(node)
+    -- 确定传入Transform才绑定
+    if(node~=nil and node.GetType~=nil) then
+        local typeName = node:GetType().Name
+        if( typeName == "Transform" or typeName == "RectTransform" ) then
+            self:bind(node)
+        end
+    end
 end
+-- 主入口 绑定后才进行各种操作
 function NodeBase:bind(node)
     self.node = node
 end

@@ -1,5 +1,5 @@
 local UI = class('UI')
-
+local UILAYER = CS.UnityEngine.LayerMask.NameToLayer("UI")
 local createUIRoot = function ()
     local uiRoot = CS.UnityEngine.GameObject('UIRoot').transform
     CS.UnityEngine.GameObject.DontDestroyOnLoad(uiRoot.gameObject)
@@ -14,6 +14,7 @@ local createUIRoot = function ()
     uiCamera.depth = 100
 
     local uiCanvas = CS.UnityEngine.GameObject('UICanvas').transform
+    uiCanvas.gameObject.layer = UILAYER;
     uiCanvas.parent = uiRoot
     uiCanvas = comp:addCSComponent(uiCanvas,CS.UnityEngine.RectTransform)
     local canvas = comp:addCSComponent(uiCanvas,CS.UnityEngine.Canvas)
@@ -34,7 +35,75 @@ end
 
 function UI:ctor()
     self.uiRoot,self.uiCamera,self.uiCanvas = createUIRoot()
+    self.uiInfoArr = {}
+end
 
+function UI:load(id,loadArg,cb,...)
+    local arg = {...}
+    local uiclass = require(id):new(loadArg,...)
+    uiclass:onLoadStart(...)
+    asset:loadPrefabAsync(
+        uiclass.ASSET_CONFIG.key,
+        uiclass.ASSET_CONFIG.assetName,
+        function(prefab)
+            table.insert(self.uiInfoArr,{id=id,asset=prefab,class=uiclass})
+            local node = self:createUINode(prefab)
+            uiclass:bind(node)
+            uiclass:onLoadEnd(table.unpack(arg))
+            if(cb~=nil) then cb(uiclass) end
+        end
+    )
+    return uiclass
+end
+function UI:onUIClose(uiInfo)
+    uiInfo.class:close()
+    CS.UnityEngine.GameObject.Destroy(uiInfo.class.node.gameObject)
+    asset:unloadAsset(uiInfo.asset)
+end
+-- 通过类实例卸载UI 只卸载一个
+function UI:closeUIFromClass(class)
+    for index, uiInfo in ipairs(self.uiInfoArr) do
+        if(uiInfo.class==class) then
+            self:onUIClose(uiInfo)
+            table.remove(self.uiInfoArr, index)
+            return true
+        end
+    end
+    return false
+end
+-- 通过ID卸载UI 允许卸载多个
+function UI:closeUIFromID(id)
+    local count = 0
+    for index, uiInfo in ipairs(self.uiInfoArr) do
+        if(uiInfo.id==id) then
+            self:onUIClose(uiInfo)
+            table.remove(self.uiInfoArr, index)
+            count = count + 1
+        end
+    end
+    return count
+end
+function UI:closeAllUI(id)
+    for index, uiInfo in ipairs(self.uiInfoArr) do
+        self:onUIClose(uiInfo)
+        table.remove(self.uiInfoArr, index)
+    end
+    self.uiInfoArr = {}
+end
+-- 创建UI物体实例
+function UI:createUINode(prefab)
+    local node = CS.UnityEngine.GameObject.Instantiate(prefab).transform
+    node = comp:getCSComponent(node,CS.UnityEngine.RectTransform)
+    node.gameObject:SetActive(false)
+    node:SetParent(self.uiCanvas)
+    node.gameObject.layer = UILAYER;
+    node.anchorMin = Vector2.zero
+    node.anchorMax = Vector2.one
+    node.offsetMin = Vector2.zero
+    node.offsetMax = Vector2.zero
+    node.anchoredPosition3D = Vector3.zero
+    node.localScale = Vector3.one
+    return node
 end
 
 return UI

@@ -1,12 +1,12 @@
 local base = require('scene_base')
-local Scene = class('Step', base)
+local SceneStep = class('scene_step', base)
 
 
 -- 加载完毕
-function Scene:onLoad()
+function SceneStep:onLoad()
     log.print("进入场景Step")
 
-    -- scene:load("Game",1,2,{a=123})
+    scene:load("Game",nil,nil,1,2,{a=123})
 
     local go = CS.UnityEngine.GameObject.Find('Image')
     local img = go:GetComponent(typeof(CS.UnityEngine.UI.Image))
@@ -40,10 +40,13 @@ function Scene:onLoad()
     --     print(tempcomp.LuaName)
     -- end
 
-    local tettet = comp:addComponent(img.transform,'comp_test1')
-    tettet = comp:getComponent(img.transform,'Test1')
-    tettet:log();
+    -- local tettet = comp:addComponent(img.transform,'comp_test1')
+    -- tettet = comp:getComponent(img.transform,'comp_test1')
+    -- tettet:log();
+    -- tettet:closeSelf()
     -- comp:closeComponent(img.transform,tettet)
+
+
 end
 
-return Scene
+return SceneStep

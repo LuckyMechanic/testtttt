@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3951072344
+CRC: 3929441337
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: d127af9a55005d842a56ffe0d7ec8490
+    Hash: c95777c540658990ad0a9ef5b3bd0b48
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5ad585dd02dfb5016c0dad519eab8f49
@@ -13,32 +13,47 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/Resources/AssetBundles/lua/util/utils.lua.txt
-- Assets/Resources/AssetBundles/lua/tool/template/template.lua.txt
-- Assets/Resources/AssetBundles/lua/tool/template/manager/template_propsManager.lua.txt
+- Assets/Resources/AssetBundles/lua/template/template.lua.txt
+- Assets/Resources/AssetBundles/lua/mgr/broadcast.lua.txt
+- Assets/Resources/AssetBundles/lua/template/manager/template_propsManager.lua.txt
 - Assets/Resources/AssetBundles/lua/util/string_util.lua.txt
-- Assets/Resources/AssetBundles/lua/tool/template/data/template_error_info.lua.txt
+- Assets/Resources/AssetBundles/lua/base/lifecycle_base.lua.txt
+- Assets/Resources/AssetBundles/lua/template/data/template_error_info.lua.txt
+- Assets/Resources/AssetBundles/lua/mgr/comp.lua.txt
 - Assets/Resources/AssetBundles/lua/tool/middleware.lua.txt
+- Assets/Resources/AssetBundles/lua/unityEngine/vector3.lua.txt
 - Assets/Resources/AssetBundles/lua/util/table_util.lua.txt
-- Assets/Resources/AssetBundles/lua/tool/timer/timer.lua.txt
+- Assets/Resources/AssetBundles/lua/unityEngine/vector2.lua.txt
+- Assets/Resources/AssetBundles/lua/mgr/timer/timer.lua.txt
 - Assets/Resources/AssetBundles/lua/tool/try.lua.txt
+- Assets/Resources/AssetBundles/lua/mgr/pool.lua.txt
 - Assets/Resources/AssetBundles/lua/util/date_util.lua.txt
-- Assets/Resources/AssetBundles/lua/tool/template/data/template_props.lua.txt
-- Assets/Resources/AssetBundles/lua/tool/template/manager/template_error_infoManager.lua.txt
+- Assets/Resources/AssetBundles/lua/template/data/template_props.lua.txt
+- Assets/Resources/AssetBundles/lua/template/manager/template_error_infoManager.lua.txt
+- Assets/Resources/AssetBundles/lua/base/ui_base.lua.txt
+- Assets/Resources/AssetBundles/lua/scene/scene_game.lua.txt
+- Assets/Resources/AssetBundles/lua/mgr/scene.lua.txt
+- Assets/Resources/AssetBundles/lua/mgr/ui.lua.txt
 - Assets/Resources/AssetBundles/lua/config/MONO_LIFECYCLE.lua.txt
-- Assets/Resources/AssetBundles/lua/tool/asset.lua.txt
+- Assets/Resources/AssetBundles/lua/base/scene_base.lua.txt
 - Assets/Resources/AssetBundles/lua/tool/log.lua.txt
-- Assets/Resources/AssetBundles/lua/tool/template/base/template_model_base.lua.txt
-- Assets/Resources/AssetBundles/lua/tool/pool.lua.txt
+- Assets/Resources/AssetBundles/lua/base/node_base.lua.txt
+- Assets/Resources/AssetBundles/lua/template/base/template_model_base.lua.txt
 - Assets/Resources/AssetBundles/lua/base/global.lua.txt
-- Assets/Resources/AssetBundles/lua/tool/template/base/template_manager_base.lua.txt
-- Assets/Resources/AssetBundles/lua/tool/template/model/template_propsModel.lua.txt
+- Assets/Resources/AssetBundles/lua/comp/comp_test1.lua.txt
+- Assets/Resources/AssetBundles/lua/mgr/mono.lua.txt
+- Assets/Resources/AssetBundles/lua/mgr/asset.lua.txt
+- Assets/Resources/AssetBundles/lua/template/base/template_manager_base.lua.txt
+- Assets/Resources/AssetBundles/lua/base/comp_base.lua.txt
+- Assets/Resources/AssetBundles/lua/template/model/template_propsModel.lua.txt
 - Assets/Resources/AssetBundles/lua/config/BROADCAST_CODE.lua.txt
 - Assets/Resources/AssetBundles/lua/base/class.lua.txt
-- Assets/Resources/AssetBundles/lua/tool/broadcast.lua.txt
-- Assets/Resources/AssetBundles/lua/tool/timer/timer_model.lua.txt
-- Assets/Resources/AssetBundles/lua/tool/mono.lua.txt
+- Assets/Resources/AssetBundles/lua/mgr/timer/timer_model.lua.txt
+- Assets/Resources/AssetBundles/lua/ui/ui_msg.lua.txt
+- Assets/Resources/AssetBundles/lua/unityEngine/color.lua.txt
+- Assets/Resources/AssetBundles/lua/scene/scene_step.lua.txt
 - Assets/Resources/AssetBundles/lua/main.lua.txt
-- Assets/Resources/AssetBundles/lua/tool/template/model/template_error_infoModel.lua.txt
+- Assets/Resources/AssetBundles/lua/template/model/template_error_infoModel.lua.txt
 - Assets/Resources/AssetBundles/lua/tool/downloadFile.lua.txt
 - Assets/Resources/AssetBundles/lua/config/GAME_CONST.lua.txt
 Dependencies: []

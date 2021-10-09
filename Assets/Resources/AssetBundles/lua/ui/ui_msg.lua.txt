@@ -1,0 +1,5 @@
+local base = require('ui_base')
+local UIMsg = class('ui_msg', base)
+
+
+return UIMsg

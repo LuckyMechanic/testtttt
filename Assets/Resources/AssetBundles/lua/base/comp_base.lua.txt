@@ -64,7 +64,10 @@ function CompBase:UnRegistMonoLifecycle()
         end
     end
 end
-
+-- 卸载自身
+function CompBase:closeSelf()
+    comp:closeComponent(self)
+end
 function CompBase:OnDestroy()
     self:close();
 end

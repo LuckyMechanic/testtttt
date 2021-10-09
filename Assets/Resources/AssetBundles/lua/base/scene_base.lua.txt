@@ -3,14 +3,11 @@ local base = require('lifecycle_base')
 local SceneBase = class('SceneBase', base)
 
 SceneBase.override = {onLoadStart=false,onLoading=false,onLoadEnd=false,onLoad=false,close = false}
-
-SceneBase.getter = {
-    -- 加载参数
-    -- ALLOW_SCENE_ACTIVATION:加载场景完毕后是否自动进入
-    -- CLOASE_ALLUI:是否清理所有UI
-    LOAD_ARG = function (t) return { ALLOW_SCENE_ACTIVATION = true, CLOASE_ALLUI = true } end
-}
 -------------------- 继承重写 --------------------
+-- 加载参数
+-- ALLOW_SCENE_ACTIVATION:加载场景完毕后是否自动进入
+-- CLOASE_ALLUI:是否清理所有UI
+SceneBase.getter.LOAD_ARG = function (t) return { ALLOW_SCENE_ACTIVATION = true, CLOASE_ALLUI = true } end
 -- 开始加载
 function SceneBase:onLoadStart(...)
 end
@@ -28,9 +25,40 @@ function SceneBase:close()
 end
 -------------------- 继承重写 --------------------
 
-function SceneBase:ctor(...)
+function SceneBase:ctor(loadArg,...)
+    loadArg = loadArg or {}
+    for key, value in pairs(self.LOAD_ARG) do
+        if(loadArg[key] == nil) then
+            loadArg[key] = self.LOAD_ARG[key]
+        end
+    end
+    self.LOAD_ARG = loadArg
+
     self.name = self.className
     self.arg = {...}
 end
+-- 开始加载
+function SceneBase:onLoadStart(...)
+    log.print("[Sence]","[LoadStart]",string.format('[%s]',self.className),...);
+end
+-- 加载过程
+function SceneBase:onLoading(ao,progress,...)
+    log.print("[Sence]","[Loading]",string.format('[%s]',self.className),string.format("[%s/1.0]",progress),...);
+end
+-- 加载完毕
+function SceneBase:onLoadEnd(ao,...)
+    log.print("[Sence]","[LoadEnd]",string.format('[%s]',self.className),...);
 
+    if(self.LOAD_ARG.ALLOW_SCENE_ACTIVATION) then
+        ao.allowSceneActivation = true
+    end
+end
+-- 加载完毕并进入场景
+function SceneBase:onLoad(...)
+    log.print("[Sence]","[onLoad]",string.format('[%s]',self.className),...);
+end
+-- 卸载场景
+function SceneBase:close()
+    log.print("[Sence]","[UnLoad]",string.format('[%s]',self.className));
+end
 return SceneBase

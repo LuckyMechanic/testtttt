@@ -5,9 +5,13 @@ function Comp:addCSComponent(node, comp)
     return node.gameObject:AddComponent(typeof(comp))
 end
 function Comp:getCSComponent(node, comp)
-    return node.gameObject:GetComponent(typeof(comp))
+    local o = node.gameObject:GetComponent(typeof(comp))
+    if(CS.LuaUtil.Instance:IsNull(o)) then  -- 一个坑 有些时候C#判空但是Lua不判nil
+        return nil
+    end
+    return o
 end
-function Comp:getCsComponents(node,comp)
+function Comp:getCSComponents(node,comp)
     return node.gameObject:GetComponents(typeof(comp))
 end
 function Comp:closeCSComponent(comp)
@@ -46,7 +50,7 @@ function Comp:addComponent(node, compName, ...)
     return comp
 end
 function Comp:getComponent(node, compName)
-    local compList = self:getCsComponents(node,CS.LuaComponent)
+    local compList = self:getCSComponents(node,CS.LuaComponent)
     if compList.Length == 0 then
         return nil
     end

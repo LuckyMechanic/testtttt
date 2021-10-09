@@ -1,21 +1,26 @@
 local base = require('scene_base')
-local Scene = class('Game', base)
+local SceneGame = class('scene_game', base)
+
+-- 加载参数
+-- ALLOW_SCENE_ACTIVATION:加载场景完毕后是否自动进入
+-- CLOASE_ALLUI:是否清理所有UI
+SceneGame.getter.LOAD_ARG = function (t) return { ALLOW_SCENE_ACTIVATION = true, CLOASE_ALLUI = true } end
 
 -- 异步加载生命周期 开始加载
-function Scene:onLoadStart(a,b,c)
+function SceneGame:onLoadStart(a,b,c)
     log.print("开始加载>>",a,b,c)
 end
 -- 异步加载生命周期 加载过程
-function Scene:onLoading(ao,progress,a,b,c)
+function SceneGame:onLoading(ao,progress,a,b,c)
     log.print("正在加载>>",progress,a,b,c);
 end
 -- 异步加载生命周期 加载完毕
-function Scene:onLoadEnd(ao,a,b,c)
+function SceneGame:onLoadEnd(ao,a,b,c)
     log.print("加载完毕>>",a,b,c);
 end
 -- 加载完毕 适合直接加载的场景 只携带场景参数
-function Scene:onLoad(a,b,c)
+function SceneGame:onLoad(a,b,c)
     log.print("进入场景>>",a,b,c)
 end
 
-return Scene
+return SceneGame

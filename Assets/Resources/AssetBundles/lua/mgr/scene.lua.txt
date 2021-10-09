@@ -16,10 +16,9 @@ function Scene:ctor()
 
     -- 监听场景相关广播
     self:RegistSceneClass();
-    self:RegistLog();
 end
 
-function Scene:load(name,...)
+function Scene:load(name,loadArg,cb,...)
     if(self.nowScene~=nil) then
         broadcast:notify(BROADCAST_CODE.SCENE_UNLOAD,self.nowScene.name);
     end
@@ -27,56 +26,39 @@ function Scene:load(name,...)
     local cls = require(luaName)
 
     local arg = {...}
-    self.nowScene = cls:new(table.unpack(arg))
+    self.nowScene = cls:new(loadArg,table.unpack(arg))
 
-    broadcast:notify(BROADCAST_CODE.SCENE_LOAD_START, table.unpack(table.merge({name},arg)))
+    broadcast:notify(BROADCAST_CODE.SCENE_LOAD_START, table.unpack(arg))
     CS.LuaUtil.Instance:LoadScene(
         name,
         function(ao)
-            broadcast:notify(BROADCAST_CODE.SCENE_LOAD_END,table.unpack(table.merge({name,ao},arg)))
+            broadcast:notify(BROADCAST_CODE.SCENE_LOAD_END,table.unpack(table.merge({ao},arg)))
+            if(cb~=nil) then cb(name,ao) end
         end,
         function (ao, progress)
-            broadcast:notify(BROADCAST_CODE.SCENE_LOADING,table.unpack(table.merge({name,ao,progress},arg)))
+            broadcast:notify(BROADCAST_CODE.SCENE_LOADING,table.unpack(table.merge({ao,progress},arg)))
         end,
-        cls.LOAD_ARG.ALLOW_SCENE_ACTIVATION,
+        false,
         CS.UnityEngine.SceneManagement.LoadSceneMode.Single
     );
 end
 -- 注册Scene类基础功能
 function Scene:RegistSceneClass()
-    broadcast:on(BROADCAST_CODE.SCENE_UNLOAD,function(name)
+    broadcast:on(BROADCAST_CODE.SCENE_UNLOAD,function()
         self.nowScene:close()
     end)
-    broadcast:on(BROADCAST_CODE.SCENE_LOAD_START,function(name,...)
+    broadcast:on(BROADCAST_CODE.SCENE_LOAD_START,function(...)
         self.nowScene:onLoadStart(...);
     end)
-    broadcast:on(BROADCAST_CODE.SCENE_LOADING,function(name,...)
+    broadcast:on(BROADCAST_CODE.SCENE_LOADING,function(...)
         self.nowScene:onLoading(...);
     end)
-    broadcast:on(BROADCAST_CODE.SCENE_LOAD_END,function(name,...)
+    broadcast:on(BROADCAST_CODE.SCENE_LOAD_END,function(...)
         self.nowScene:onLoadEnd(...);
     end)
-    broadcast:on(BROADCAST_CODE.SCENE_LOAD,function(name,...)
+    broadcast:on(BROADCAST_CODE.SCENE_LOAD,function(...)
         self.nowScene:onLoad(...);
     end)
-end
--- 注册日志打印功能
-function Scene:RegistLog()
-    broadcast:on(BROADCAST_CODE.SCENE_UNLOAD,function(name)
-        log.print("[Sence]","[UnLoad]",string.format('[%s]',name));
-    end,-1)
-    broadcast:on(BROADCAST_CODE.SCENE_LOAD_START,function(name,...)
-        log.print("[Sence]",string.format('[%s]',name),"[LoadStart]",...);
-    end,-1)
-    broadcast:on(BROADCAST_CODE.SCENE_LOADING,function(name,ao,progress,...)
-        log.print("[Sence]",string.format('[%s]',name),"[Loading]",string.format("[%s/1.0]",progress),...);
-    end,-1)
-    broadcast:on(BROADCAST_CODE.SCENE_LOAD_END,function(name,ao,...)
-        log.print("[Sence]",string.format('[%s]',name),"[LoadEnd]",ao,...);
-    end,-1)
-    broadcast:on(BROADCAST_CODE.SCENE_LOAD,function(name,...)
-        log.print("[Sence]",string.format('[%s]',name),"[onLoad]",...);
-    end,-1)
 end
 
 return Scene
