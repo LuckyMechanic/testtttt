@@ -37,7 +37,7 @@ function UI:ctor()
     self.uiRoot,self.uiCamera,self.uiCanvas = createUIRoot()
     self.uiInfoArr = {}
 end
-
+-- 加载UI
 function UI:load(id,loadArg,cb,...)
     local arg = {...}
     local uiclass = require(id):new(loadArg,...)
@@ -55,6 +55,7 @@ function UI:load(id,loadArg,cb,...)
     )
     return uiclass
 end
+-- UI卸载回调
 function UI:onUIClose(uiInfo)
     uiInfo.class:close()
     CS.UnityEngine.GameObject.Destroy(uiInfo.class.node.gameObject)
@@ -83,6 +84,7 @@ function UI:closeUIFromID(id)
     end
     return count
 end
+-- 卸载所有UI
 function UI:closeAllUI(id)
     for index, uiInfo in ipairs(self.uiInfoArr) do
         self:onUIClose(uiInfo)
