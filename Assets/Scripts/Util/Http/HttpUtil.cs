@@ -128,9 +128,14 @@ public class HttpUtil : Singleton<HttpUtil>
         {
             HttpResult result = Post(request, body, (ex) =>
             {
+
                 ThreadUtil.Instance.PostMainThreadAction<Exception>(error, ex);
             });
-            ThreadUtil.Instance.PostMainThreadAction<HttpResult>(cb, result);
+            if (result.bytes.Length > 0)
+            {
+                ThreadUtil.Instance.PostMainThreadAction<HttpResult>(cb, result);
+            }
+
         }));
         thread.Start();
     }

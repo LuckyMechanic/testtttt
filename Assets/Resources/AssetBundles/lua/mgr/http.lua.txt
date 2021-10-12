@@ -73,14 +73,34 @@ function HTTP:ctor()
     self.token = nil
 end
 
+
+
 function HTTP:send(router, data, cb, errorFunc)
     local dataPack = {}
     dataPack.router = router
     dataPack[router] = data
     local buff = assert(pb.encode('http.rpc', dataPack))
     self:postAsync(GAME_CONST.API_URL,buff,function(result)
-        local rpc = assert(pb.decode('http.rpc',result.bytes))
-        log.print(rpc.router,rpc[rpc.router]);
+        local t_dataPack = assert(pb.decode('http.rpc',result.bytes))
+        local t_router = t_dataPack.router
+        local t_data = t_dataPack[t_router]
+
+        if(t_router=='error') then
+            -- 出现业务逻辑错误
+            return
+        end
+        if (t_data['token'] ~= nil) then
+            self.token = t_data['token']
+            log.print('[HTTP]',string.format('update token is %s',self.token))
+        end
+
+        if(cb~=nil) then
+            cb(t_router,t_data)
+        end
+    end,function(ex)
+        -- HTTP请求错误
+        -- Template.template_error_info.ROUTER_ERROR
+        log.error(ex:ToString())
     end)
 end
 
