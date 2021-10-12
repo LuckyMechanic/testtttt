@@ -6,7 +6,8 @@ if (GAME_CONST.PRO_ENV == ENV_TYPE.MASTER) then
 else
     GAME_CONST.API_URL = 'http://127.0.0.1:8200'
 end
-
+GAME_CONST.SOCKET_HOST = nil    -- socket host 动态赋值
+GAME_CONST.SOCKET_PORT = nil    -- socket port 动态赋值
 GAME_CONST.DOWNLOAD_URL = table.concat({'https://test-1251361371.cos-website.ap-nanjing.myqcloud.com/', 'Download/'})
 GAME_CONST.DOWNLOAD_VERSION_URL = table.concat({GAME_CONST.DOWNLOAD_URL, 'Version'})
 

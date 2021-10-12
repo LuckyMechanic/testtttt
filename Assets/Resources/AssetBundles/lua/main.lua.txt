@@ -26,20 +26,20 @@ if (GAME_CONST.PRO_ENV == ENV_TYPE.DEV) then -- 此处为断点代码，需要�
     }
 end
 
-local data = {router = 'register', register = {username = 'fdsajhfaskfl', password = 'sdafasdgasdf'}}
--- 序列化
-local buff = assert(pb.encode('http.rpc', data))
-log.print('序列化成功', buff, pb.tohex(buff))
--- 反序列化
-local rpc = assert(pb.decode('http.rpc', buff))
-log.print('反序列化成功', rpc)
+-- local data = {router = 'register', register = {username = 'fdsajhfaskfl', password = 'sdafasdgasdf'}}
+-- -- 序列化
+-- local buff = assert(pb.encode('http.rpc', data))
+-- log.print('序列化成功', buff, pb.tohex(buff))
+-- -- 反序列化
+-- local rpc = assert(pb.decode('http.rpc', buff))
+-- log.print('反序列化成功', rpc)
 
 -- log.print(200, '我是一个提示', {tip = '我是一个提示'})
 -- log.error(400, '我是一个错误', {tip = '我是一个错误'})
 -- log.warn(500, '我是一个警告', {tip = '我是一个警告'})
 
 
-scene:load('Step')
+-- scene:load('Step')
 
 -- Middleware:new():use(function(ctx,next)
 --     ui:load("ui_msg",nil,function(ccc)
@@ -61,3 +61,10 @@ scene:load('Step')
 -- ui:load("ui_msg",nil,function(ccc)
 --     -- ccc:closeSelf()
 -- end)
+
+
+-- print(CS.Step1.dic)
+
+local router = 'login'
+local data = {username='aaaa',password='bbb'}
+http:send(router,data)

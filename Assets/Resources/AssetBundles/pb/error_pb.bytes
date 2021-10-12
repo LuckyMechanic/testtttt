@@ -1,28 +1,13 @@
 
-’
-error.protoerror"I
-CError
-info (2.error.CErrorInfo
-data (2.error.ErrorData"I
-SError
-info (2.error.SErrorInfo
-data (2.error.ErrorData"3
-
-CErrorInfo
-
-id (
-code (	
-tip (	"g
-
-SErrorInfo
-
-id (
-code (	
-tip (	
-	clientTip (	
-	serverTip (	
-desc (	".
-	ErrorData!
-USER_BAN (2.error.USER_BAN"
-USER_BAN
-time (
+õ
+error.protoerror"S
+Error$
+info (2.error.ErrorInfoRinfo$
+data (2.error.ErrorDataRdata"1
+	ErrorInfo
+code (	Rcode
+tip (	Rtip"7
+	ErrorData*
+USER_BAN (2.error.USER_BANRUSERBAN"
+USER_BAN
+time (Rtime

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Main
@@ -12,6 +13,5 @@ public class Main
         // MonoUtil.Instance.MonoGo.AddComponent<TestConsole>().Show();
 
         LuaEnvManager.Instance.Load();
-
     }
 }

@@ -1,0 +1,87 @@
+local HTTP = class('Http')
+local CSHttpUtil = CS.HttpUtil.Instance
+-- 封装C#
+function HTTP:post(url, data, error)
+    local request = CS.System.Net.HttpWebRequest.Create(CS.System.Uri(url))
+    request.Timeout = 1000
+
+    local result =
+        CSHttpUtil:Post(
+        request,
+        data,
+        function(ex)
+            if (error ~= nil) then
+                error(ex)
+            end
+        end
+    )
+    return result
+end
+function HTTP:postAsync(url, data, cb, error)
+    local request = CS.System.Net.HttpWebRequest.Create(CS.System.Uri(url))
+    request.Timeout = 1000
+
+    CSHttpUtil:PostAsync(
+        request,
+        data,
+        function(result)
+            if (cb ~= nil) then
+                cb(result)
+            end
+        end,
+        function(ex)
+            if (error ~= nil) then
+                error(ex)
+            end
+        end
+    )
+end
+function HTTP:get(url, error)
+    local request = CS.System.Net.HttpWebRequest.Create(CS.System.Uri(url))
+    request.Timeout = 1000
+
+    local result =
+        CSHttpUtil:Get(
+        request,
+        function(ex)
+            if (error ~= nil) then
+                error(ex)
+            end
+        end
+    )
+    return result
+end
+function HTTP:getAsync(url, cb, error)
+    local request = CS.System.Net.HttpWebRequest.Create(System.Uri(url))
+    request.Timeout = 1000
+    CSHttpUtil:GetAsync(
+        request,
+        function(result)
+            if (cb ~= nil) then
+                cb(result)
+            end
+        end,
+        function(ex)
+            if (error ~= nil) then
+                error(ex)
+            end
+        end
+    )
+end
+-- 业务逻辑
+function HTTP:ctor()
+    self.token = nil
+end
+
+function HTTP:send(router, data, cb, errorFunc)
+    local dataPack = {}
+    dataPack.router = router
+    dataPack[router] = data
+    local buff = assert(pb.encode('http.rpc', dataPack))
+    self:postAsync(GAME_CONST.API_URL,buff,function(result)
+        local rpc = assert(pb.decode('http.rpc',result.bytes))
+        log.print(rpc.router,rpc[rpc.router]);
+    end)
+end
+
+return HTTP

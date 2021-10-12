@@ -9,6 +9,7 @@ using UnityEngine.UI;
 [LuaCallCSharp]
 public class Step1 : MonoBehaviour
 {
+    public static Dictionary<string, string> dic = new Dictionary<string, string>();
 
     public static byte[] buff
     {
@@ -38,7 +39,6 @@ public class Step1 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         ThreadUtil.Instance.MainThreadSynContext = System.Threading.SynchronizationContext.Current;
 
         var t = new System.Threading.Thread((obj) =>

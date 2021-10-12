@@ -1,41 +1,41 @@
 
-ú
-model.protomodel"Z
-UserInfo
-uid (	
-username (	
-banTime (
-state (
-lastAid ("4
-AreaInfo
-aid (
-name (	
-state (" 
+¹
+model.protomodel"‚
+UserInfo
+uid (	Ruid
+username (	Rusername
+banTime (RbanTime
+state (Rstate
+lastAid (RlastAid"F
+AreaInfo
+aid (Raid
+name (	Rname
+state (Rstate"ä
 
-PlayerInfo
-pid (	
-uid (	
-aid (
-name (	
+PlayerInfo
+pid (	Rpid
+uid (	Ruid
+aid (Raid
+name (	Rname
+lv (Rlv
+exp (Rexp
+	loginTime (R	loginTime
 
-lv (
-exp (
-	loginTime (
-
-logoutTime (
-online	 (
+logoutTime (R
+logoutTime
+online	 (Ronline
 state
- ("6
-ServerConfig
+ (Rstate"F
+ServerConfig
+id (Rid
+host (	Rhost
+port (Rport"L
+PlayerCurrency
+	currency0 (R	currency0
+	currency1 (R	currency1"Y
+PlayerProps
+propsId (RpropsId
+cnt (Rcnt
 
-id (
-host (	
-port ("6
-PlayerCurrency
-	currency0 (
-	currency1 ("?
-PlayerProps
-propsId (
-cnt (
-
-createTime (
+createTime (R
+createTime
