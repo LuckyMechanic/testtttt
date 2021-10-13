@@ -44,21 +44,26 @@ function Scene:load(name,loadArg,cb,...)
 end
 -- 注册Scene类基础功能
 function Scene:RegistSceneClass()
-    broadcast:on(BROADCAST_CODE.SCENE_UNLOAD,function()
-        self.nowScene:close()
-    end)
-    broadcast:on(BROADCAST_CODE.SCENE_LOAD_START,function(...)
-        self.nowScene:onLoadStart(...);
-    end)
-    broadcast:on(BROADCAST_CODE.SCENE_LOADING,function(...)
-        self.nowScene:onLoading(...);
-    end)
-    broadcast:on(BROADCAST_CODE.SCENE_LOAD_END,function(...)
-        self.nowScene:onLoadEnd(...);
-    end)
-    broadcast:on(BROADCAST_CODE.SCENE_LOAD,function(...)
-        self.nowScene:onLoad(...);
-    end)
+    broadcast:on(BROADCAST_CODE.SCENE_UNLOAD,self.onSceneUnLoad,self)
+    broadcast:on(BROADCAST_CODE.SCENE_LOAD_START,self.onSceneLoadStart,self)
+    broadcast:on(BROADCAST_CODE.SCENE_LOADING,self.onSceneLoading,self)
+    broadcast:on(BROADCAST_CODE.SCENE_LOAD_END,self.onSceneLoadEnd,self)
+    broadcast:on(BROADCAST_CODE.SCENE_LOAD,self.onSceneLoad,self)
 end
 
+function Scene:onSceneUnLoad()
+    self.nowScene:close()
+end
+function Scene:onSceneLoadStart(...)
+    self.nowScene:onLoadStart(...)
+end
+function Scene:onSceneLoading(...)
+    self.nowScene:onLoading(...)
+end
+function Scene:onSceneLoadEnd(...)
+    self.nowScene:onLoadEnd(...)
+end
+function Scene:onSceneLoad(...)
+    self.nowScene:onLoad(...)
+end
 return Scene

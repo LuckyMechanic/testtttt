@@ -44,7 +44,7 @@ public class HttpUtil : Singleton<HttpUtil>
             response.Close();
             request.Abort();
             byte[] bytes = byteArray.ToArray();
-            if (bytes.Length > 0)
+            if (bytes.Length >= 0)
             {
                 return new HttpResult() { code = code, bytes = bytes, response = response };
             }
@@ -66,7 +66,7 @@ public class HttpUtil : Singleton<HttpUtil>
             {
                 ThreadUtil.Instance.PostMainThreadAction<Exception>(error, ex);
             });
-            if (result.bytes.Length > 0)
+            if (result.code != -1)
             {
                 ThreadUtil.Instance.PostMainThreadAction<HttpResult>(cb, result);
             }
@@ -108,7 +108,7 @@ public class HttpUtil : Singleton<HttpUtil>
             response.Close();
             request.Abort();
             byte[] bytes = byteArray.ToArray();
-            if (bytes.Length > 0)
+            if (bytes.Length >= 0)
             {
                 return new HttpResult() { code = code, bytes = bytes, response = response };
             }
@@ -131,7 +131,7 @@ public class HttpUtil : Singleton<HttpUtil>
 
                 ThreadUtil.Instance.PostMainThreadAction<Exception>(error, ex);
             });
-            if (result.bytes.Length > 0)
+            if (result.code != -1)
             {
                 ThreadUtil.Instance.PostMainThreadAction<HttpResult>(cb, result);
             }

@@ -34,8 +34,8 @@ function LifecycleBase:timer_clear()
     end
     self.timerMap = {}
 end
-function LifecycleBase:broadcast_on(key, callback, order, isOnce)
-    local flag = broadcast:on(key, callback, order, isOnce)
+function LifecycleBase:broadcast_on(key, callback, this, order, isOnce)
+    local flag = broadcast:on(key, callback, this, order, isOnce)
     if flag then
         local info = {key = key, callback = callback}
         table.insert(self.broadcastMap, info)

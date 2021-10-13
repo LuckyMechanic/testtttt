@@ -97,7 +97,8 @@ function HTTP:send(router, data, cb, errorFunc)
         if(cb~=nil) then
             cb(t_router,t_data)
         end
-    end,function(ex)
+    end,
+    function(ex)
         -- HTTP请求错误
         -- Template.template_error_info.ROUTER_ERROR
         log.error(ex:ToString())

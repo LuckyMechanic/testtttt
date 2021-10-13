@@ -60,12 +60,7 @@ function Timer:update()
     timerDelTempList = {}
 end
 function Timer:ctor()
-    broadcast:on(
-        BROADCAST_CODE.MONO("Update"),
-        function()
-            self:update()
-        end
-    )
+    broadcast:on(BROADCAST_CODE.MONO("Update"),self.update,self)
 end
 
 --生成时钟
