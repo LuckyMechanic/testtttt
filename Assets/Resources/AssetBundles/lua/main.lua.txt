@@ -62,9 +62,6 @@ end
 --     -- ccc:closeSelf()
 -- end)
 
-
--- print(CS.Step1.dic)
-
 local router = 'login'
 local data = {username='aaaa',password='bbb'}
 http:send(router,data)

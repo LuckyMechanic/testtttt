@@ -101,7 +101,7 @@ table.toString = function ( t,depth,child )
 	elseif(type(t)=='table') then
 		local tstr = ''
 		if(depth<=0) then
-			tstr = table.concat({'[',tostring(t),']'})
+			return table.concat({'[',tostring(t),']'})
 		end
 		local arr = {}
 		if(table.isArray(t)) then

@@ -16,9 +16,15 @@ BROADCAST_CODE.SCENE_UNLOAD = 'SCENE_UNLOAD'
 BROADCAST_CODE.MONO = function(type)
     return string.format("MONO_%s",string.upper(type))
 end
+-- HTTP接收回调
+-- 作为函数代表key时，可触发所有Http接收
+-- 作为函数调用代表key时，可触发指定的Http接收
+BROADCAST_CODE.HTTP_ERROR = function(errorInfo)
+    return string.format("HTTP_ERROR_%s",string.upper(errorInfo.code))
+end
 -- HTTP错误回调
--- 作为函数代表key时，可触发所有HttpError
--- 作为函数调用代表key时，可触发指定的HttpError
+-- 作为函数代表key时，可触发所有Http错误
+-- 作为函数调用代表key时，可触发指定的Http错误
 BROADCAST_CODE.HTTP_ERROR = function(errorInfo)
     return string.format("HTTP_ERROR_%s",string.upper(errorInfo.code))
 end

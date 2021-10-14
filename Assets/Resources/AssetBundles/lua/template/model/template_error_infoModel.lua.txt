@@ -9,6 +9,10 @@ end
 
 -- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ 可编辑区块 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
+function Model:get_tip()
+    return self:get_clientTip()
+end
+
 function Model:equal(tplModel)
     return self:get_code() == tplModel:get_code();
 end

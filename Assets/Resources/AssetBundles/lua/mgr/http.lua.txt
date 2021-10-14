@@ -72,10 +72,14 @@ end
 function HTTP:ctor()
     self.token = nil
 end
-
-
-
+function HTTP:onError(errorInfo,errorData,rpcRouter,rpcData)
+    log.error('[HTTP]',errorInfo:get_code(),errorInfo:get_tip(),errorData)
+end
+function HTTP:onReceive(retRouter,retData,rpcRouter,rpcData)
+    log.print('[HTTP]','[ToClient]',retRouter,retData)
+end
 function HTTP:send(router, data, cb, errorFunc)
+    log.print('[HTTP]','[ToServer]',router,data)
     local dataPack = {}
     dataPack.router = router
     dataPack[router] = data
@@ -87,6 +91,11 @@ function HTTP:send(router, data, cb, errorFunc)
 
         if(t_router=='error') then
             -- 出现业务逻辑错误
+            local errorInfo = Template.template_error_info[t_data.info.code]
+            if(errorFunc~=nil) then
+                errorFunc(errorInfo,t_data.data,router,data)
+            end
+            self:onError(errorInfo,t_data.data,router,data)
             return
         end
         if (t_data['token'] ~= nil) then
@@ -97,12 +106,18 @@ function HTTP:send(router, data, cb, errorFunc)
         if(cb~=nil) then
             cb(t_router,t_data)
         end
+        self:onReceive(t_router,t_data,router,data)
     end,
     function(ex)
         -- HTTP请求错误
-        -- Template.template_error_info.ROUTER_ERROR
-        log.error(ex:ToString())
+        local errorInfo = Template.template_error_info.HTTP_ERROR
+        if(errorFunc~=nil) then
+            errorFunc(errorInfo,ex,router,data)
+        end
+        self:onError(errorInfo,ex,router,data)
     end)
 end
+
+
 
 return HTTP
