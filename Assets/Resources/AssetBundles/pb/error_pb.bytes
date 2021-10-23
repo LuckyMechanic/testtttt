@@ -1,13 +1,11 @@
 
-õ
-error.protoerror"S
-Error$
-info (2.error.ErrorInfoRinfo$
-data (2.error.ErrorDataRdata"1
-	ErrorInfo
-code (	Rcode
-tip (	Rtip"7
-	ErrorData*
-USER_BAN (2.error.USER_BANRUSERBAN"
-USER_BAN
-time (Rtime
+“
+error.protoerror"3
+Error
+
+id (	
+data (2.error.ErrorData".
+	ErrorData!
+USER_BAN (2.error.USER_BAN"
+USER_BAN
+time (

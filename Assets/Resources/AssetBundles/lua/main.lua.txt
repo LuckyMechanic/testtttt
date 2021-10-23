@@ -26,6 +26,8 @@ if (GAME_CONST.PRO_ENV == ENV_TYPE.DEV) then -- 此处为断点代码，需要�
     }
 end
 
+-- GAME_CONST.TEST_CONSOLE_COMP:Show()
+
 -- local data = {router = 'register', register = {username = 'fdsajhfaskfl', password = 'sdafasdgasdf'}}
 -- -- 序列化
 -- local buff = assert(pb.encode('http.rpc', data))
@@ -63,5 +65,5 @@ end
 -- end)
 
 local router = 'login'
-local data = {username='aaaa',password='bbb'}
+local data = {username='aaaa34123',password='bbbvvvvv'}
 http:send(router,data)

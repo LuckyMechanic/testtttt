@@ -15,6 +15,9 @@ _G.Vector2 = require('vector2')
 _G.log = require('log')
 _G.Template = require('template')
 _G.Template.refresh()
+_G.ERROR_INFO = Template.template_error
+
+_G.ErrorControl = require('error_control')
 
 -- 实例化对象
 _G.broadcast = require('broadcast'):new()
@@ -31,3 +34,4 @@ _G.scene = require('scene'):new()
 _G.ui = require('ui'):new()
 _G.http = require('http'):new()
 
+GAME_CONST.TEST_CONSOLE_COMP = comp:addCSComponent(mono.monoNode,CS.TestConsole)

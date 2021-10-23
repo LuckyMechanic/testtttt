@@ -49,16 +49,18 @@ end
 Log.print = function(...)
     local arr = {}
     table.insert(arr, getTopText('Print', Color.White))
-    for index, value in ipairs({...}) do
-        table.insert(arr, getColorText(Color.White,value))
+    local param = {...}
+    for i = 1, #param do
+        table.insert(arr, getColorText(Color.White,param[i]))
     end
     CS.UnityEngine.Debug.Log(table.concat(arr,'  '))
 end
 Log.error = function(...)
     local arr = {}
     table.insert(arr, getTopText('Error', Color.Red))
-    for index, value in ipairs({...}) do
-        table.insert(arr, getColorText( Color.Red,value))
+    local param = {...}
+    for i = 1, #param do
+        table.insert(arr, getColorText(Color.Red,param[i]))
     end
     CS.UnityEngine.Debug.LogError(table.concat(arr,'  '))
 end
@@ -66,8 +68,9 @@ end
 Log.warn = function(...)
     local arr = {}
     table.insert(arr, getTopText('Warn',Color.Yellow))
-    for index, value in ipairs({...}) do
-        table.insert(arr, getColorText(Color.Yellow,value))
+    local param = {...}
+    for i = 1, #param do
+        table.insert(arr, getColorText(Color.Yellow,param[i]))
     end
     CS.UnityEngine.Debug.LogWarning(table.concat(arr,'  '))
 end

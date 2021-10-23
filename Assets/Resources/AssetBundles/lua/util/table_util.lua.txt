@@ -78,9 +78,9 @@ table.csArrayToTable = function(csArray)
     return t
 end
 -- table转字符串
----@type t table table
----@type tier int 遍历最大深度
----@type child boolean 是否为子字符串 主要用于table判断是否加类型前缀[]
+---@type table t
+---@type int tier 遍历最大深度
+---@type boolean child 是否为子字符串 主要用于table判断是否加类型前缀[]
 table.toString = function ( t,depth,child )
 	depth = depth or 3
 	child = child or false

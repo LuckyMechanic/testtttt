@@ -9,11 +9,7 @@ function Broadcast:notify(key, ...)
     end
     local removeList = {}
     for i, v in pairs(self.callBackInfoMap[key]) do
-        if(v.this) then
-            v.callback(v.this,...)
-        else
-            v.callback(...)
-        end
+        Common.call(v.this,v.callback,...)
         if v.isOnce then
             table.insert(removeList, v.callback)
         end

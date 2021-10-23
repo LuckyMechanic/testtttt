@@ -1,5 +1,15 @@
 local base = require('ui_base')
 local UIMsg = class('ui_msg', base)
 
+---@type string title 标题
+---@type string msg 内容
+---@type boolean isClickClose 点击按钮是否自动关闭
+---@type boolean isCloseBtn 是否显示关闭按钮
+---@type Action onClose 关闭按钮回调
+---@type Action<boolean> onClick 消息按钮回调 参数表示点击了 是 or 否
+---@type Array<string> btnTitles 按钮标题数组
+function UIMsg:onLoad(arg)
+end
+
 
 return UIMsg

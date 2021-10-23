@@ -21,11 +21,18 @@ string.rfind = function(str, pattern)
 end
 -- 通过table格式化字符串
 string.formatTable = function(formatText,t)
-	local result = formatText
-	for k, v in pairs( t ) do
-		result = string.gsub(result,table.concat({'{',k,'}'}),v)
-	end
-	return result
+    local result = formatText
+    try{
+        function()
+            for k, v in pairs( t ) do
+                result = string.gsub(result,table.concat({'{',k,'}'}),v)
+            end
+        end,
+        catch = function()
+            result = formatText
+        end
+    }
+    return result
 end
 -- 获取携带Color颜色信息的字符串
 ---@type color color
