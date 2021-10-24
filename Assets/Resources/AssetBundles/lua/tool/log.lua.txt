@@ -1,13 +1,13 @@
 local Log = {}
 
-local STACK_CNT = 1     -- 显示堆栈层级数量
+local STACK_CNT = 1 -- 显示堆栈层级数量
 
-local getColorText = function (color,text)
+local getColorText = function(color, text)
     local result = ''
-    if(type(text)=='string') then
-        result = string.getColorText(color,text)
+    if (type(text) == 'string') then
+        result = string.getColorText(color, text)
     else
-        result = string.getColorText(color,table.toString(text))
+        result = string.getColorText(color, table.toString(text))
     end
     return result
 end
@@ -26,7 +26,7 @@ local getStackInfo = function(offset)
     return string.format('%s:%d', t[#t], info.currentline)
 end
 local getDateInfo = function()
-    return Date.format('{year}年{month}月{day}日 {hour}:{minute}:{second}')
+    return Date.getTimeText('%Y年%m月%d日 %H:%M:%S', Date.unix())
 end
 local getTopText = function(tag, color)
     local arr = {}
@@ -44,35 +44,35 @@ local getTopText = function(tag, color)
     for index, info in ipairs(arr) do
         table.insert(strArr, getColorText(info.color, info.text))
     end
-    return table.concat(strArr,' ')
+    return table.concat(strArr, ' ')
 end
 Log.print = function(...)
     local arr = {}
     table.insert(arr, getTopText('Print', Color.White))
     local param = {...}
     for i = 1, #param do
-        table.insert(arr, getColorText(Color.White,param[i]))
+        table.insert(arr, getColorText(Color.White, param[i]))
     end
-    CS.UnityEngine.Debug.Log(table.concat(arr,'  '))
+    CS.UnityEngine.Debug.Log(table.concat(arr, '  '))
 end
 Log.error = function(...)
     local arr = {}
     table.insert(arr, getTopText('Error', Color.Red))
     local param = {...}
     for i = 1, #param do
-        table.insert(arr, getColorText(Color.Red,param[i]))
+        table.insert(arr, getColorText(Color.Red, param[i]))
     end
-    CS.UnityEngine.Debug.LogError(table.concat(arr,'  '))
+    CS.UnityEngine.Debug.LogError(table.concat(arr, '  '))
 end
 
 Log.warn = function(...)
     local arr = {}
-    table.insert(arr, getTopText('Warn',Color.Yellow))
+    table.insert(arr, getTopText('Warn', Color.Yellow))
     local param = {...}
     for i = 1, #param do
-        table.insert(arr, getColorText(Color.Yellow,param[i]))
+        table.insert(arr, getColorText(Color.Yellow, param[i]))
     end
-    CS.UnityEngine.Debug.LogWarning(table.concat(arr,'  '))
+    CS.UnityEngine.Debug.LogWarning(table.concat(arr, '  '))
 end
 
 return Log

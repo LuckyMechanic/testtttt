@@ -11,14 +11,17 @@ end
 
 -- 获得错误文本
 function Model:getTip(data)
-    local text = self.get_tip():get_text()
-    return string.formatTable(text,data)
+    local text = self:get_tip():get_text()
+    if (data ~= nil and ErrorTipControl[self:get_id()] ~= nil) then
+        data = ErrorTipControl[self:get_id()](data)
+    end
+    return string.formatTable(text, data)
 end
 
 function Model:equal(error)
     local result = false
     try {
-        function ()
+        function()
             result = self:get_id() == error:get_id()
         end
     }

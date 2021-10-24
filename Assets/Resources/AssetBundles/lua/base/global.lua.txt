@@ -18,6 +18,7 @@ _G.Template.refresh()
 _G.ERROR_INFO = Template.template_error
 
 _G.ErrorControl = require('error_control')
+_G.ErrorTipControl = require('errorTip_control')
 
 -- 实例化对象
 _G.broadcast = require('broadcast'):new()
@@ -34,4 +35,4 @@ _G.scene = require('scene'):new()
 _G.ui = require('ui'):new()
 _G.http = require('http'):new()
 
-GAME_CONST.TEST_CONSOLE_COMP = comp:addCSComponent(mono.monoNode,CS.TestConsole)
+GAME_CONST.TEST_CONSOLE_COMP = comp:addCSComponent(mono.monoNode, CS.TestConsole)

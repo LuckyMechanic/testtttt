@@ -1,10 +1,9 @@
 local ErrorControl = {}
 
 -- 接收错误
-function ErrorControl.Receive(info,data,...)
-    broadcast:notify(BROADCAST_CODE.ERROR,info,data,...)
-    broadcast:notify(BROADCAST_CODE.ERROR(info),info,data,...)
+function ErrorControl.Receive(error, data, ...)
+    broadcast:notify(BROADCAST_CODE.ERROR, error, data, ...)
+    broadcast:notify(BROADCAST_CODE.ERROR(error), error, data, ...)
 end
-
 
 return ErrorControl

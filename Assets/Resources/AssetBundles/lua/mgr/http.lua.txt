@@ -72,56 +72,70 @@ end
 function HTTP:ctor()
     self.token = nil
 end
-function HTTP:onError(errorInfo,errorData,rpcRouter,rpcData)
-    log.error('[HTTP]',string.format("[%s]",errorInfo:get_id()),errorInfo:getTip(errorData),errorData,rpcRouter,rpcData)
+function HTTP:onError(error, data, rpcRouter, rpcData)
+    log.print(
+        '[HTTP]',
+        string.getColorText(Color.Red, '[Error]'),
+        string.format('[%s]', error:get_id()),
+        error:getTip(data),
+        data,
+        rpcRouter,
+        rpcData
+    )
 
-    ErrorControl.Receive(errorInfo,errorData,rpcRouter,rpcData)
+    ErrorControl.Receive(error, data, rpcRouter, rpcData)
 end
-function HTTP:onReceive(retRouter,retData,rpcRouter,rpcData)
-    log.print('[HTTP]','[ToClient]',string.format("[%s]",retRouter),retData)
-    broadcast:notify(BROADCAST_CODE.HTTP_RECEIVE,retRouter,retData,rpcRouter,rpcData)
-    broadcast:notify(BROADCAST_CODE.HTTP_RECEIVE(retRouter),retData,rpcRouter,rpcData)
+function HTTP:onReceive(retRouter, retData, rpcRouter, rpcData)
+    log.print('[HTTP]', '[ToClient]', string.format('[%s]', retRouter), retData)
+    broadcast:notify(BROADCAST_CODE.HTTP_RECEIVE, retRouter, retData, rpcRouter, rpcData)
+    broadcast:notify(BROADCAST_CODE.HTTP_RECEIVE(retRouter), retData, rpcRouter, rpcData)
 end
 function HTTP:send(router, data, cb, errorFunc)
-    log.print('[HTTP]','[ToServer]',string.format("[%s]",router),data)
+    log.print('[HTTP]', '[ToServer]', string.format('[%s]', router), data)
     local dataPack = {}
     dataPack.router = router
     dataPack[router] = data
     local buff = assert(pb.encode('http.rpc', dataPack))
-    self:postAsync(GAME_CONST.API_URL,buff,function(result)
-        local t_dataPack = assert(pb.decode('http.rpc',result.bytes))
-        local t_router = t_dataPack.router
-        local t_data = t_dataPack[t_router]
+    self:postAsync(
+        GAME_CONST.API_URL,
+        buff,
+        function(result)
+            local t_dataPack = assert(pb.decode('http.rpc', result.bytes))
+            local t_router = t_dataPack.router
+            local t_data = t_dataPack[t_router]
 
-        if(t_router=='error') then
-            -- 出现业务逻辑错误
-            local errorInfo = ERROR_INFO[t_data.id] or ERROR_INFO.UNKNOWN_ERROR
-            if(errorFunc~=nil) then
-                errorFunc(errorInfo,t_data.data,router,data)
+            if (t_router == 'error') then
+                -- 出现业务逻辑错误
+                local errorInfo = ERROR_INFO[t_data.id] or ERROR_INFO.UNKNOWN_ERROR
+                local errorData = nil
+                if (t_data.data ~= nil) then
+                    errorData = t_data.data[errorInfo:get_id()]
+                end
+                if (errorFunc ~= nil) then
+                    errorFunc(errorInfo, errorData, router, data)
+                end
+                self:onError(errorInfo, errorData, router, data)
+                return
             end
-            self:onError(errorInfo,t_data.data,router,data)
-            return
-        end
-        if (t_data['token'] ~= nil) then
-            self.token = t_data['token']
-            log.print('[HTTP]',string.format('update token is %s',self.token))
-        end
+            if (t_data['token'] ~= nil) then
+                self.token = t_data['token']
+                log.print('[HTTP]', string.format('update token is %s', self.token))
+            end
 
-        self:onReceive(t_router,t_data,router,data)
-        if(cb~=nil) then
-            cb(t_router,t_data)
+            self:onReceive(t_router, t_data, router, data)
+            if (cb ~= nil) then
+                cb(t_router, t_data)
+            end
+        end,
+        function(ex)
+            -- HTTP请求错误
+            local errorInfo = ERROR_INFO.HTTP_ERROR or ERROR_INFO.UNKNOWN_ERROR
+            self:onError(errorInfo, ex, router, data)
+            if (errorFunc ~= nil) then
+                errorFunc(errorInfo, ex, router, data)
+            end
         end
-    end,
-    function(ex)
-        -- HTTP请求错误
-        local errorInfo = ERROR_INFO.HTTP_ERROR or ERROR_INFO.UNKNOWN_ERROR
-        self:onError(errorInfo,ex,router,data)
-        if(errorFunc~=nil) then
-            errorFunc(errorInfo,ex,router,data)
-        end
-    end)
+    )
 end
-
-
 
 return HTTP
