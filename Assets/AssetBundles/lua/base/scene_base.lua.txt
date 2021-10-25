@@ -7,7 +7,7 @@ SceneBase.override = {onLoadStart=false,onLoading=false,onLoadEnd=false,onLoad=f
 -- 加载参数
 -- ALLOW_SCENE_ACTIVATION:加载场景完毕后是否自动进入
 -- CLOASE_ALLUI:是否清理所有UI
-SceneBase.getter.LOAD_ARG = function (t) return { ALLOW_SCENE_ACTIVATION = true, CLOASE_ALLUI = true } end
+SceneBase.getter.LOAD_ARG = function () return { ALLOW_SCENE_ACTIVATION = true, CLOASE_ALLUI = true } end
 -- 开始加载
 function SceneBase:onLoadStart(...)
 end

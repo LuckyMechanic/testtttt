@@ -4,15 +4,29 @@ local base = require('ui_base')
 local UI_MSG = class('ui_msg', base)
 
 function UI_MSG:initUIControl()
-	self.closeBtn = UIControl:new(self.node,"/closeBtn")
-	self.titleText = UIControl:new(self.node,"/titleText")
-	self.msgText = UIControl:new(self.node,"/msgText")
-	self.confirmBtnText = UIControl:new(self.node,"/confirmBtn/confirmBtnText")
-	self.yesBtnText = UIControl:new(self.node,"/yesBtn/yesBtnText")
-	self.noBtnText = UIControl:new(self.node,"/noBtn/noBtnText")
+	self.closeBtn = UIControl:new(self.node,"closeBtn")
+	self.titleText = UIControl:new(self.node,"titleText")
+	self.msgText = UIControl:new(self.node,"msgText")
+	self.confirmBtn = UIControl:new(self.node,"confirmBtn")
+	self.confirmBtnText = UIControl:new(self.node,"confirmBtn/confirmBtnText")
+	self.yesBtn = UIControl:new(self.node,"yesBtn")
+	self.yesBtnText = UIControl:new(self.node,"yesBtn/yesBtnText")
+	self.noBtn = UIControl:new(self.node,"noBtn")
+	self.noBtnText = UIControl:new(self.node,"noBtn/noBtnText")
+
+    self.closeBtn:SetOnClick(self,function()
+        print("点击了关闭")
+    end)
+    self.yesBtn:SetOnClick(self,function()
+        print("点击了是")
+    end)
+    self.noBtn:SetOnClick(self,function()
+        print("点击了否")
+    end)
 end
 
 -- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ 可编辑区块 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+UI_MSG.getter.LOAD_ARG = function () return { ALLOW_SCENE_ACTIVATION = false , ORDER = 0 , MaskInfo = {isMask=true, color=Color(0,0,0,0.5)} } end
 
 ---@type string title 标题
 ---@type string msg 内容

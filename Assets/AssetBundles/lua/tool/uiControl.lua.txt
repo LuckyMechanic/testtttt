@@ -1,4 +1,143 @@
 local UIControl = class("UIControl")
+---------------- base ----------------
+---@type Transform
+UIControl.getter.transform = function(this)
+    return this.node
+end
+---@type GameObject
+UIControl.getter.gameObject = function(this)
+    if(self.gameObject==nil) then
+        self.gameObject = this.node.gameObject
+    end
+    return self.gameObject
+end
+---@type RectTransform
+UIControl.getter.rectTransform = function(this)
+    return this:RefreshGetComponent('rectTransform',CS.UnityEngine.RectTransform)
+end
+---------------- graphic ----------------
+---@type Graphic
+UIControl.getter.graphic = function(this)
+    return this:RefreshGetComponent("graphic",CS.UnityEngine.UI.Graphic)
+end
+UIControl.getter.image = function (this)
+    return this.graphic
+end
+UIControl.getter.rawImage = function (this)
+    return this.graphic
+end
+UIControl.getter.text = function(this)
+    return this.graphic
+end
+---------------- selectable ----------------
+---@type Selectable
+UIControl.getter.selectable = function(this)
+    return this:RefreshGetComponent("selectable",CS.UnityEngine.UI.Selectable)
+end
+---@type Button
+UIControl.getter.button = function(this)
+    return this.selectable
+end
+---@type Dropdown
+UIControl.getter.dropdown = function(this)
+    return this.selectable
+end
+---@type InputField
+UIControl.getter.inputField = function(this)
+    return this.selectable
+end
+---@type Scrollbar
+UIControl.getter.scrollbar = function(this)
+    return this.selectable
+end
+---@type Slider
+UIControl.getter.slider = function(this)
+    return this.selectable
+end
+---@type Toggle
+UIControl.getter.toggle = function(this)
+    return this.selectable
+end
+
+-- 构造函数
+function UIControl:ctor(node,path)
+    path = path or ''
+    self.node = node:Find(path)
+    self.root = node
+    self.path = path
+end
+-- 卸载事件
+function UIControl:close()
+    if(self.selectable~=nil) then
+        self:SetOnClick(nil)
+    end
+end
+
+-- 更新Component
+---@param name string 对应属性名，获取成功将自动存储至self中
+---@param t CS.Type Component Type
+function UIControl:RefreshGetComponent(name,t)
+    local c = rawget(self,name)
+    if(c~=nil) then return c end
+    c = comp:getCSComponent(self.node,t)
+    if(c==nil) then return nil end
+    self[name] = c
+    return self[name]
+end
+-- 更新Component 不存在则添加
+---@param name string 对应属性名，获取成功将自动存储至self中
+---@param t CS.Type Component Type
+function UIControl:RefreshGetOrAddComponent(name,t)
+    local c = rawget(self,name)
+    if(c~=nil) then return c end
+    c = comp:getCSComponent(self.node,t)
+    if(c==nil) then
+        c = comp:addCSComponent(self.node,t)
+    end
+    self[name] = c
+    return self[name]
+end
+---------------- graphic ----------------
+--- Image
+function UIControl:SetSprite(sprite)
+    self.image.sprite = sprite
+end
+
+function UIControl:SetFillAmount(value)
+    self.image.fillAmount = value
+end
+--- RawImage
+function UIControl:SetTexture(texture)
+    self.rawImage.texture = texture
+end
+--- Text
+function UIControl:SetText(text)
+    self.text.text = text
+end
+function UIControl:GetText(text)
+    return self.text.text
+end
+---------------- selectable ----------------
+--- Button
+function UIControl:SetOnClick(this, callback)
+    local onClick = self.button.onClick
+    if self.onClick then
+        onClick:RemoveListener(self.onClick)
+    end
+    if(callback==nil) then return end
+    self.onClick = function()
+        Common.call(this,callback)
+    end
+    onClick:AddListener(self.onClick)
+end
+--- Dropdown
+function UIControl:GetDropdownValue()
+    return self.dropdown.value
+end
+
+function UIControl:SetDropdownValue(valueIndex)
+    self.dropdown.value = valueIndex
+end
 
 
 return UIControl

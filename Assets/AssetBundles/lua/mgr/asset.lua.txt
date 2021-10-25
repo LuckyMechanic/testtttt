@@ -37,16 +37,16 @@ local loadInfoList = {
 
 for index, info in ipairs(loadInfoList) do
     Asset[string.format("load%s",info.key)] = function(this,key,assetName)
-        return Common.call(this,self._load, info.type , key , assetName)
+        return Common.call(this,this._load, info.type , key , assetName)
     end
     Asset[string.format("load%sAsync",info.key)] = function(this,key,assetName,cb)
-        return Common.call(this,self._loadAsync, info.type , key, assetName , cb)
+        return Common.call(this,this._loadAsync, info.type , key, assetName , cb)
     end
     Asset[string.format("loadAll%s",info.key)] = function(this,key)
-        return Common.call(this,self._loadAll, info.type , key )
+        return Common.call(this,this._loadAll, info.type , key )
     end
     Asset[string.format("loadAll%sAsync",info.key)] = function(this,key,cb)
-        return Common.call(this,self._loadAllAsync, info.type , key ,cb )
+        return Common.call(this,this._loadAllAsync, info.type , key ,cb )
     end
 end
 

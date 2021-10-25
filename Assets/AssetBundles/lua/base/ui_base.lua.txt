@@ -5,13 +5,16 @@ UIBase.override = {onLoadStart=false,onLoadEnd=false,onLoad=false,close = false}
 
 -------------------- 继承重写 --------------------
 -- 资源配置
-UIBase.getter.ASSET_CONFIG = function(t) return { key = 'ui', assetName = t.className } end
+UIBase.getter.ASSET_CONFIG = function(this) return { key = 'ui', assetName = this.className } end
 -- 加载参数
 -- ALLOW_UI_ACTIVATION：加载UI完毕后是否直接打开
 -- ORDER：渲染层级 数值越大越靠前
 -- MaskInfo：遮罩信息 可阻挡下层点击事件 isMask-是否存在遮罩 color-遮罩颜色
-UIBase.getter.LOAD_ARG = function (t) return { ALLOW_SCENE_ACTIVATION = true , ORDER = 0 , MaskInfo = {isMask=true, color=Color(0,0,0,0.5)} } end
+UIBase.getter.LOAD_ARG = function () return { ALLOW_SCENE_ACTIVATION = true , ORDER = 0 , MaskInfo = {isMask=true, color=Color(0,0,0,0.5)} } end
 
+-- 初始化UIControl
+function UIBase:initUIControl()
+end
 -- 开始加载 界面未实例化
 function UIBase:onLoadStart(...)
 end
@@ -37,10 +40,26 @@ function UIBase:ctor(loadArg,...)
     self.name = self.className
     self.arg = {...}
     self.node = nil
+
+     -- 此处是游戏结束时集中销毁组件的处理
+     self:broadcast_on(BROADCAST_CODE.MONO("OnDestroy"),self.closeSelf,self)
+end
+-- 卸载UI
+function UIBase:close()
+    -- 清理UIControl
+    for key, value in pairs(self) do
+        if(value.className~=nil) then
+            if(value.className == 'UIControl') then
+                value:close()
+            end
+        end
+    end
 end
 function UIBase:onLoadEnd(...)
     -- 更新遮罩信息
     self:updateMaskInfo()
+    -- 更新UIControl
+    self:initUIControl()
     -- 自动打开
     if(self.LOAD_ARG.ALLOW_SCENE_ACTIVATION) then
         self:show()

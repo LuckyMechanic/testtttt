@@ -77,12 +77,9 @@ public class UIEditor
         for (int i = 0; i < node.childCount; i++)
         {
             var child = node.GetChild(i);
-            var path = root + "/" + child.name;
-            if (child.childCount == 0)
-            {
-                infoDic.Add(path, child);
-            }
-            else
+            var path = root + (root == "" ? "" : "/") + child.name;
+            infoDic.Add(path, child);
+            if (child.childCount > 0)
             {
                 TryGetChildNodeInfo(child, ref infoDic, path);
             }
