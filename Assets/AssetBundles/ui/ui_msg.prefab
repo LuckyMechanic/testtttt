@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 3306969977183434637}
   - component: {fileID: 5418352372505881227}
   m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
+  m_Name: noBtnText
+  m_TagString: UIControl
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 1831795805188422097}
   m_Layer: 5
   m_Name: titleText
-  m_TagString: Untagged
+  m_TagString: UIControl
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 5389284280035599791}
   m_Layer: 5
   m_Name: noBtn
-  m_TagString: Untagged
+  m_TagString: UIControl
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -300,8 +300,8 @@ GameObject:
   - component: {fileID: 8220979025838986796}
   - component: {fileID: 6409437024524812748}
   m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
+  m_Name: yesBtnText
+  m_TagString: UIControl
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -377,8 +377,8 @@ GameObject:
   - component: {fileID: 8405552314879589146}
   - component: {fileID: 5716221750859620394}
   m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
+  m_Name: confirmBtnText
+  m_TagString: UIControl
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -456,7 +456,7 @@ GameObject:
   - component: {fileID: 6018552797546170497}
   m_Layer: 5
   m_Name: confirmBtn
-  m_TagString: Untagged
+  m_TagString: UIControl
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -574,7 +574,7 @@ GameObject:
   - component: {fileID: 6784220330762037965}
   m_Layer: 5
   m_Name: yesBtn
-  m_TagString: Untagged
+  m_TagString: UIControl
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -692,7 +692,7 @@ GameObject:
   - component: {fileID: 825286443270281679}
   m_Layer: 5
   m_Name: closeBtn
-  m_TagString: Untagged
+  m_TagString: UIControl
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -809,7 +809,7 @@ GameObject:
   - component: {fileID: 1750803239038704780}
   m_Layer: 5
   m_Name: msgText
-  m_TagString: Untagged
+  m_TagString: UIControl
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

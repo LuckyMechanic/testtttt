@@ -28,7 +28,7 @@ public class CodeTemplate
         }
         return "";
     }
-    public static string FormatCodeTemplate(string templateName, params object[] args)
+    public static string GenerateCode(string templateName, params object[] args)
     {
         string codeTemplateText = GetCodeTemplateText(templateName);
         return string.Format(codeTemplateText, args);
@@ -42,7 +42,7 @@ public class CodeTemplate
     {
         string result = "";
         MatchCollection mc = Regex.Matches(codeContent, string.Format(CODE_TEMPLATE_EDITOR, @"([\s\S]*?)"));
-        string[] tempArr = FormatCodeTemplate(templateName, args).Split(new string[] { "[EDITOR]" }, StringSplitOptions.None);
+        string[] tempArr = GenerateCode(templateName, args).Split(new string[] { "[EDITOR]" }, StringSplitOptions.None);
         for (int i = 0; i < tempArr.Length; i++)
         {
             result += tempArr[i];

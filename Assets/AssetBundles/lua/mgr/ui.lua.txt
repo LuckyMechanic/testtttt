@@ -38,6 +38,9 @@ function UI:ctor()
     self.uiInfoArr = {}
 end
 -- 加载UI
+---@param id string UI名
+---@param loadArg table 加载配置 ui_base.LOAD_ARG
+---@param cb Action<uiClass> 加载完毕回调
 function UI:load(id,loadArg,cb,...)
     local arg = {...}
     local uiclass = require(id):new(loadArg,...)

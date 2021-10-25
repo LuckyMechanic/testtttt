@@ -1,5 +1,16 @@
+-- 该文件通过工具生成，只可以修改可编辑区块中的内容
+
 local base = require('ui_base')
 local UI_MSG = class('ui_msg', base)
+
+function UI_MSG:initUIControl()
+	self.closeBtn = UIControl:new(self.node,"/closeBtn")
+	self.titleText = UIControl:new(self.node,"/titleText")
+	self.msgText = UIControl:new(self.node,"/msgText")
+	self.confirmBtnText = UIControl:new(self.node,"/confirmBtn/confirmBtnText")
+	self.yesBtnText = UIControl:new(self.node,"/yesBtn/yesBtnText")
+	self.noBtnText = UIControl:new(self.node,"/noBtn/noBtnText")
+end
 
 -- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ 可编辑区块 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
