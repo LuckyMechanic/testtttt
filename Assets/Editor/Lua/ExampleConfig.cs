@@ -300,7 +300,12 @@ public static class ExampleConfig
                 new List<string>(){"UnityEngine.UI.Graphic","OnRebuildRequested"},
                 new List<string>(){"UnityEngine.UI.Text","OnRebuildRequested"},
                 new List<string>(){"UnityEngine.Texture","imageContentsHash"},
-                new List<string>(){"UnityEngine.ParticleSystemForceField","FindAll"}
+                new List<string>(){"UnityEngine.ParticleSystemForceField","FindAll"},
+
+                new List<string>(){"AssetUtil","LoadAssetFromEditorBundle","System.Type","System.String","System.String"},
+                new List<string>(){"AssetUtil","LoadAssetFromEditorBundleAsync","System.Type","System.String","System.String","System.Action`1[UnityEngine.Object]"},
+                new List<string>(){"AssetUtil","LoadAllAssetFromEditorBundle","System.Type","System.String"},
+                new List<string>(){"AssetUtil","LoadAllAssetFromEditorBundleAsync","System.Type","System.String","System.Action`1[UnityEngine.Object[]]"},
     };
     // Delegate黑名单
     public static List<string> DelegateBlackList = new List<string>()

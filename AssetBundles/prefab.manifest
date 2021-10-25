@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2546771572
+CRC: 317953647
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: ed523f506165f364b63a0da095c1d4fd
+    Hash: 1f82f4c0cd53dcb5249cf197666ab430
   TypeTreeHash:
     serializedVersion: 2
-    Hash: fab0a39b1023965da549e3cbd0c930cf
+    Hash: 5cfdbfba92fdee19504481d3fbea8427
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -19,8 +19,6 @@ ClassTypes:
   Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
 - Class: 115
   Script: {instanceID: 0}
-- Class: 213
-  Script: {instanceID: 0}
 - Class: 222
   Script: {instanceID: 0}
 - Class: 223
@@ -28,7 +26,5 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
-- Assets/Resources/AssetBundles/prefab/Canvas.prefab
-Dependencies:
-- D:/testtttt/Assets/../AssetBundles/p2
-- D:/testtttt/Assets/../AssetBundles/p1
+- Assets/AssetBundles/prefab/Canvas.prefab
+Dependencies: []

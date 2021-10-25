@@ -1,6 +1,7 @@
 -- node基类 将Lua代码绑定至某游戏物体
 local base = require('lifecycle_base')
 local NodeBase = class('NodeBase', base)
+
 -- 构造函数只是为了方便快速绑定物体，主要入口逻辑应该写在bind函数
 function NodeBase:ctor(node,...)
     -- 确定传入Transform才绑定
@@ -15,5 +16,4 @@ end
 function NodeBase:bind(node)
     self.node = node
 end
-
 return NodeBase

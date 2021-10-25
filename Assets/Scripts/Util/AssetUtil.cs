@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public enum AssetLoadType
@@ -33,56 +34,6 @@ public class AssetUtil : Singleton<AssetUtil>
     private JObject _relyJObject;
     // 资源版本文件 主要用于查找资源文件名
     private VModel _vModel;
-
-    /// <summary>
-    /// 开发环境使用 记录所有ab包资源路径
-    /// </summary>
-    /// <returns></returns>
-    private Dictionary<string, Dictionary<string, string>> _abAssetFileMap = new Dictionary<string, Dictionary<string, string>>();
-
-    public void Load()
-    {
-        // 开发环境缓存ab包资源路径
-#if UNITY_EDITOR
-        if (GameConst.PRO_ENV == ENV_TYPE.DEV)
-        {
-            foreach (var abName in UnityEditor.AssetDatabase.GetAllAssetBundleNames())
-            {
-                _abAssetFileMap.Add(abName, new Dictionary<string, string>());
-                foreach (var assetFilePath in UnityEditor.AssetDatabase.GetAssetPathsFromAssetBundle(abName))
-                {
-                    string assetName = Path.GetFileNameWithoutExtension(assetFilePath);
-                    string dirPath = Path.GetDirectoryName(assetFilePath);
-                    dirPath = dirPath.Replace("Assets\\Resources\\", "");
-                    dirPath = dirPath.Replace("\\", "/");
-                    string path = dirPath + "/" + assetName;
-                    _abAssetFileMap[abName].Add(assetName, path);
-                }
-            }
-        }
-#endif
-    }
-    /// <summary>
-    /// 获取开发环境缓存ab包资源路径
-    /// </summary>
-    /// <param name="abName"></param>
-    /// <param name="assetName"></param>
-    /// <returns></returns>
-    public string getABAssetFilePath(string abName, string assetName)
-    {
-        if (!_abAssetFileMap.ContainsKey(abName))
-        {
-            return null;
-        }
-        var map = _abAssetFileMap[abName];
-        if (!map.ContainsKey(assetName))
-        {
-            return null;
-        }
-        var path = map[assetName];
-        return path;
-    }
-
 
     /// <summary>
     /// 查找资源文件字节集
@@ -394,7 +345,7 @@ public class AssetUtil : Singleton<AssetUtil>
         Debug.LogFormat("从AssetBundle加载资源 - key：【{0}】 assetName：【{1}】", key, asset.name);
     }
     #endregion
-
+#if UNITY_EDITOR
     #region 模拟AssetBundle加载资源
     /// <summary>
     /// 开发环境时使用的模拟AB包加载资源
@@ -405,68 +356,55 @@ public class AssetUtil : Singleton<AssetUtil>
     /// <returns></returns>
     public UnityEngine.Object LoadAssetFromEditorBundle(Type type, string key, string assetName)
     {
-        var path = getABAssetFilePath(key, assetName);
-        if (path == null)
+        var paths = AssetDatabase.GetAssetPathsFromAssetBundleAndAssetName(key, assetName);
+        foreach (var path in paths)
         {
-            return null;
-        }
-        var asset = Resources.Load(path, type);
-        if (asset != null)
-        {
-            _loadAssetFromEditorBundleOver(key, asset);
-        }
-        return asset;
-    }
-    public void LoadAssetFromEditorBundleAsync(Type type, string key, string assetName, Action<UnityEngine.Object> cb)
-    {
-        var path = getABAssetFilePath(key, assetName);
-        if (path == null)
-        {
-            cb(null);
-            return;
-        }
-        MonoUtil.Instance.StartCoroutine(_loadAssetFromResourcesAsync(type, path, (asset) =>
-        {
+            var asset = AssetDatabase.LoadAssetAtPath(path, type);
             if (asset != null)
             {
                 _loadAssetFromEditorBundleOver(key, asset);
+                return asset;
             }
-            cb(asset);
-        }));
+        }
+        return null;
+    }
+    // 事实上AssetDatabase并没有异步加载方式，这里凑格式多写一个，本质上还是异步加载
+    public void LoadAssetFromEditorBundleAsync(Type type, string key, string assetName, Action<UnityEngine.Object> cb)
+    {
+        cb(LoadAssetFromEditorBundle(type, key, assetName));
     }
     public UnityEngine.Object[] LoadAllAssetFromEditorBundle(Type type, string key)
     {
         List<UnityEngine.Object> assets = new List<UnityEngine.Object>();
-        Dictionary<string, string> dic;
-        if (_abAssetFileMap.TryGetValue(key, out dic))
+        var paths = AssetDatabase.GetAssetPathsFromAssetBundle(key);
+        foreach (var path in paths)
         {
-            foreach (var assetName in dic.Keys)
+            var asset = AssetDatabase.LoadAssetAtPath(path, type);
+            if (asset != null)
             {
-                assets.Add(LoadAssetFromEditorBundle(type, key, assetName));
+                _loadAssetFromEditorBundleOver(key, asset);
+
+                assets.Add(asset);
             }
         }
         return assets.ToArray();
     }
+    // 事实上AssetDatabase并没有异步加载全部方式，这里凑格式多写一个，本质上还是异步加载
     public void LoadAllAssetFromEditorBundleAsync(Type type, string key, Action<UnityEngine.Object[]> cb)
     {
         List<UnityEngine.Object> assets = new List<UnityEngine.Object>();
-        Dictionary<string, string> dic;
-        if (_abAssetFileMap.TryGetValue(key, out dic))
+        var paths = AssetDatabase.GetAssetPathsFromAssetBundle(key);
+        foreach (var path in paths)
         {
-            int sum = 0;
-            foreach (var assetName in dic.Keys)
+            var asset = AssetDatabase.LoadAssetAtPath(path, type);
+            if (asset != null)
             {
-                LoadAssetFromEditorBundleAsync(type, key, assetName, (asset) =>
-                {
-                    sum += 1;
-                    assets.Add(asset);
-                    if (assets.Count >= sum)
-                    {
-                        cb(assets.ToArray());
-                    }
-                });
+                _loadAssetFromEditorBundleOver(key, asset);
+
+                assets.Add(asset);
             }
         }
+        cb(assets.ToArray());
     }
     private void _loadAssetFromEditorBundleOver(string key, UnityEngine.Object asset)
     {
@@ -475,6 +413,7 @@ public class AssetUtil : Singleton<AssetUtil>
         _addLoadAssetInfo(key, asset, AssetLoadType.EditorAssetBundle);
     }
     #endregion
+#endif
 
     #region 本地资源Resources加载
     /// <summary>
@@ -523,7 +462,7 @@ public class AssetUtil : Singleton<AssetUtil>
         }
         return assets;
     }
-    // 事实上Resources并没有异步加载方式，这里凑格式多写一个，本质上还是异步加载
+    // 事实上Resources并没有异步加载全部方式，这里凑格式多写一个，本质上还是异步加载
     public void LoadAllAssetFromResourcesAsync(Type type, string key, Action<UnityEngine.Object[]> cb)
     {
         cb(LoadAllAssetFromResources(type, key));
@@ -589,8 +528,10 @@ public class AssetUtil : Singleton<AssetUtil>
         }
         else
         {
+#if UNITY_EDITOR
             // 开发环境模拟AB包本地加载
             asset = LoadAssetFromEditorBundle(type, key, assetName);
+#endif
         }
         if (asset == null)
         {
@@ -625,6 +566,7 @@ public class AssetUtil : Singleton<AssetUtil>
         }
         else
         {
+#if UNITY_EDITOR
             LoadAssetFromEditorBundleAsync(type, key, assetName, (asset) =>
             {
                 if (asset == null)
@@ -637,6 +579,7 @@ public class AssetUtil : Singleton<AssetUtil>
                     cb(asset);
                 }
             });
+#endif
         }
     }
 
@@ -657,8 +600,10 @@ public class AssetUtil : Singleton<AssetUtil>
         }
         else
         {
+#if UNITY_EDITOR
             // 开发环境模拟AB包本地加载
             assets = LoadAllAssetFromEditorBundle(type, key);
+#endif
         }
         if (assets.Length == 0)
         {
@@ -693,6 +638,7 @@ public class AssetUtil : Singleton<AssetUtil>
         }
         else
         {
+#if UNITY_EDITOR
             LoadAllAssetFromEditorBundleAsync(type, key, (assets) =>
             {
                 if (assets.Length == 0)
@@ -705,6 +651,7 @@ public class AssetUtil : Singleton<AssetUtil>
                     cb(assets);
                 }
             });
+#endif
         }
     }
 

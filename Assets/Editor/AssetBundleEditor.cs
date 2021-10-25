@@ -174,7 +174,7 @@ public class AssetBundleEditor : MonoBehaviour
             filePathList = new List<string>();
         }
 
-        if (filePath.IndexOf("Assets/Resources/AssetBundles/") != -1 && filePathList.IndexOf(filePath) == -1)
+        if (filePath.IndexOf("Assets/AssetBundles/") != -1 && filePathList.IndexOf(filePath) == -1)
         {
             filePathList.Add(filePath);
         }
@@ -316,7 +316,7 @@ public class AssetBundleEditor : MonoBehaviour
         EncryptUtil.Instance.WriteString(versionFile.FullName, json);
 
         // 复制部分默认文件到StreamingAssetsPath
-        string[] defaultFiles = new string[] { "Version", "AssetBundleRely", "lua", "hotupdate", "pb" };
+        string[] defaultFiles = new string[] { "Version", "AssetBundleRely", "lua", "pb", "ui", "p1" };
         foreach (var tag in defaultFiles)
         {
             FileInfo fileInfo = FileUtil.Instance.GetChildFile(GameConst.BUILD_ROOT, tag + "*");

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 493631016
+CRC: 1003003785
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: cc7bd6f769af85c2c6910dce1010204b
+    Hash: 5a932a5aaaf4ac67fa69fdfdad66010b
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5ad585dd02dfb5016c0dad519eab8f49
@@ -12,7 +12,10 @@ ClassTypes:
 - Class: 49
   Script: {instanceID: 0}
 Assets:
-- Assets/Resources/AssetBundles/pb/error_pb.bytes
-- Assets/Resources/AssetBundles/pb/http_pb.bytes
-- Assets/Resources/AssetBundles/pb/model_pb.bytes
+- Assets/AssetBundles/pb/error_pb.bytes
+- Assets/AssetBundles/pb/db_pb.bytes
+- Assets/AssetBundles/pb/http_pb.bytes
+- Assets/AssetBundles/pb/socket_pb.bytes
+- Assets/AssetBundles/pb/model_pb.bytes
+- Assets/AssetBundles/pb/s2s_pb.bytes
 Dependencies: []

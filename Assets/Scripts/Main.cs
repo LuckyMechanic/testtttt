@@ -7,7 +7,6 @@ public class Main
     {
         ThreadUtil.Instance.Load();
         MonoUtil.Instance.Load();
-        AssetUtil.Instance.Load();
 
         LuaEnvManager.Instance.Load();
     }

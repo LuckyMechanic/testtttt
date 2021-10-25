@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3614443535
+CRC: 3135035505
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 56e0c96df8f22ec332c1514beb0ae165
+    Hash: 11748b6cbf664797b5ae9ec07cdafe42
   TypeTreeHash:
     serializedVersion: 2
     Hash: cb3f6df5cbc4a2990c44c2787bc9553a
@@ -14,5 +14,10 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 Assets:
-- Assets/Resources/AssetBundles/p1/Square.png
+- Assets/AssetBundles/p1/pop1.png
+- Assets/AssetBundles/p1/btn1.png
+- Assets/AssetBundles/p1/bar_bg.png
+- Assets/AssetBundles/p1/btn2.png
+- Assets/AssetBundles/p1/btn_close1.png
+- Assets/AssetBundles/p1/bar_val.png
 Dependencies: []

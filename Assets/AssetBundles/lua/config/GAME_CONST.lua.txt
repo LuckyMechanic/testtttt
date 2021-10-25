@@ -4,7 +4,7 @@ setmetatable(GAME_CONST, {__index = CS.GameConst})
 _G.ENV_TYPE = CS.ENV_TYPE
 -- HTTP API URL
 if (GAME_CONST.PRO_ENV == ENV_TYPE.MASTER) then
-    GAME_CONST.API_URL = 'http://127.0.0.1:8200'
+    GAME_CONST.API_URL = 'http://10.42.3.132:8200'
 else
     GAME_CONST.API_URL = 'http://127.0.0.1:8200'
 end

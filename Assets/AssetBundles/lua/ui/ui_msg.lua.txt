@@ -1,0 +1,38 @@
+local base = require('ui_base')
+local UI_MSG = class('ui_msg', base)
+
+---@type string title 标题
+---@type string msg 内容
+---@type boolean isClickClose 点击按钮是否自动关闭
+---@type boolean isCloseBtn 是否显示关闭按钮
+---@type class this 调用方实例
+---@type Action onClose 关闭按钮回调
+---@type Action<boolean> onClick 消息按钮回调 参数表示点击了 是 or 否
+---@type Array<string> btnTitles 按钮标题数组
+---@type int btnType 提示按钮类型 0-确定 1-是/否
+function UI_MSG:onLoad(arg)
+    self.title = arg.title or '提示'
+    self.msg = arg.msg or ''
+    self.isClickClose = true
+    if(arg.isClickClose~=nil) then
+        self.isClickClose = arg.isClickClose
+    end
+    self.isCloseBtn = true
+    if (arg.isCloseBtn ~= nil) then
+        self.isCloseBtn = arg.isCloseBtn
+    end
+    self.this = arg.this or self
+    self.onClose = arg.onClose
+    self.onClick = arg.onClick
+    self.btnTitles = arg.btnTitle
+    if (self.btnTitle ~= nil) then
+        -- 非数组转为单成员数组
+        if (type(self.btnTitle) == 'string') then
+            self.btnTitle = {self.btnTitle}
+        end
+    end
+    self.btnType = arg.btnType or 0
+end
+
+
+return UI_MSG

@@ -1,19 +1,33 @@
 ManifestFileVersion: 0
-CRC: 261824854
+CRC: 3396612283
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 82ac05e65429672207b47a87ea3e937c
+    Hash: 1b7027c6e02cef52959f56a22aaa37dd
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 783599d7cc3396c66a24adfe6656f577
+    Hash: e756e8d891111c46bc2cc87e4dd634b9
 HashAppended: 0
 ClassTypes:
 - Class: 1
   Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
 - Class: 115
+  Script: {instanceID: 0}
+- Class: 128
   Script: {instanceID: 0}
 - Class: 213
   Script: {instanceID: 0}
@@ -22,7 +36,6 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
-- Assets/Resources/AssetBundles/ui/ui_msg.prefab
+- Assets/AssetBundles/ui/ui_msg.prefab
 Dependencies:
-- D:/testtttt/Assets/../AssetBundles/p2
 - D:/testtttt/Assets/../AssetBundles/p1

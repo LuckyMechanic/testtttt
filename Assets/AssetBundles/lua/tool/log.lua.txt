@@ -22,8 +22,10 @@ local getStackInfo = function(offset)
     if (info.currentline == -1) then
         return ' - '
     end
-    local t = string.split(info.source, '\\')
-    return string.format('%s:%d', t[#t], info.currentline)
+    local from = string.gsub(info.source,'@','')
+    local t = string.split(from, '\\')
+    local fileName =  t[#t]..'.lua.txt'
+    return fileName .. ':' .. info.currentline
 end
 local getDateInfo = function()
     return Date.getTimeText('%Y年%m月%d日 %H:%M:%S', Date.unix())

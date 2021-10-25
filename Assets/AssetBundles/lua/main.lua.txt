@@ -63,12 +63,12 @@ end
 --     -- ccc:closeSelf()
 -- end)
 
-broadcast:on(
-    BROADCAST_CODE.ERROR,
-    function(error, data, rpcRouter, rpcData)
-        log.error(error:get_id(), error:getTip(data), rpcRouter, rpcData)
-    end
-)
+-- broadcast:on(
+--     BROADCAST_CODE.ERROR,
+--     function(error, data, rpcRouter, rpcData)
+--         log.error(error:get_id(), error:getTip(data), rpcRouter, rpcData)
+--     end
+-- )
 
 local router = 'login'
 local data = {username = 'aaaa34123', password = 'bbbvvvvv'}
