@@ -1,6 +1,8 @@
 local base = require('ui_base')
 local UI_MSG = class('ui_msg', base)
 
+-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ 可编辑区块 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
 ---@type string title 标题
 ---@type string msg 内容
 ---@type boolean isClickClose 点击按钮是否自动关闭
@@ -34,5 +36,6 @@ function UI_MSG:onLoad(arg)
     self.btnType = arg.btnType or 0
 end
 
+-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ 可编辑区块 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
 return UI_MSG

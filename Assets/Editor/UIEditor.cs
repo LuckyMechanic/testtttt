@@ -15,10 +15,6 @@ public class UIEditor
     /// UI AB包名
     /// </summary>
     static string UI_ASSETBUNDLE_NAME = "ui";
-    /// <summary>
-    /// UI 生成代码模板
-    /// </summary>
-    static string CODE_TEMPLATE_FILEPATH = "";
 
     [MenuItem("Assets/Generate UI Script", true)]
     static bool ValidateGenerateUIScript()
@@ -28,9 +24,17 @@ public class UIEditor
     [MenuItem("Assets/Generate UI Script")]
     static void GenerateUIScript()
     {
-        foreach (var item in GetSelectUIPrefabs())
+        foreach (var uiPrefab in GetSelectUIPrefabs())
         {
-            Debug.Log(item.name + " " + item);
+            string filePath = new FileInfo(string.Format("{0}/{1}.lua.txt", UI_Script_DIR, uiPrefab.name)).FullName;
+            string codeContent = "";
+            if (File.Exists(filePath))
+            {
+                codeContent = File.ReadAllText(filePath);
+            }
+            codeContent = CodeTemplate.GenerateEditorCode(codeContent, "code_template_ui", uiPrefab.name.ToUpper(), uiPrefab.name);
+            File.WriteAllText(filePath, codeContent);
+            Debug.LogFormat("[{0}]UI代码生成成功 >>> {1}", uiPrefab.name, filePath);
         }
     }
 
