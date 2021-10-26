@@ -32,23 +32,36 @@ public class UIEditor
         {
             Dictionary<string, Transform> dic = new Dictionary<string, Transform>();
             TryGetChildNodeInfo(uiPrefab.transform, ref dic);
-            List<string> codeList = new List<string>();
+            List<string> uiControlCodeList = new List<string>();
+            List<string> uiControlNameList = new List<string>();
             foreach (var item in dic)
             {
                 if (item.Value.CompareTag(UICONTROL_TAG))
                 {
-                    codeList.Add(string.Format("\t{0}", CodeTemplate.GenerateCode("code_template_uiControl", item.Value.name, item.Key)));
+                    if (uiControlNameList.IndexOf(item.Value.name) != -1)
+                    {
+                        UnityEngine.Debug.LogWarningFormat("[{0}]存在重复UIControl[{1}] >> {0}/{2}", uiPrefab.name, item.Value.name, item.Key);
+                    }
+                    uiControlNameList.Add(item.Value.name);
+
+
+                    uiControlCodeList.Add(string.Format("\t{0}", CodeTemplate.GenerateCode("code_template_uiControl", item.Value.name, item.Key)));
                 }
             }
-            string uiControlCodeText = string.Join("\n", codeList);
+            string uiControlCodeText = string.Join("\n", uiControlCodeList);
 
             string filePath = new FileInfo(string.Format("{0}/{1}.lua.txt", UI_SCRIPT_DIR, uiPrefab.name)).FullName;
             string codeContent = "";
+            string defaultContent = "";
             if (File.Exists(filePath))
             {
                 codeContent = File.ReadAllText(filePath);
             }
-            codeContent = CodeTemplate.GenerateEditorCode(codeContent, "code_template_ui", uiPrefab.name.ToUpper(), uiPrefab.name, uiControlCodeText);
+            else
+            {
+                defaultContent = CodeTemplate.GenerateCode("code_template_ui_default", uiPrefab.name.ToUpper());
+            }
+            codeContent = CodeTemplate.GenerateEditorCode(codeContent, "code_template_ui", defaultContent, uiPrefab.name.ToUpper(), uiPrefab.name, uiControlCodeText);
             File.WriteAllText(filePath, codeContent);
             Debug.LogFormat("[{0}]UI代码生成成功 >>> {1}", uiPrefab.name, filePath);
         }

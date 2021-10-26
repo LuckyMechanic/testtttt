@@ -74,11 +74,14 @@ function UIControl:ctor(node,path)
 end
 -- 卸载事件
 function UIControl:close()
+    -- 清理所有UnityEvent监听事件
     for unityEvent, infos in pairs(self.unityEventInfo) do
         for index, info in ipairs(infos) do
+            log.print("清理")
             unityEvent:RemoveListener(info.event)
         end
     end
+
 end
 
 -- 获得Component
@@ -169,10 +172,21 @@ end
 function UIControl:GetDropdownValue()
     return self.dropdown.value
 end
-
 function UIControl:SetDropdownValue(valueIndex)
     self.dropdown.value = valueIndex
 end
-
+-- InputField
+function UIControl:SetInputText(text)
+    self.inputField.text = text
+end
+function UIControl:GetInputText()
+    return self.inputField.text
+end
+function UIControl:SetOnValueChanged(this, callback)
+    self:addUnityEventListener(self.inputField.onValueChanged,this,callback)
+end
+function UIControl:SetOnEndEdit(this, callback)
+    self:addUnityEventListener(self.inputField.onEndEdit,this,callback)
+end
 
 return UIControl

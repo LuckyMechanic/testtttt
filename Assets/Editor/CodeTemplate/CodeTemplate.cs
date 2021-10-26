@@ -38,7 +38,7 @@ public class CodeTemplate
     /// 生成部分可编辑代码文本
     /// </summary>
     /// <returns></returns>
-    public static string GenerateEditorCode(string codeContent, string templateName, params object[] args)
+    public static string GenerateEditorCode(string codeContent, string templateName, string defaultCode = "", params object[] args)
     {
         string result = "";
         MatchCollection mc = Regex.Matches(codeContent, string.Format(CODE_TEMPLATE_EDITOR, @"([\s\S]*?)"));
@@ -54,7 +54,7 @@ public class CodeTemplate
                 }
                 else
                 {
-                    result += string.Format(CODE_TEMPLATE_EDITOR, "");
+                    result += string.Format(CODE_TEMPLATE_EDITOR, defaultCode);
                 }
             }
         }

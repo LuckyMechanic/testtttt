@@ -41,14 +41,14 @@ function UIBase:ctor(loadArg,...)
     self.arg = {...}
     self.node = nil
 
-     -- 此处是游戏结束时集中销毁组件的处理
+     -- 此处是游戏结束时销毁组件的处理
      self:broadcast_on(BROADCAST_CODE.MONO("OnDestroy"),self.closeSelf,self)
 end
 -- 卸载UI
 function UIBase:close()
     -- 清理UIControl
     for key, value in pairs(self) do
-        if(value.className~=nil) then
+        if(type(value)=='table' and value.className~=nil) then
             if(value.className == 'UIControl') then
                 value:close()
             end
@@ -97,5 +97,6 @@ function UIBase:updateOrder(order)
     local canvas = comp:getCSComponent(self.node,CS.UnityEngine.Canvas) or comp:addCSComponent(self.node,CS.UnityEngine.Canvas)
     canvas.overrideSorting = true;
     canvas.sortingOrder = order
+    local graphicRaycaster = comp:getCSComponent(self.node,CS.UnityEngine.UI.GraphicRaycaster) or comp:addCSComponent(self.node,CS.UnityEngine.UI.GraphicRaycaster)
 end
 return UIBase

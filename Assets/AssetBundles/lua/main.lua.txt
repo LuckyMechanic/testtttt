@@ -59,9 +59,7 @@ end
 --     end)
 -- end):next()
 
-ui:load("ui_msg")
-
-log.print("sffdfdf",nil,nil,123123123)
+ui:load("ui_test")
 
 -- broadcast:on(
 --     BROADCAST_CODE.ERROR,
