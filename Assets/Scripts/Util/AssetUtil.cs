@@ -1,3 +1,4 @@
+using System.Threading;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,7 +31,8 @@ public class AssetUtil : Singleton<AssetUtil>
     private Dictionary<string, AssetBundle> _bundleMap = new Dictionary<string, AssetBundle>();
     // 已加载的资源信息 用于记录引用卸载AB包
     private Dictionary<string, List<AssetLoadInfo>> _loadInfoMap = new Dictionary<string, List<AssetLoadInfo>>();
-
+    // 正在加载的AB包数组
+    private List<string> _loadingBundleList = new List<string>();
     // 资源依赖文件Json对象
     private JObject _relyJObject;
     // 资源版本文件 主要用于查找资源文件名
@@ -148,7 +150,10 @@ public class AssetUtil : Singleton<AssetUtil>
         }
         EncryptUtil.Instance.AesDecryptAsync(getAssetFileBytes("AssetBundles/" + key), (data) =>
         {
-            _bundleBytesMap.Add(key, data);
+            if (!_bundleBytesMap.ContainsKey(key))
+            {
+                _bundleBytesMap.Add(key, data);
+            }
             cb(data);
         });
         return true;
@@ -218,12 +223,26 @@ public class AssetUtil : Singleton<AssetUtil>
             if (cb != null) cb(null);
             yield break;
         }
-        yield return new WaitUntil(() => { return data != null; });
+        yield return new WaitUntil(() => { return data != null; });     // 等待AB包异步解密完毕
+        // 为了保证异步解密AB包资源过程，AB包未加载，因此再判断一次
+        if (_bundleMap.ContainsKey(key))
+        {
+            if (cb != null) cb(_bundleMap[key]);
+            yield break;
+        }
+        // 判断AB包是否正在通过异步加载
+        if (_loadingBundleList.IndexOf(key) != -1)
+        {
+            yield return new WaitUntil(() => { return _bundleMap.ContainsKey(key); });  // 等待AB包异步加载完毕
+            if (cb != null) cb(_bundleMap[key]);
+            yield break;
+        }
+        _loadingBundleList.Add(key);
         var assetLoadRequest = AssetBundle.LoadFromMemoryAsync(data);
         yield return assetLoadRequest;
         AssetBundle bundle = assetLoadRequest.assetBundle;
-
         _loadBundleOver(key, bundle);
+        _loadingBundleList.Remove(key);
 
         if (cb != null) cb(bundle);
     }
