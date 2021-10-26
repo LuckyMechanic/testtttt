@@ -81,7 +81,6 @@ function UIControl:close()
             unityEvent:RemoveListener(info.event)
         end
     end
-
 end
 
 -- 获得Component
@@ -120,12 +119,14 @@ function UIControl:addUnityEventListener(unityEvent,this,callback)
     local event = function()
         Common.call(this,callback)
     end
-    unityEvent:AddListener(event)
+    local info = {callback=callback,event=event}
+
+    unityEvent:AddListener(info.event)
 
     if(not self.unityEventInfo[unityEvent]) then
         self.unityEventInfo[unityEvent] = {}
     end
-    table.insert(self.unityEventInfo[unityEvent],{callback=callback,event=event})
+    table.insert(self.unityEventInfo[unityEvent],info)
 
     return true
 end

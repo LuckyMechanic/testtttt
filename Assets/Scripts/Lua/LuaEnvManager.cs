@@ -5,7 +5,6 @@ using XLua;
 public class LuaEnvManager : Singleton<LuaEnvManager>
 {
     public LuaEnv LuaEnv;
-
     public LuaEnvManager()
     {
 
@@ -37,7 +36,6 @@ public class LuaEnvManager : Singleton<LuaEnvManager>
             LuaEnv.Dispose();
         };
     }
-
     private byte[] OnLoadLuaFile(ref string filepath)
     {
         TextAsset asset = AssetUtil.Instance.LoadAsset(typeof(TextAsset), "lua", string.Format("{0}.lua", filepath)) as TextAsset;

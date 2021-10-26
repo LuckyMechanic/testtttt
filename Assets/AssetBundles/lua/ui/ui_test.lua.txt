@@ -35,8 +35,8 @@ function UI_TEST:onLoad(arg)
 	-- self.Button3:SetOnClick(self,self.ButtonOnClick)
 end
 
-function UI_TEST:ButtonOnClick(agr1,arg2,arg3)
-	log.print("点击按钮",agr1,arg2,arg3)
+function UI_TEST:ButtonOnClick()
+	log.print("点击按钮")
 end
 
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ 可编辑区块 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
