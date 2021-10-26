@@ -61,7 +61,11 @@ end
 -- UI卸载回调
 function UI:onUIClose(uiInfo)
     uiInfo.class:close()
-    CS.UnityEngine.GameObject.Destroy(uiInfo.class.node.gameObject)
+    local node = uiInfo.class.node
+
+    if(not CS.LuaUtil.Instance:IsNull(node)) then
+        CS.UnityEngine.GameObject.Destroy(node.gameObject)
+    end
     asset:unloadAsset(uiInfo.asset)
 end
 -- 通过类实例卸载UI 只卸载一个

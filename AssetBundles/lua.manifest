@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1912234757
+CRC: 1381872772
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: edf64a81fd6754b6cade30e3baf9d1e3
+    Hash: 1d33ece1d0278095a16824a0abc148a9
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5ad585dd02dfb5016c0dad519eab8f49
@@ -15,6 +15,7 @@ Assets:
 - Assets/AssetBundles/lua/util/utils.lua.txt
 - Assets/AssetBundles/lua/template/template.lua.txt
 - Assets/AssetBundles/lua/mgr/broadcast.lua.txt
+- Assets/AssetBundles/lua/tool/uiControl.lua.txt
 - Assets/AssetBundles/lua/template/manager/template_propsManager.lua.txt
 - Assets/AssetBundles/lua/util/common_util.lua.txt
 - Assets/AssetBundles/lua/util/string_util.lua.txt

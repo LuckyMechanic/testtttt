@@ -16,6 +16,7 @@ public enum AssetLoadType
 public class AssetLoadInfo
 {
     public string Key;
+    public string Name;
     public UnityEngine.Object Asset;
     public AssetLoadType Type;
     public int Index = 1;   //使用计次
@@ -479,6 +480,7 @@ public class AssetUtil : Singleton<AssetUtil>
     {
         var loadInfo = new AssetLoadInfo();
         loadInfo.Key = key;
+        loadInfo.Name = asset.name;
         loadInfo.Asset = asset;
         loadInfo.Type = Type;
         loadInfo.Index = 1;
@@ -657,41 +659,51 @@ public class AssetUtil : Singleton<AssetUtil>
 
     public void UnloadAsset(UnityEngine.Object asset)
     {
+        List<AssetLoadInfo> unLoadList = new List<AssetLoadInfo>();
         foreach (var key in _loadInfoMap.Keys)
         {
-            _unloadAsset(key, asset);
+            var list = _loadInfoMap[key];
+            AssetLoadInfo info = null;
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].Asset == asset)
+                {
+                    info = list[i];
+                    break;
+                }
+            }
+            if (info != null)
+            {
+                unLoadList.Add(info);
+            }
+
         }
+
+        foreach (var info in unLoadList)
+        {
+            _unloadAsset(info);
+        }
+
     }
 
-    private void _unloadAsset(string key, UnityEngine.Object asset)
+    private void _unloadAsset(AssetLoadInfo info)
     {
-        if (!_loadInfoMap.ContainsKey(key)) return;
-        var list = _loadInfoMap[key];
-        AssetLoadInfo info = null;
-        for (int i = 0; i < list.Count; i++)
-        {
-            if (list[i].Asset == asset)
-            {
-                info = list[i];
-                break;
-            }
-        }
         if (info == null) return;
-        info.Index--;
-        if (info.Index == 0)
-        {
-            list.Remove(info);
-        }
         if (info.Type == AssetLoadType.AssetBundle)
         {
-            if (list.Count == 0)
+            Debug.LogFormat("从AssetBundle卸载资源 - key：【{0}】 assetName：【{1}】", info.Key, info.Name);
+
+            info.Index--;
+            if (info.Index == 0)
             {
                 UnloadBundle(info.Key);
+
+                _loadInfoMap[info.Key].Remove(info);
             }
         }
         else if (info.Type == AssetLoadType.EditorAssetBundle)
         {
-            Debug.LogFormat("从模拟AssetBundle加载资源 - key：【{0}】 assetName：【{1}】", info.Key, info.Asset.name);
+            Debug.LogFormat("从模拟AssetBundle卸载资源 - key：【{0}】 assetName：【{1}】", info.Key, info.Name);
             if (info.Asset.GetType() != typeof(UnityEngine.GameObject))
             {
                 Resources.UnloadAsset(info.Asset);
@@ -703,7 +715,7 @@ public class AssetUtil : Singleton<AssetUtil>
         }
         else if (info.Type == AssetLoadType.Resources)
         {
-            Debug.LogFormat("从Resources卸载资源 - key：【{0}】 assetName：【{1}】", info.Key, info.Asset.name);
+            Debug.LogFormat("从Resources卸载资源 - key：【{0}】 assetName：【{1}】", info.Key, info.Name);
             if (info.Asset.GetType() != typeof(UnityEngine.GameObject))
             {
                 Resources.UnloadAsset(info.Asset);

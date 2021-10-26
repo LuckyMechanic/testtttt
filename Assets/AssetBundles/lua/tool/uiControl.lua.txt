@@ -1,5 +1,9 @@
 local UIControl = class("UIControl")
 ---------------- base ----------------
+---@type string
+UIControl.getter.name = function(this)
+    return this.node.name
+end
 ---@type Transform
 UIControl.getter.transform = function(this)
     return this.node
@@ -13,12 +17,12 @@ UIControl.getter.gameObject = function(this)
 end
 ---@type RectTransform
 UIControl.getter.rectTransform = function(this)
-    return this:RefreshGetComponent('rectTransform',CS.UnityEngine.RectTransform)
+    return this:getComponent(CS.UnityEngine.RectTransform,'rectTransform')
 end
 ---------------- graphic ----------------
 ---@type Graphic
 UIControl.getter.graphic = function(this)
-    return this:RefreshGetComponent("graphic",CS.UnityEngine.UI.Graphic)
+    return this:getComponent(CS.UnityEngine.UI.Graphic,"graphic")
 end
 UIControl.getter.image = function (this)
     return this.graphic
@@ -32,7 +36,7 @@ end
 ---------------- selectable ----------------
 ---@type Selectable
 UIControl.getter.selectable = function(this)
-    return this:RefreshGetComponent("selectable",CS.UnityEngine.UI.Selectable)
+    return this:getComponent(CS.UnityEngine.UI.Selectable,"selectable")
 end
 ---@type Button
 UIControl.getter.button = function(this)
@@ -65,44 +69,83 @@ function UIControl:ctor(node,path)
     self.node = node:Find(path)
     self.root = node
     self.path = path
+
+    self.unityEventInfo = {}
 end
 -- 卸载事件
 function UIControl:close()
-    if(self.selectable~=nil) then
-        self:SetOnClick(nil)
+    for unityEvent, infos in pairs(self.unityEventInfo) do
+        for index, info in ipairs(infos) do
+            unityEvent:RemoveListener(info.event)
+        end
     end
 end
 
--- 更新Component
----@param name string 对应属性名，获取成功将自动存储至self中
+-- 获得Component
 ---@param t CS.Type Component Type
-function UIControl:RefreshGetComponent(name,t)
+---@param name string 可为空 对应缓存属性名，获取成功将自动存储至self中
+function UIControl:getComponent(t,name)
     local c = rawget(self,name)
     if(c~=nil) then return c end
     c = comp:getCSComponent(self.node,t)
     if(c==nil) then return nil end
-    self[name] = c
-    return self[name]
+    if(name~=nil) then
+        self[name] = c
+    end
+    return c
 end
--- 更新Component 不存在则添加
----@param name string 对应属性名，获取成功将自动存储至self中
+-- 获得Component 不存在则添加
 ---@param t CS.Type Component Type
-function UIControl:RefreshGetOrAddComponent(name,t)
+---@param name string 可为空 对应缓存属性名，获取成功将自动存储至self中
+function UIControl:getOrAddComponent(t,name)
     local c = rawget(self,name)
     if(c~=nil) then return c end
     c = comp:getCSComponent(self.node,t)
     if(c==nil) then
         c = comp:addCSComponent(self.node,t)
     end
-    self[name] = c
-    return self[name]
+    if(name~=nil) then
+        self[name] = c
+    end
+    return c
+end
+
+-- 添加UnityEvent监听
+---@param unityEvent UnityEvent
+---@param callback Action
+function UIControl:addUnityEventListener(unityEvent,this,callback)
+    local event = function()
+        Common.call(this,callback)
+    end
+    unityEvent:AddListener(event)
+
+    if(not self.unityEventInfo[unityEvent]) then
+        self.unityEventInfo[unityEvent] = {}
+    end
+    table.insert(self.unityEventInfo[unityEvent],{callback=callback,event=event})
+
+    return true
+end
+-- 移除UnityEvent监听
+---@param unityEvent UnityEvent
+---@param callback Action
+function UIControl:removeUnityEventListener(unityEvent,callback)
+    if(not self.unityEventInfo[unityEvent]) then return false end
+    for index, info in ipairs(self.unityEventInfo[unityEvent]) do
+        if(info.callback==callback) then
+            unityEvent:RemoveListener(info.event)
+
+            table.remove(self.unityEventInfo[unityEvent],index)
+            return true
+        end
+    end
+    return false
 end
 ---------------- graphic ----------------
 --- Image
 function UIControl:SetSprite(sprite)
     self.image.sprite = sprite
 end
-
 function UIControl:SetFillAmount(value)
     self.image.fillAmount = value
 end
@@ -120,15 +163,7 @@ end
 ---------------- selectable ----------------
 --- Button
 function UIControl:SetOnClick(this, callback)
-    local onClick = self.button.onClick
-    if self.onClick then
-        onClick:RemoveListener(self.onClick)
-    end
-    if(callback==nil) then return end
-    self.onClick = function()
-        Common.call(this,callback)
-    end
-    onClick:AddListener(self.onClick)
+    self:addUnityEventListener(self.button.onClick,this,callback)
 end
 --- Dropdown
 function UIControl:GetDropdownValue()
