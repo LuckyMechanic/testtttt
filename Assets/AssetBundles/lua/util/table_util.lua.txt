@@ -36,18 +36,21 @@ function table.isArray(t)
     return true
 end
 -- 合并
-table.merge = function(t1,t2)
-    local t = table.deepCopy(t1);
-    if(table.isArray(t1) and table.isArray(t2)) then
-        for index, value in ipairs(t2) do
-            table.insert(t,value)
-        end
-    else
-        for key, value in pairs(t2) do
-            t[key] = value;
-        end
+table.merge = function(t,...)
+    local result = table.deepCopy(t);
+    for i, v in ipairs( {...} ) do
+    	if(table.isArray(result) and table.isArray(v)) then
+	        for index, value in ipairs(v) do
+	            table.insert(result,value)
+	        end
+	    else
+	        for key, value in pairs(v) do
+	            result[key] = value;
+	        end
+	    end
     end
-    return t
+
+    return result
 end
 -- 数组成员存在检查
 table.exist = function(t, value)
@@ -112,8 +115,9 @@ table.toString = function ( t,depth,child )
 			tstr = table.concat({'[',table.concat(arr,','),']'})
 		else
 			for k, v in pairs( t ) do
-				local kstr = type(k)~='number'and k or table.concat({'[',k,']'})
+				local kstr = type(k)~='number'and table.toString(k) or table.concat({'[',k,']'})
 				local vstr = table.toString(v,depth-1,true)
+                -- print(kstr,vstr,kstr.ToString,)
 				table.insert( arr, table.concat({kstr,'=',vstr}) )
 			end
 			tstr = table.concat({'{',table.concat(arr,','),'}'})

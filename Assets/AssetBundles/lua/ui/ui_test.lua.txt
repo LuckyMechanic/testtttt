@@ -29,14 +29,38 @@ end
 
 -- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ 可编辑区块 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
+
 function UI_TEST:onLoad(arg)
-	self.Button1:SetOnClick(self,self.ButtonOnClick)
-	-- self.Button2:SetOnClick(self,self.ButtonOnClick)
-	-- self.Button3:SetOnClick(self,self.ButtonOnClick)
+	self.Button1:setOnButtonClick(self,self.ButtonOnClick,{order=1})
+	self.Button2:setOnButtonClick(self,self.ButtonOnClick,{order=2})
+	self.Button3:setOnButtonClick(self,self.ButtonOnClick,{order=3})
+
+	self.InputField1:setOnInputFieldChanged(self,self.InputFieldOnValueChanged,{order=1})
+	self.InputField2:setOnInputFieldChanged(self,self.InputFieldOnValueChanged,{order=2})
+	self.InputField3:setOnInputFieldChanged(self,self.InputFieldOnValueChanged,{order=3})
+	self.InputField1:setOnInputFieldEndEdit(self,self.InputFieldOnEndEdit,{order=1})
+	self.InputField2:setOnInputFieldEndEdit(self,self.InputFieldOnEndEdit,{order=2})
+	self.InputField3:setOnInputFieldEndEdit(self,self.InputFieldOnEndEdit,{order=3})
+
+	self.Dropdown1:setOnDropdownChanged(self,self.OnDropdownChanged,{order=1})
+	self.Dropdown2:setOnDropdownChanged(self,self.OnDropdownChanged,{order=2})
+	self.Dropdown3:setOnDropdownChanged(self,self.OnDropdownChanged,{order=3})
 end
 
-function UI_TEST:ButtonOnClick()
-	log.print("点击按钮")
+function UI_TEST:OnButtonClick(control,data)
+	log.print("OnButtonClick",control.name,data)
+end
+
+function UI_TEST:OnInputFieldChanged(control,text,data)
+	log.print("OnInputFieldChanged",control.name,text,data)
+end
+
+function UI_TEST:OnInputFieldEndEdit(control,text,data)
+	log.print("OnInputFieldEndEdit",control.name,text,data)
+end
+
+function UI_TEST:OnDropdownChanged(control,index,data)
+	log.print("OnDropdownChanged",control.name,index,data)
 end
 
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ 可编辑区块 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑

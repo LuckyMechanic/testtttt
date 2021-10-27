@@ -42,14 +42,15 @@ Color.__call = function (t,r, g, b, a)
     return Color:new(r, g, b, a)
 end
 -- __tostring
-Color.__tostringx = function (t)
-	Color.__tostring = nil
-	local str = table.concat({'Color',' ',t:toHex()})
-	Color.__tostring = Color.__tostringx
+Color.__tostring = function (t)
+	local str = ''
+	if(t:get()) then
+		str = table.concat({'Color',' ',t:toHex()})
+	else
+		str = "class Color"
+	end
 	return str
 end
-Color.__tostring = Color.__tostringx
-
 -- 常量定义
 _getter.White = function () return Color('#FFFFFF') end
 _getter.Gray = function () return Color('#F2F2F2') end
@@ -79,10 +80,10 @@ end
 Color.rgbaToHEX = function(rgba)
 	local hexArr = {}
 	table.insert( hexArr,'#')
-	table.insert( hexArr,string.format( "%02X", rgba.r * 255 ) )
-	table.insert( hexArr,string.format( "%02X", rgba.g * 255 ) )
-	table.insert( hexArr,string.format( "%02X", rgba.b * 255 ) )
-	table.insert( hexArr,string.format( "%02X", rgba.a * 255 ) )
+	table.insert( hexArr,string.format( "%02X", math.ceil( rgba.r * 255 )) )
+	table.insert( hexArr,string.format( "%02X", math.ceil( rgba.g * 255 )) )
+	table.insert( hexArr,string.format( "%02X", math.ceil( rgba.b * 255 )) )
+	table.insert( hexArr,string.format( "%02X", math.ceil( rgba.a * 255 )) )
 	return table.concat( hexArr )
 end
 

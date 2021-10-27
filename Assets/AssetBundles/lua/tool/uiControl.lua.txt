@@ -76,11 +76,9 @@ end
 function UIControl:close()
     -- 清理所有UnityEvent监听事件
     for unityEvent, infos in pairs(self.unityEventInfo) do
-        for index, info in ipairs(infos) do
-            log.print("清理")
-            unityEvent:RemoveListener(info.event)
-        end
+        self:clearUnityEventListener(unityEvent)
     end
+    self.unityEventInfo = {}
 end
 
 -- 获得Component
@@ -112,12 +110,14 @@ function UIControl:getOrAddComponent(t,name)
     return c
 end
 
--- 添加UnityEvent监听
+-- 添加UnityEvent监听事件
 ---@param unityEvent UnityEvent
 ---@param callback Action
-function UIControl:addUnityEventListener(unityEvent,this,callback)
-    local event = function()
-        Common.call(this,callback)
+function UIControl:addUnityEventListener(unityEvent,this,callback,uiControl,...)
+    local data = {...}
+    local event = function(...)
+        local arg = table.merge({uiControl},{...},data)
+        Common.call(this,callback,table.unpack(arg))
     end
     local info = {callback=callback,event=event}
 
@@ -130,7 +130,7 @@ function UIControl:addUnityEventListener(unityEvent,this,callback)
 
     return true
 end
--- 移除UnityEvent监听
+-- 移除UnityEvent监听事件
 ---@param unityEvent UnityEvent
 ---@param callback Action
 function UIControl:removeUnityEventListener(unityEvent,callback)
@@ -138,6 +138,7 @@ function UIControl:removeUnityEventListener(unityEvent,callback)
     for index, info in ipairs(self.unityEventInfo[unityEvent]) do
         if(info.callback==callback) then
             unityEvent:RemoveListener(info.event)
+            unityEvent:Invoke();
 
             table.remove(self.unityEventInfo[unityEvent],index)
             return true
@@ -145,49 +146,70 @@ function UIControl:removeUnityEventListener(unityEvent,callback)
     end
     return false
 end
+-- 移除UnityEvent所有监听事件
+---@param unityEvent UnityEvent
+function UIControl:clearUnityEventListener(unityEvent)
+    if(not self.unityEventInfo[unityEvent]) then return false end
+    unityEvent:RemoveAllListeners()
+    unityEvent:Invoke();
+
+    self.unityEventInfo[unityEvent] = nil
+end
+
 ---------------- graphic ----------------
 --- Image
-function UIControl:SetSprite(sprite)
+function UIControl:setSprite(sprite)
     self.image.sprite = sprite
 end
-function UIControl:SetFillAmount(value)
+function UIControl:setFillAmount(value)
     self.image.fillAmount = value
 end
 --- RawImage
-function UIControl:SetTexture(texture)
+function UIControl:setTexture(texture)
     self.rawImage.texture = texture
 end
 --- Text
-function UIControl:SetText(text)
+function UIControl:setText(text)
     self.text.text = text
 end
-function UIControl:GetText(text)
+function UIControl:getText(text)
     return self.text.text
 end
 ---------------- selectable ----------------
 --- Button
-function UIControl:SetOnClick(this, callback)
-    self:addUnityEventListener(self.button.onClick,this,callback)
+function UIControl:setOnButtonClick(this,callback,data)
+    local unityEvent = self.button.onClick
+    self:clearUnityEventListener(unityEvent)
+    self:addUnityEventListener(unityEvent,this,callback,self,data)
 end
 --- Dropdown
-function UIControl:GetDropdownValue()
+function UIControl:getDropdownValue()
     return self.dropdown.value
 end
-function UIControl:SetDropdownValue(valueIndex)
+function UIControl:setDropdownValue(valueIndex)
     self.dropdown.value = valueIndex
 end
+function UIControl:setOnDropdownChanged(this,callback,data)
+    local unityEvent = self.dropdown.onValueChanged
+    self:clearUnityEventListener(unityEvent)
+    self:addUnityEventListener(unityEvent,this,callback,self,data)
+end
 -- InputField
-function UIControl:SetInputText(text)
+function UIControl:setInputText(text)
     self.inputField.text = text
 end
-function UIControl:GetInputText()
+function UIControl:getInputText()
     return self.inputField.text
 end
-function UIControl:SetOnValueChanged(this, callback)
-    self:addUnityEventListener(self.inputField.onValueChanged,this,callback)
+function UIControl:setOnInputFieldChanged(this,callback,data)
+    local unityEvent = self.inputField.onValueChanged
+    self:clearUnityEventListener(unityEvent)
+    self:addUnityEventListener(unityEvent,this,callback,self,data)
 end
-function UIControl:SetOnEndEdit(this, callback)
-    self:addUnityEventListener(self.inputField.onEndEdit,this,callback)
+function UIControl:setOnInputFieldEndEdit(this,callback,data)
+    local unityEvent = self.inputField.onEndEdit
+    self:clearUnityEventListener(unityEvent)
+    self:addUnityEventListener(unityEvent,this,callback,self,data)
 end
 
 return UIControl

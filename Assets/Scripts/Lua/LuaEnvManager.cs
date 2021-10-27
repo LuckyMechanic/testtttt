@@ -32,7 +32,6 @@ public class LuaEnvManager : Singleton<LuaEnvManager>
         };
         MonoUtil.Instance.MonoComponent.OnDestroyEvent += () =>
         {
-            UnityEngine.Debug.Log("LuaEnv.Dispose");
             LuaEnv.Dispose();
         };
     }
