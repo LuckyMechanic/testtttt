@@ -35,34 +35,41 @@ function UI_TEST:onLoad(arg)
 	self.Button2:setOnButtonClick(self,self.ButtonOnClick,{order=2})
 	self.Button3:setOnButtonClick(self,self.ButtonOnClick,{order=3})
 
-	self.InputField1:setOnInputFieldChanged(self,self.InputFieldOnValueChanged,{order=1})
-	self.InputField2:setOnInputFieldChanged(self,self.InputFieldOnValueChanged,{order=2})
-	self.InputField3:setOnInputFieldChanged(self,self.InputFieldOnValueChanged,{order=3})
+	self.InputField1:setOnInputFieldValueChanged(self,self.InputFieldOnValueChanged,{order=1})
+	self.InputField2:setOnInputFieldValueChanged(self,self.InputFieldOnValueChanged,{order=2})
+	self.InputField3:setOnInputFieldValueChanged(self,self.InputFieldOnValueChanged,{order=3})
 	self.InputField1:setOnInputFieldEndEdit(self,self.InputFieldOnEndEdit,{order=1})
 	self.InputField2:setOnInputFieldEndEdit(self,self.InputFieldOnEndEdit,{order=2})
 	self.InputField3:setOnInputFieldEndEdit(self,self.InputFieldOnEndEdit,{order=3})
 
-	self.Dropdown1:setOnDropdownChanged(self,self.OnDropdownChanged,{order=1})
-	self.Dropdown2:setOnDropdownChanged(self,self.OnDropdownChanged,{order=2})
-	self.Dropdown3:setOnDropdownChanged(self,self.OnDropdownChanged,{order=3})
+	self.Dropdown1:setOnDropdownValueChanged(self,self.OnDropdownValueChanged,{order=1})
+	self.Dropdown2:setOnDropdownValueChanged(self,self.OnDropdownValueChanged,{order=2})
+	self.Dropdown3:setOnDropdownValueChanged(self,self.OnDropdownValueChanged,{order=3})
+
+	self.Slider1:setOnDropdownValueChanged(self,self.OnSliderValueChanged,{order=1})
+	self.Slider2:setOnDropdownValueChanged(self,self.OnSliderValueChanged,{order=2})
+	self.Slider3:setOnDropdownValueChanged(self,self.OnSliderValueChanged,{order=3})
 end
 
 function UI_TEST:OnButtonClick(control,data)
 	log.print("OnButtonClick",control.name,data)
 end
 
-function UI_TEST:OnInputFieldChanged(control,text,data)
-	log.print("OnInputFieldChanged",control.name,text,data)
+function UI_TEST:InputFieldOnValueChanged(control,text,data)
+	log.print("InputFieldOnValueChanged",control.name,text,data)
 end
 
 function UI_TEST:OnInputFieldEndEdit(control,text,data)
 	log.print("OnInputFieldEndEdit",control.name,text,data)
 end
 
-function UI_TEST:OnDropdownChanged(control,index,data)
-	log.print("OnDropdownChanged",control.name,index,data)
+function UI_TEST:OnDropdownValueChanged(control,value,data)
+	log.print("OnDropdownValueChanged",control.name,value,data)
 end
 
+function UI_TEST:OnSliderValueChanged(control,value,data)
+	log.print("OnSliderValueChanged",control.name,value,data)
+end
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ 可编辑区块 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
 return UI_TEST

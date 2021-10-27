@@ -189,7 +189,7 @@ end
 function UIControl:setDropdownValue(valueIndex)
     self.dropdown.value = valueIndex
 end
-function UIControl:setOnDropdownChanged(this,callback,data)
+function UIControl:setOnDropdownValueChanged(this,callback,data)
     local unityEvent = self.dropdown.onValueChanged
     self:clearUnityEventListener(unityEvent)
     self:addUnityEventListener(unityEvent,this,callback,self,data)
@@ -201,7 +201,7 @@ end
 function UIControl:getInputText()
     return self.inputField.text
 end
-function UIControl:setOnInputFieldChanged(this,callback,data)
+function UIControl:setOnInputFieldValueChanged(this,callback,data)
     local unityEvent = self.inputField.onValueChanged
     self:clearUnityEventListener(unityEvent)
     self:addUnityEventListener(unityEvent,this,callback,self,data)
@@ -211,5 +211,14 @@ function UIControl:setOnInputFieldEndEdit(this,callback,data)
     self:clearUnityEventListener(unityEvent)
     self:addUnityEventListener(unityEvent,this,callback,self,data)
 end
+--- Scrollbar
+
+--- Slider
+function UIControl:setOnSliderValueChanged(this,callback,data)
+    local unityEvent = self.slider.onValueChanged
+    self:clearUnityEventListener(unityEvent)
+    self:addUnityEventListener(unityEvent,this,callback,self,data)
+end
+--- Toggle
 
 return UIControl

@@ -9,5 +9,7 @@ public class Main
         MonoUtil.Instance.Load();
 
         LuaEnvManager.Instance.Load();
+
+        // UnityEngine.UI.Slider
     }
 }
