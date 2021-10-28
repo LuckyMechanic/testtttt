@@ -52,17 +52,13 @@ public class UIEditor
 
             string filePath = new FileInfo(string.Format("{0}/{1}.lua.txt", UI_SCRIPT_DIR, uiPrefab.name)).FullName;
             string codeContent = "";
-            string defaultContent = "";
+            string defaultContent = CodeTemplate.GenerateCode("code_template_ui_default", uiPrefab.name.ToUpper());
             if (File.Exists(filePath))
             {
                 codeContent = File.ReadAllText(filePath);
             }
-            else
-            {
-                defaultContent = CodeTemplate.GenerateCode("code_template_ui_default", uiPrefab.name.ToUpper());
-            }
-            codeContent = CodeTemplate.GenerateEditorCode(codeContent, "code_template_ui", defaultContent, uiPrefab.name.ToUpper(), uiPrefab.name, uiControlCodeText);
-            // File.WriteAllText(filePath, codeContent);
+            codeContent = CodeTemplate.GenerateEditorCode(codeContent, "code_template_ui", new string[] { defaultContent }, uiPrefab.name.ToUpper(), uiPrefab.name, uiControlCodeText);
+            File.WriteAllText(filePath, codeContent);
             Debug.LogFormat("[{0}]UI代码生成成功 >>> {1}", uiPrefab.name, filePath);
         }
     }

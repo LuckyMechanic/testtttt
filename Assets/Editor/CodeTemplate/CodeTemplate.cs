@@ -38,14 +38,12 @@ public class CodeTemplate
     /// 生成部分可编辑代码文本
     /// </summary>
     /// <returns></returns>
-    public static string GenerateEditorCode(string codeContent, string templateName, string defaultCode = "", params object[] args)
+    public static string GenerateEditorCode(string codeContent, string templateName, string[] defaultCodes = null, params object[] args)
     {
         string result = "";
-        MatchCollection mc = Regex.Matches(codeContent, string.Format(CODE_TEMPLATE_EDITOR, @"([\s\S]*?)"));
 
-        UnityEngine.Debug.Log(codeContent);
-        UnityEngine.Debug.Log(string.Format(CODE_TEMPLATE_EDITOR, @"([\s\S]*?)"));
-        UnityEngine.Debug.Log(mc.Count);
+        string regex = string.Format(CODE_TEMPLATE_EDITOR, @"([\s\S]*?)");
+        MatchCollection mc = Regex.Matches(codeContent, regex);
 
         string[] tempArr = GenerateCode(templateName, args).Split(new string[] { "[EDITOR]" }, StringSplitOptions.None);
         for (int i = 0; i < tempArr.Length; i++)
@@ -55,11 +53,16 @@ public class CodeTemplate
             {
                 if (i < mc.Count)
                 {
-                    result += string.Format(CODE_TEMPLATE_EDITOR, mc[i].Groups[1].Value);
+                    result += string.Format(CODE_TEMPLATE_EDITOR.Replace(@"\n", "\n"), mc[i].Groups[1].Value);
                 }
                 else
                 {
-                    result += string.Format(CODE_TEMPLATE_EDITOR, defaultCode);
+                    string defaultCode = "";
+                    if (defaultCodes != null)
+                    {
+                        defaultCode = i < defaultCodes.Length ? defaultCodes[i] : defaultCodes[defaultCodes.Length - 1];
+                    }
+                    result += string.Format(CODE_TEMPLATE_EDITOR.Replace(@"\n", "\n"), defaultCode);
                 }
             }
         }
