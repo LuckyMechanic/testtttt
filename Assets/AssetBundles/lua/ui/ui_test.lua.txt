@@ -31,16 +31,16 @@ end
 
 
 function UI_TEST:onLoad(arg)
-	self.Button1:setOnButtonClick(self,self.ButtonOnClick,{order=1})
-	self.Button2:setOnButtonClick(self,self.ButtonOnClick,{order=2})
-	self.Button3:setOnButtonClick(self,self.ButtonOnClick,{order=3})
+	self.Button1:setOnButtonClick(self,self.OnButtonClick,{order=1})
+	self.Button2:setOnButtonClick(self,self.OnButtonClick,{order=2})
+	self.Button3:setOnButtonClick(self,self.OnButtonClick,{order=3})
 
-	self.InputField1:setOnInputFieldValueChanged(self,self.InputFieldOnValueChanged,{order=1})
-	self.InputField2:setOnInputFieldValueChanged(self,self.InputFieldOnValueChanged,{order=2})
-	self.InputField3:setOnInputFieldValueChanged(self,self.InputFieldOnValueChanged,{order=3})
-	self.InputField1:setOnInputFieldEndEdit(self,self.InputFieldOnEndEdit,{order=1})
-	self.InputField2:setOnInputFieldEndEdit(self,self.InputFieldOnEndEdit,{order=2})
-	self.InputField3:setOnInputFieldEndEdit(self,self.InputFieldOnEndEdit,{order=3})
+	self.InputField1:setOnInputFieldValueChanged(self,self.OnInputFieldValueChanged,{order=1})
+	self.InputField2:setOnInputFieldValueChanged(self,self.OnInputFieldValueChanged,{order=2})
+	self.InputField3:setOnInputFieldValueChanged(self,self.OnInputFieldValueChanged,{order=3})
+	self.InputField1:setOnInputFieldEndEdit(self,self.OnInputFieldEndEdit,{order=1})
+	self.InputField2:setOnInputFieldEndEdit(self,self.OnInputFieldEndEdit,{order=2})
+	self.InputField3:setOnInputFieldEndEdit(self,self.OnInputFieldEndEdit,{order=3})
 
 	self.Dropdown1:setOnDropdownValueChanged(self,self.OnDropdownValueChanged,{order=1})
 	self.Dropdown2:setOnDropdownValueChanged(self,self.OnDropdownValueChanged,{order=2})
@@ -49,13 +49,25 @@ function UI_TEST:onLoad(arg)
 	self.Slider1:setOnDropdownValueChanged(self,self.OnSliderValueChanged,{order=1})
 	self.Slider2:setOnDropdownValueChanged(self,self.OnSliderValueChanged,{order=2})
 	self.Slider3:setOnDropdownValueChanged(self,self.OnSliderValueChanged,{order=3})
+
+	self.Toggle1:setOnToggleValueChanged(self,self.OnToggleValueChanged,{order=1})
+	self.Toggle2:setOnToggleValueChanged(self,self.OnToggleValueChanged,{order=2})
+	self.Toggle3:setOnToggleValueChanged(self,self.OnToggleValueChanged,{order=3})
+
+	self.Scrollbar1:setOnScrollbarValueChanged(self,self.OnScrollbarValueChanged,{order=1})
+	self.Scrollbar2:setOnScrollbarValueChanged(self,self.OnScrollbarValueChanged,{order=2})
+	self.Scrollbar3:setOnScrollbarValueChanged(self,self.OnScrollbarValueChanged,{order=3})
+
+	self.Toggle4:setOnToggleValueChanged(self,self.OnToggleValueChanged,{order=4})
+	self.Toggle5:setOnToggleValueChanged(self,self.OnToggleValueChanged,{order=5})
+	self.Toggle6:setOnToggleValueChanged(self,self.OnToggleValueChanged,{order=6})
 end
 
 function UI_TEST:OnButtonClick(control,data)
 	log.print("OnButtonClick",control.name,data)
 end
 
-function UI_TEST:InputFieldOnValueChanged(control,text,data)
+function UI_TEST:OnInputFieldValueChanged(control,text,data)
 	log.print("InputFieldOnValueChanged",control.name,text,data)
 end
 
@@ -69,6 +81,14 @@ end
 
 function UI_TEST:OnSliderValueChanged(control,value,data)
 	log.print("OnSliderValueChanged",control.name,value,data)
+end
+
+function UI_TEST:OnToggleValueChanged(control,value,data)
+	log.print("OnToggleValueChanged",control.name,value,data)
+end
+
+function UI_TEST:OnScrollbarValueChanged(control,value,data)
+	log.print("OnScrollbarValueChanged",control.name,value,data)
 end
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ 可编辑区块 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 

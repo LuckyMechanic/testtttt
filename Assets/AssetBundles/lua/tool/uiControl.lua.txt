@@ -78,7 +78,6 @@ function UIControl:close()
     for unityEvent, infos in pairs(self.unityEventInfo) do
         self:clearUnityEventListener(unityEvent)
     end
-    self.unityEventInfo = {}
 end
 
 -- 获得Component
@@ -169,11 +168,11 @@ function UIControl:setTexture(texture)
     self.rawImage.texture = texture
 end
 --- Text
-function UIControl:setText(text)
-    self.text.text = text
-end
 function UIControl:getText(text)
     return self.text.text
+end
+function UIControl:setText(text)
+    self.text.text = text
 end
 ---------------- selectable ----------------
 --- Button
@@ -186,8 +185,8 @@ end
 function UIControl:getDropdownValue()
     return self.dropdown.value
 end
-function UIControl:setDropdownValue(valueIndex)
-    self.dropdown.value = valueIndex
+function UIControl:setDropdownValue(value)
+    self.dropdown.value = value
 end
 function UIControl:setOnDropdownValueChanged(this,callback,data)
     local unityEvent = self.dropdown.onValueChanged
@@ -195,11 +194,11 @@ function UIControl:setOnDropdownValueChanged(this,callback,data)
     self:addUnityEventListener(unityEvent,this,callback,self,data)
 end
 -- InputField
-function UIControl:setInputText(text)
-    self.inputField.text = text
-end
 function UIControl:getInputText()
     return self.inputField.text
+end
+function UIControl:setInputText(text)
+    self.inputField.text = text
 end
 function UIControl:setOnInputFieldValueChanged(this,callback,data)
     local unityEvent = self.inputField.onValueChanged
@@ -212,13 +211,40 @@ function UIControl:setOnInputFieldEndEdit(this,callback,data)
     self:addUnityEventListener(unityEvent,this,callback,self,data)
 end
 --- Scrollbar
-
+function UIControl:getScrollbarValue()
+    return self.scrollbar.value
+end
+function UIControl:setScrollbarValue(value)
+    self.scrollbar.value = value
+end
+function UIControl:setOnScrollbarValueChanged(this,callback,data)
+    local unityEvent = self.scrollbar.onValueChanged
+    self:clearUnityEventListener(unityEvent)
+    self:addUnityEventListener(unityEvent,this,callback,self,data)
+end
 --- Slider
+function UIControl:getSliderValue()
+    return self.slider.value
+end
+function UIControl:setSliderValue(value)
+    self.slider.value = value
+end
 function UIControl:setOnSliderValueChanged(this,callback,data)
     local unityEvent = self.slider.onValueChanged
     self:clearUnityEventListener(unityEvent)
     self:addUnityEventListener(unityEvent,this,callback,self,data)
 end
 --- Toggle
+function UIControl:getIsOn()
+    return self.toggle.isOn
+end
+function UIControl:setIsOn(isOn)
+    self.toggle.isOn = isOn
+end
+function UIControl:setOnToggleValueChanged(this,callback,data)
+    local unityEvent = self.toggle.onValueChanged
+    self:clearUnityEventListener(unityEvent)
+    self:addUnityEventListener(unityEvent,this,callback,self,data)
+end
 
 return UIControl

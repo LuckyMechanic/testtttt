@@ -29,7 +29,7 @@ end
 -- 判断是否是数组
 function table.isArray(t)
     for i = 1, table.count(t) do
-        if not t[i] then
+        if t[i]==nil then
             return false
         end
     end
