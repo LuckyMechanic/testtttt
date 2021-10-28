@@ -51,13 +51,15 @@ Vector3.__call = function (t,x,y,z)
     return Vector3:new(x,y,z)
 end
 -- __tostring
-Vector3.__tostringx = function (t)
-	Vector3.__tostring = nil
-	local str = table.concat({'Vector3'})
-	Vector3.__tostring = Vector3.__tostringx
+Vector3.__tostring = function (t)
+	local str = ''
+	if(t:get()) then
+		str = table.concat({'Vector3'})
+	else
+		str = "class Vector3"
+	end
 	return str
 end
-Vector3.__tostring = Vector3.__tostringx
 
 -- 常量定义
 _getter.up 		= function() return Vector3(0,1,0) end

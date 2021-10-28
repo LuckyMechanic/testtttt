@@ -29,7 +29,6 @@ end
 
 -- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ 可编辑区块 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
-
 function UI_TEST:onLoad(arg)
 	self.Button1:setOnButtonClick(self,self.OnButtonClick,{order=1})
 	self.Button2:setOnButtonClick(self,self.OnButtonClick,{order=2})
@@ -90,6 +89,7 @@ end
 function UI_TEST:OnScrollbarValueChanged(control,value,data)
 	log.print("OnScrollbarValueChanged",control.name,value,data)
 end
+
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ 可编辑区块 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
 return UI_TEST

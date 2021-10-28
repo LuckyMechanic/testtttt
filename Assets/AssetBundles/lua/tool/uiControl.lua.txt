@@ -154,7 +154,106 @@ function UIControl:clearUnityEventListener(unityEvent)
 
     self.unityEventInfo[unityEvent] = nil
 end
-
+---------------- base ----------------
+--- Transform
+function UIControl:getPosition()
+    return Vector3(self.transform.position)
+end
+function UIControl:setPosition(value)
+    self.transform.position = value
+end
+function UIControl:getLocalPosition()
+    return Vector3(self.transform.localPosition)
+end
+function UIControl:setLocalPosition(value)
+    self.transform.localPosition = value
+end
+function UIControl:getEulerAngles()
+    return Vector3(self.transform.eulerAngles)
+end
+function UIControl:setEulerAngles(value)
+    self.transform.eulerAngles = value
+end
+function UIControl:getLocalEulerAngles()
+    return Vector3(self.transform.localEulerAngles)
+end
+function UIControl:setLocalEulerAngles(value)
+    self.transform.localEulerAngles = value
+end
+function UIControl:getRotation()
+    return Quaternion(self.transform.rotation)
+end
+function UIControl:setRotation(value)
+    self.transform.rotation = value
+end
+function UIControl:getLocalRotation()
+    return Quaternion(self.transform.localRotation)
+end
+function UIControl:setLocalRotation(value)
+    self.transform.localRotation = value
+end
+function UIControl:getLocalScale()
+    return Vector3(self.transform.localScale)
+end
+function UIControl:setLocalScale(value)
+    self.transform.localScale = value
+end
+--- GameObject
+function UIControl:getActive()
+    return self.gameObject.activeSelf
+end
+function UIControl:setActive(flag)
+    self.gameObject:SetActive(flag)
+end
+--- RectTransform
+function UIControl:getAnchoredPosition()
+    return Vector2(self.transform.anchoredPosition)
+end
+function UIControl:setAnchoredPosition(value)
+    self.transform.anchoredPosition = value
+end
+function UIControl:getAnchoredPosition3D()
+    return Vector3(self.transform.anchoredPosition3D)
+end
+function UIControl:setAnchoredPosition3D(value)
+    self.transform.anchoredPosition3D = value
+end
+function UIControl:getOffsetMax()
+    return Vector2(self.transform.offsetMax)
+end
+function UIControl:setOffsetMax(value)
+    self.transform.offsetMax = value
+end
+function UIControl:getOffsetMin()
+    return Vector2(self.transform.offsetMin)
+end
+function UIControl:setOffsetMin(value)
+    self.transform.offsetMin = value
+end
+function UIControl:getAnchorMax()
+    return Vector2(self.transform.anchorMax)
+end
+function UIControl:setAnchorMax(value)
+    self.transform.anchorMax = value
+end
+function UIControl:getAnchorMin()
+    return Vector2(self.transform.anchorMin)
+end
+function UIControl:setAnchorMin(value)
+    self.transform.anchorMin = value
+end
+function UIControl:getPivot()
+    return Vector2(self.transform.pivot)
+end
+function UIControl:setPivot(value)
+    self.transform.pivot = value
+end
+function UIControl:getSizeDelta()
+    return Vector2(self.transform.sizeDelta)
+end
+function UIControl:setSizeDelta(value)
+    self.transform.sizeDelta = value
+end
 ---------------- graphic ----------------
 --- Image
 function UIControl:setSprite(sprite)
@@ -168,7 +267,7 @@ function UIControl:setTexture(texture)
     self.rawImage.texture = texture
 end
 --- Text
-function UIControl:getText(text)
+function UIControl:getText()
     return self.text.text
 end
 function UIControl:setText(text)

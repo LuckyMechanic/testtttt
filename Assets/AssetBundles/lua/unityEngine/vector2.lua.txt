@@ -49,14 +49,15 @@ Vector2.__call = function (t,x,y)
     return Vector2:new(x,y)
 end
 -- __tostring
-Vector2.__tostringx = function (t)
-	Vector2.__tostring = nil
-	local str = table.concat({'Vector2'})
-	Vector2.__tostring = Vector2.__tostringx
+Vector2.__tostring = function (t)
+	local str = ''
+	if(t:get()) then
+		str = table.concat({'Vector2'})
+	else
+		str = "class Vector2"
+	end
 	return str
 end
-Vector2.__tostring = Vector2.__tostringx
-
 -- 常量定义
 _getter.up 		= function() return Vector2(0, 1) end
 _getter.right	= function() return Vector2(1, 0) end
