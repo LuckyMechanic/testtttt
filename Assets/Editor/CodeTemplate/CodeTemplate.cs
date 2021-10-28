@@ -42,6 +42,11 @@ public class CodeTemplate
     {
         string result = "";
         MatchCollection mc = Regex.Matches(codeContent, string.Format(CODE_TEMPLATE_EDITOR, @"([\s\S]*?)"));
+
+        UnityEngine.Debug.Log(codeContent);
+        UnityEngine.Debug.Log(string.Format(CODE_TEMPLATE_EDITOR, @"([\s\S]*?)"));
+        UnityEngine.Debug.Log(mc.Count);
+
         string[] tempArr = GenerateCode(templateName, args).Split(new string[] { "[EDITOR]" }, StringSplitOptions.None);
         for (int i = 0; i < tempArr.Length; i++)
         {

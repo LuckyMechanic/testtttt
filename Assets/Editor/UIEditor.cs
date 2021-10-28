@@ -62,7 +62,7 @@ public class UIEditor
                 defaultContent = CodeTemplate.GenerateCode("code_template_ui_default", uiPrefab.name.ToUpper());
             }
             codeContent = CodeTemplate.GenerateEditorCode(codeContent, "code_template_ui", defaultContent, uiPrefab.name.ToUpper(), uiPrefab.name, uiControlCodeText);
-            File.WriteAllText(filePath, codeContent);
+            // File.WriteAllText(filePath, codeContent);
             Debug.LogFormat("[{0}]UI代码生成成功 >>> {1}", uiPrefab.name, filePath);
         }
     }
