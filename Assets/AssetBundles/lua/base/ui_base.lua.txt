@@ -8,9 +8,9 @@ UIBase.override = {onLoadStart=false,onLoadEnd=false,onLoad=false,close = false}
 UIBase.getter.ASSET_CONFIG = function(this) return { key = 'ui', assetName = this.className } end
 -- 加载参数
 -- ALLOW_UI_ACTIVATION：加载UI完毕后是否直接打开
--- ORDER：渲染层级 数值越大越靠前
+-- Layer：渲染层级
 -- MaskInfo：遮罩信息 可阻挡下层点击事件 isMask-是否存在遮罩 color-遮罩颜色
-UIBase.getter.LOAD_ARG = function () return { ALLOW_SCENE_ACTIVATION = true , ORDER = 0 , MaskInfo = {isMask=true, color=Color(0,0,0,0.5)} } end
+UIBase.getter.LOAD_ARG = function () return { ALLOW_SCENE_ACTIVATION = true , Layer = 'UI_Default' , MaskInfo = {isMask=true, color=Color(0,0,0,0.5)} } end
 
 -- 初始化UIControl
 function UIBase:initUIControl()
@@ -36,13 +36,11 @@ function UIBase:ctor(loadArg,...)
         end
     end
     self.LOAD_ARG = loadArg
-
     self.name = self.className
     self.arg = {...}
     self.node = nil
-
-     -- 此处是游戏结束时销毁组件的处理
-     self:broadcast_on(BROADCAST_CODE.MONO("OnDestroy"),self.closeSelf,self)
+    -- 此处是游戏结束时销毁组件的处理
+    self:broadcast_on(BROADCAST_CODE.MONO("OnDestroy"),self.closeSelf,self)
 end
 -- 卸载UI
 function UIBase:close()
@@ -68,12 +66,12 @@ end
 -- 显示UI
 function UIBase:show()
     self.node.gameObject:SetActive(true)
-    -- 更新渲染层级 此处更新只能在gameobject显示情况下生效 因此放在此处
-    self:updateOrder()
+    -- 更新渲染层级
+    self:updateLayer()
     -- 第一次显示则触发onLoad生命周期
     if(self.firstShow == nil or self.firstShow )then
         self.firstShow = false
-        self:onLoad(table.unpack(self.arg))
+        self:onLoad(table.unpack(self.arg) or {})
     end
 end
 -- 隐藏UI
@@ -92,11 +90,12 @@ function UIBase:updateMaskInfo(info)
     maskImage.color = info.color
 end
 -- 更新渲染层级
-function UIBase:updateOrder(order)
-    order = order or self.LOAD_ARG.ORDER
+function UIBase:updateLayer(layer)
+    layer = layer or self.LOAD_ARG.Layer
     local canvas = comp:getCSComponent(self.node,CS.UnityEngine.Canvas) or comp:addCSComponent(self.node,CS.UnityEngine.Canvas)
-    canvas.overrideSorting = true;
-    canvas.sortingOrder = order
+    canvas.overrideSorting = true
+    canvas.sortingLayerID = CS.UnityEngine.SortingLayer.NameToID(layer)
+    canvas.sortingOrder = ui.uiCount[self.LOAD_ARG.Layer]
     local graphicRaycaster = comp:getCSComponent(self.node,CS.UnityEngine.UI.GraphicRaycaster) or comp:addCSComponent(self.node,CS.UnityEngine.UI.GraphicRaycaster)
 end
 return UIBase

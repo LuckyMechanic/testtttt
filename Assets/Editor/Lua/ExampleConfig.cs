@@ -4,7 +4,6 @@ using XLua;
 using System.Reflection;
 using System.Linq;
 
-//配置的详细介绍请看Doc下《XLua的配置.doc》
 public static class ExampleConfig
 {
 
@@ -72,7 +71,7 @@ public static class ExampleConfig
         "ClusterInput", "Motion",
         "UnityEngine.UI.ReflectionMethodsCache", "NativeLeakDetection",
         "NativeLeakDetectionMode", "WWWAudioExtensions", "UnityEngine.Experimental",
-        "ClusterNetwork",
+        "ClusterNetwork","GUIStyleState","iPhoneUtils","TerrainData"
     };
     /// <summary>
     /// CSharpCallLua 扩展Type

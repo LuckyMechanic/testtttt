@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1381872772
+CRC: 1372620442
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1d33ece1d0278095a16824a0abc148a9
+    Hash: 5c0d65331d4cbb383f524b7ddab020d3
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5ad585dd02dfb5016c0dad519eab8f49
@@ -16,7 +16,9 @@ Assets:
 - Assets/AssetBundles/lua/template/template.lua.txt
 - Assets/AssetBundles/lua/mgr/broadcast.lua.txt
 - Assets/AssetBundles/lua/tool/uiControl.lua.txt
+- Assets/AssetBundles/lua/config/UIID.lua.txt
 - Assets/AssetBundles/lua/template/manager/template_propsManager.lua.txt
+- Assets/AssetBundles/lua/unityEngine/quaternion.lua.txt
 - Assets/AssetBundles/lua/util/common_util.lua.txt
 - Assets/AssetBundles/lua/util/string_util.lua.txt
 - Assets/AssetBundles/lua/base/lifecycle_base.lua.txt
@@ -46,6 +48,7 @@ Assets:
 - Assets/AssetBundles/lua/template/data/template_text.lua.txt
 - Assets/AssetBundles/lua/template/data/template_error.lua.txt
 - Assets/AssetBundles/lua/base/global.lua.txt
+- Assets/AssetBundles/lua/ui/ui_test.lua.txt
 - Assets/AssetBundles/lua/comp/comp_test1.lua.txt
 - Assets/AssetBundles/lua/mgr/mono.lua.txt
 - Assets/AssetBundles/lua/control/error_control.lua.txt

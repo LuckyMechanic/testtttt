@@ -1,0 +1,8 @@
+
+-- 显示逻辑
+_G.SHOW_STYLE_MSG = {
+    NONE = enum(0),                    -- 不显示
+    HTTP_ERROR = enum(),               -- 重试按钮的HTTP错误信息框
+    UI_ERROR  = enum(),                -- 错误信息框
+    UI_TIP = enum(),                   -- 提示信息框
+}

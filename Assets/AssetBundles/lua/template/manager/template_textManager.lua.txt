@@ -9,7 +9,13 @@ function Manager:ctor()
 end
 
 -- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ 可编辑区块 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-
+function Manager:getText(id)
+    local model = self.baseInfo[id]
+    if(model~=nil) then
+        return model:get_text()
+    end
+    return ""
+end
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ 可编辑区块 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
 return Manager

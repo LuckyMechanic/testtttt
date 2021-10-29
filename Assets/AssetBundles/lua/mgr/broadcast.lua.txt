@@ -32,9 +32,9 @@ function Broadcast:on(key, callback, this, order, isOnce)
         -- 键值不存在则新建
         table.insert(list, info)
         self.callBackInfoMap[key] = list
-    elseif self:exist(key, callback) then
-        -- 重复则不注册
-        return false
+    -- elseif self:exist(key, callback) then
+    --     -- 重复则不注册
+    --     return false
     else
         list = self.callBackInfoMap[key]
         local index = nil

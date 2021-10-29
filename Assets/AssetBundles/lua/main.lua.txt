@@ -40,7 +40,7 @@ end
 -- log.error(400, '我是一个错误', {tip = '我是一个错误'})
 -- log.warn(500, '我是一个警告', {tip = '我是一个警告'})
 
--- scene:load('Step')
+scene:load('Step')
 
 -- Middleware:new():use(function(ctx,next)
 --     ui:load("ui_msg",nil,function(ccc)
@@ -59,7 +59,7 @@ end
 --     end)
 -- end):next()
 
-ui:load("ui_test")
+-- ui:load(UIID.ui_test)
 
 -- broadcast:on(
 --     BROADCAST_CODE.ERROR,
@@ -68,6 +68,6 @@ ui:load("ui_test")
 --     end
 -- )
 
--- local router = 'login'
--- local data = {username = 'aaaa34123', password = 'bbbvvvvv'}
--- http:send(router, data)
+local router = 'login'
+local data = {username = 'aaaa34123', password = 'bbbvvvvv'}
+http:send(router, data)

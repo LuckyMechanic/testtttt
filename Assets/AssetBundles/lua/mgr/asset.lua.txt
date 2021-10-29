@@ -81,7 +81,7 @@ function Asset:loadAllString(key)
     local result = {}
     for index, asset in ipairs(assets) do
         table.insert(result,asset:ToString())
-        self:unloadAsset(asset);
+        -- self:unloadAsset(asset);
     end
     return result
 end
@@ -131,7 +131,7 @@ function Asset:loadAllBytes(key)
     local result = {}
     for index, asset in ipairs(assets) do
         table.insert(result,asset.bytes)
-        self:unloadAsset(asset);
+        -- self:unloadAsset(asset);
     end
     return result
 end

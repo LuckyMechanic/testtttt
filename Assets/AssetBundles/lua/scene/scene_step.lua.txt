@@ -5,53 +5,6 @@ local SceneStep = class('scene_step', base)
 -- 加载完毕
 function SceneStep:onLoad()
     log.print("进入场景Step")
-
-    -- scene:load("Game",nil,nil,1,2,{a=123})
-
-    local go = CS.UnityEngine.GameObject.Find('Image')
-    local img = go:GetComponent(typeof(CS.UnityEngine.UI.Image))
-
-    go.transform.position = Vector3.one
-    log.print(Vector3(go.transform.position) == Vector3.one )
-    -- log.print(go.transform.position == Vector3.one)
-    -- -- img.color = Color:new(1,1,1,1)
-    -- -- log.print( Color:new('#FFFF00'))
-    img.color = Color.Yellow
-    log.print(Color.Yellow)
-    log.print(Vector3.one == Vector3.one)
-    -- log.print(img.color)
-    -- log.print(Color:new(img.color))
-    -- local color = Color:new(img.color)
-    -- color.r = 0
-    -- img.color = color
-
-    log.print(Vector2.one)
-
-    log.print(Date.toTable(10))
-
-    -- for i = 1, 10 do
-    --     local tempcomp = comp:addCSComponent(img.transform,CS.LuaComponent)
-    --     tempcomp.LuaName = '我是LuaComp'..i
-    -- end
-
-    -- local arr = comp:getCsComponents(img.transform,CS.LuaComponent)
-    -- for i = 0, arr.Length-1 do
-    --     local tempcomp = arr:GetValue(i)
-    --     print(tempcomp.LuaName)
-    -- end
-
-    -- local tettet = comp:addComponent(img.transform,'comp_test1')
-    -- tettet = comp:getComponent(img.transform,'comp_test1')
-    -- tettet:log();
-    -- tettet:closeSelf()
-    -- comp:closeComponent(img.transform,tettet)
-
-
-
-    ui:load("ui_msg",nil,function(ccc)
-        scene:load("Game",nil,nil,1,2,{a=123})
-    end)
-
 end
 
 return SceneStep

@@ -10,10 +10,10 @@ UIControl.getter.transform = function(this)
 end
 ---@type GameObject
 UIControl.getter.gameObject = function(this)
-    if(self.gameObject==nil) then
-        self.gameObject = this.node.gameObject
+    if(rawget(this,"gameObject")==nil) then
+        this.gameObject = this.node.gameObject
     end
-    return self.gameObject
+    return this.gameObject
 end
 ---@type RectTransform
 UIControl.getter.rectTransform = function(this)

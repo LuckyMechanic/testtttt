@@ -4,6 +4,8 @@ local ErrorControl = {}
 function ErrorControl.Receive(error, data, ...)
     broadcast:notify(BROADCAST_CODE.ERROR, error, data, ...)
     broadcast:notify(BROADCAST_CODE.ERROR(error), error, data, ...)
+
+    ShowStyleControl.ShowMsg(SHOW_STYLE_MSG[error:get_showStyle()],error,data,...)
 end
 
 return ErrorControl

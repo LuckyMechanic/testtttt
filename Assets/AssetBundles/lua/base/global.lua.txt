@@ -2,9 +2,11 @@ _G.class = require('class')
 _G.try = require('try')
 require('utils')
 -- 常量
+require("ENUM")
 _G.MONO_LIFECYCLE = require('MONO_LIFECYCLE')
 _G.GAME_CONST = require('GAME_CONST')
 _G.BROADCAST_CODE = require('BROADCAST_CODE')
+_G.UIID = require('UIID')
 -- 类
 _G.UIControl = require('uiControl')
 _G.DownloadFile = require('downloadFile')
@@ -17,10 +19,10 @@ _G.Vector2 = require('vector2')
 _G.log = require('log')
 _G.Template = require('template')
 _G.Template.refresh()
-_G.ERROR_INFO = Template.template_error
 
 _G.ErrorControl = require('error_control')
 _G.ErrorTipControl = require('errorTip_control')
+_G.ShowStyleControl = require('showStyle_control')
 
 -- 实例化对象
 _G.broadcast = require('broadcast'):new()
