@@ -1,0 +1,67 @@
+local ShowStyleMsg = {}
+
+---@param type SHOW_STYLE_MSG 显示样式
+function ShowStyleMsg.ShowMsg(type,...)
+    -- 不显示
+    if(type == SHOW_STYLE_MSG.NONE) then
+        return nil
+    end
+    -- 重试按钮的HTTP错误信息框
+    if(type == SHOW_STYLE_MSG.HTTP_ERROR) then
+        return ShowStyleMsg.Show_HTTP_ERROR(...)
+    end
+    -- 错误信息框
+    if(type == SHOW_STYLE_MSG.UI_ERROR) then
+        return ShowStyleMsg.Show_UI_ERROR(...)
+    end
+    -- 提示信息框
+    if(type == SHOW_STYLE_MSG.UI_TIP) then
+        return ShowStyleMsg.Show_UI_TIP(...)
+    end
+    return nil
+end
+
+function ShowStyleMsg.Show_HTTP_ERROR(...)
+    local arg = {...}
+    ---@type template_errorModel
+    local error = arg[1]
+    local data = arg[2]
+    local rpcRouter = arg[3]
+    local rpcData = arg[4]
+
+    ui:show(UIID.UI_MSG,{
+        title=Template.template_text:getText(400101),
+        msg=error:getTip(data),
+        btnTitles=Template.template_text:getText(400102),
+        isShowCloseBtn=false,
+        isClickClose=false,
+        onClick=function(ui)
+            http:send(rpcRouter, rpcData)
+            ui:closeSelf()
+        end
+    })
+end
+
+function ShowStyleMsg.Show_UI_ERROR(...)
+    local arg = {...}
+    ---@type template_errorModel
+    local error = arg[1]
+    local data = arg[2]
+
+    ui:show(UIID.UI_MSG,{title=Template.template_text:getText(400101),msg=error:getTip(data)})
+end
+
+function ShowStyleMsg.Show_UI_TIP(...)
+    local arg = {...}
+    local data = arg[1]
+
+    local msg = ''
+    if(type(data)=='string') then
+        msg = data
+    elseif(type(data)=='number') then
+        msg = Template.template_text:getText(data)
+    end
+    ui:show(UIID.UI_MSG,{title=Template.template_text:getText(400103),msg=msg})
+end
+
+return ShowStyleMsg
