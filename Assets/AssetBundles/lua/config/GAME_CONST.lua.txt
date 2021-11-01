@@ -13,7 +13,7 @@ GAME_CONST.SOCKET_HOST = nil
 -- SOCKET PORT
 GAME_CONST.SOCKET_PORT = nil
 -- 资源文件下载URL
-GAME_CONST.DOWNLOAD_URL = table.concat({'https://test-1251361371.cos-website.ap-nanjing.myqcloud.com/', 'Download/'})
+GAME_CONST.DOWNLOAD_URL = table.concat({'http://127.0.0.1', 'Download/'})
 -- 资源版本文件URL
 GAME_CONST.DOWNLOAD_VERSION_URL = table.concat({GAME_CONST.DOWNLOAD_URL, 'Version'})
 -- 本地资源版本文件路径

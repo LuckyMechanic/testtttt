@@ -1,0 +1,12 @@
+local AssetVersionControl = {}
+
+local this = AssetVersionControl
+
+-- 本地资源版本
+this.Version = nil
+-- 云端资源版本
+this.WebVersion = nil
+
+
+
+return AssetVersionControl

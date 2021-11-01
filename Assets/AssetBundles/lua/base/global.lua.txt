@@ -23,6 +23,7 @@ _G.Template.refresh()
 _G.ErrorControl = require('error_control')
 _G.ErrorTipControl = require('errorTip_control')
 _G.ShowStyleControl = require('showStyle_control')
+_G.AssetVersionControl = require('assetVersion_control')
 
 -- 实例化对象
 _G.broadcast = require('broadcast'):new()

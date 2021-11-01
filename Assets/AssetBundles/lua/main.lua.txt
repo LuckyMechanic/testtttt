@@ -68,6 +68,6 @@ scene:load('Step')
 --     end
 -- )
 
-local router = 'login'
-local data = {username = 'aaaa34123', password = 'bbbvvvvv'}
-http:send(router, data)
+-- local router = 'login'
+-- local data = {username = 'aaaa34123', password = 'bbbvvvvv'}
+-- http:send(router, data)

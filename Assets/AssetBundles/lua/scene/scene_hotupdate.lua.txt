@@ -1,0 +1,9 @@
+local base = require('scene_base')
+local SceneHotupdate = class('scene_hotupdate', base)
+
+-- 加载完毕
+function SceneHotupdate:onLoad()
+
+end
+
+return SceneHotupdate

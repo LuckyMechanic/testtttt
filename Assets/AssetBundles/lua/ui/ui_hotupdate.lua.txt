@@ -1,0 +1,27 @@
+-- 该文件通过工具生成，只可以修改可编辑区块中的内容
+
+local base = require('ui_base')
+local UI_HOTUPDATE = class('ui_hotupdate', base)
+
+function UI_HOTUPDATE:initUIControl()
+	self.progressBarValueImage = UIControl:new(self.node,"Image/progressBarValueImage")
+	self.assetVersionText = UIControl:new(self.node,"assetVersionText")
+	self.clientVersionText = UIControl:new(self.node,"clientVersionText")
+	self.progressText = UIControl:new(self.node,"progressText")
+end
+
+-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ 可编辑区块 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+function UI_HOTUPDATE:onLoad(arg)
+	self:refreshVersion()
+end
+function UI_HOTUPDATE:refreshVersion()
+	local isNil = AssetVersionControl.Version == nil
+	self.assetVersionText:setActive(not isNil)
+	self.clientVersionText:setActive(not isNil)
+	if(not isNil) then
+
+	end
+end
+-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ 可编辑区块 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+
+return UI_HOTUPDATE

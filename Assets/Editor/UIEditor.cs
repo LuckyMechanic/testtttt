@@ -30,22 +30,20 @@ public class UIEditor
     {
         foreach (var uiPrefab in GetSelectUIPrefabs())
         {
-            Dictionary<string, Transform> dic = new Dictionary<string, Transform>();
+            Dictionary<Transform, string> dic = new Dictionary<Transform, string>();
             TryGetChildNodeInfo(uiPrefab.transform, ref dic);
             List<string> uiControlCodeList = new List<string>();
             List<string> uiControlNameList = new List<string>();
             foreach (var item in dic)
             {
-                if (item.Value.CompareTag(UICONTROL_TAG))
+                if (item.Key.CompareTag(UICONTROL_TAG))
                 {
-                    if (uiControlNameList.IndexOf(item.Value.name) != -1)
+                    if (uiControlNameList.IndexOf(item.Key.name) != -1)
                     {
-                        UnityEngine.Debug.LogWarningFormat("[{0}]存在重复UIControl[{1}] >> {0}/{2}", uiPrefab.name, item.Value.name, item.Key);
+                        UnityEngine.Debug.LogWarningFormat("[{0}]存在重复UIControl[{1}] >> {0}/{2}", uiPrefab.name, item.Key.name, item.Value);
                     }
-                    uiControlNameList.Add(item.Value.name);
-
-
-                    uiControlCodeList.Add(string.Format("\t{0}", CodeTemplate.GenerateCode("code_template_uiControl", item.Value.name, item.Key)));
+                    uiControlNameList.Add(item.Key.name);
+                    uiControlCodeList.Add(string.Format("\t{0}", CodeTemplate.GenerateCode("code_template_uiControl", item.Key.name, item.Value)));
                 }
             }
             string uiControlCodeText = string.Join("\n", uiControlCodeList);
@@ -81,13 +79,13 @@ public class UIEditor
     /// <summary>
     /// 遍历获得所有子物体信息
     /// </summary>
-    static void TryGetChildNodeInfo(Transform node, ref Dictionary<string, Transform> infoDic, string root = "")
+    static void TryGetChildNodeInfo(Transform node, ref Dictionary<Transform, string> infoDic, string root = "")
     {
         for (int i = 0; i < node.childCount; i++)
         {
             var child = node.GetChild(i);
             var path = root + (root == "" ? "" : "/") + child.name;
-            infoDic.Add(path, child);
+            infoDic.Add(child, path);
             if (child.childCount > 0)
             {
                 TryGetChildNodeInfo(child, ref infoDic, path);

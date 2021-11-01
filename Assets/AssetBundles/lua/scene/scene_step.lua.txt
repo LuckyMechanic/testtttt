@@ -1,10 +1,9 @@
 local base = require('scene_base')
 local SceneStep = class('scene_step', base)
 
-
 -- 加载完毕
 function SceneStep:onLoad()
-    log.print("进入场景Step")
+    scene:load('Hotupdate')
 end
 
 return SceneStep
